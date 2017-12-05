@@ -6,7 +6,7 @@ Object.defineProperty(exports, "__esModule", {
 
 
 // Needed as the zIndex works with absolute values.
-exports.default = {
+var zIndex = {
   mobileStepper: 900,
   menu: 1000,
   appBar: 1100,
@@ -19,3 +19,5 @@ exports.default = {
   snackbar: 2900,
   tooltip: 3000
 };
+
+exports.default = zIndex;

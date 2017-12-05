@@ -3,8 +3,10 @@ import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 import Input, { InputLabel } from 'material-ui/Input';
 import { FormControl, FormHelperText } from 'material-ui/Form';
+import Button from 'material-ui/Button';
 
 import pink from 'material-ui/colors/pink';
+import blue from 'material-ui/colors/blue';
 import green from 'material-ui/colors/green';
 import Avatar from 'material-ui/Avatar';
 import FolderIcon from 'material-ui-icons/Folder';
@@ -12,6 +14,9 @@ import PageviewIcon from 'material-ui-icons/Pageview';
 import AssignmentIcon from 'material-ui-icons/Assignment';
 import PersonIcon from 'material-ui-icons/Person';
 import LockIcon from 'material-ui-icons/Lock';
+
+import axios from 'axios';
+import { withRouter } from 'react-router-dom'
 
 const styles = theme => ({
   container: {
@@ -33,29 +38,68 @@ const styles = theme => ({
     display: 'flex',
     justifyContent: 'center',
   },
+  button: {
+    margin: theme.spacing.unit,
+    color: 'white',
+  },
+  label: {
+    textTransform: 'capitalize',
+  },
+  input: {
+    display: 'none',
+  },
 });
+
+const styleButton = {
+  background: blue[500],
+};
 
 class ComposedTextField extends React.Component {
   state = {
-    name: 'Composed TextField',
+    username: 'Composed TextField',
+    password: '',
+  }
+
+  handleChangeName = event => {
+    this.setState({ username: event.target.value });
   };
 
-  handleChange = event => {
-    this.setState({ name: event.target.value });
+  handleChangePassword = event => {
+    this.setState({ password: event.target.value });
   };
+  componentDidMount() {
+    this.refs.form.onSubmit = () => this.handleSubmit();
+  }
+  handleSubmit = (e) => {
+    console.log(this.state.username);
+    console.log(this.state.password);
+    e.preventDefault();
+    var headers = {
+        'Content-Type': 'application/json'
+    }
+    axios.post('/post', {
+      username: this.state.username,
+      password: this.state.password
+    }, headers
+  ).then( response => {
+  		alert(response.data);
+  	}).catch( error => {
+      consoloe(error);
+    });
+  }
 
   render() {
     const classes = this.props.classes;
 
     return (
-      <div className={classes.container}>
+      <form ref="form" className={classes.container}  >
         <div className={classes.row}>
           <Avatar className={classes.pinkAvatar}>
             <PersonIcon />
           </Avatar>
           <FormControl className={classes.formControl}>
             <InputLabel htmlFor="name-simple">Username</InputLabel>
-            <Input id="name-simple" value={this.state.name} onChange={this.handleChange} />
+            <Input id="name-simple" value={this.state.username} onChange={this.handleChangeName} />
           </FormControl>
         </div>
         <div className={classes.row}>
@@ -64,21 +108,17 @@ class ComposedTextField extends React.Component {
           </Avatar>
           <FormControl className={classes.formControl}>
             <InputLabel htmlFor="name-helper">Password</InputLabel>
-            <Input id="name-helper" type="password" value={this.state.name} onChange={this.handleChange} />
+            <Input id="name-helper" type="password" value={this.state.password} onChange={this.handleChangePassword} />
             <FormHelperText>Some important helper text</FormHelperText>
           </FormControl>
         </div>
-        <FormControl className={classes.formControl} disabled>
-          <InputLabel htmlFor="name-disabled">Name</InputLabel>
-          <Input id="name-disabled" value={this.state.name} onChange={this.handleChange} />
-          <FormHelperText>Disabled</FormHelperText>
-        </FormControl>
-        <FormControl className={classes.formControl} error>
-          <InputLabel htmlFor="name-error">Name</InputLabel>
-          <Input id="name-error" value={this.state.name} onChange={this.handleChange} />
-          <FormHelperText>Error</FormHelperText>
-        </FormControl>
-      </div>
+
+        <div className={classes.row}>
+          <Button  style={styleButton} className={classes.button} onClick={() => { history.push('/fff')}}>
+            {'Login'}
+          </Button>
+        </div>
+      </form>
     );
   }
 }

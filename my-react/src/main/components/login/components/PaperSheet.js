@@ -13,19 +13,22 @@ const styles = theme => ({
     maxWidth: '900px',
     margin: '0 auto',
   }),
+  col: {
+    display: 'flex',
+  },
 });
 
 function PaperSheet(props) {
   const classes = props.classes;
   return (
-    <div>
+    <div className={classes.col}>
       <Paper className={classes.root} elevation={4} >
-        <Typography type="headline" component="h3">
+{/*        <Typography type="headline" component="h3">
           This is a sheet of paper.
         </Typography>
         <Typography type="body1" component="p">
           Paper can be used to build surface or other elements for your application.
-        </Typography>
+        </Typography> */}
         <ComposedTextField />
       </Paper>
     </div>

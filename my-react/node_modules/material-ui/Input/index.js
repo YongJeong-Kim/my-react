@@ -13,6 +13,15 @@ Object.defineProperty(exports, 'default', {
   }
 });
 
+var _InputAdornment = require('./InputAdornment');
+
+Object.defineProperty(exports, 'InputAdornment', {
+  enumerable: true,
+  get: function get() {
+    return _interopRequireDefault(_InputAdornment).default;
+  }
+});
+
 var _InputLabel = require('./InputLabel');
 
 Object.defineProperty(exports, 'InputLabel', {

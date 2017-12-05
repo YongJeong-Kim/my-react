@@ -15,7 +15,8 @@ var _propTypes2 = _interopRequireDefault(_propTypes);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var CHANNEL = exports.CHANNEL = 'material-ui';
+// Same value used by react-jss
+var CHANNEL = exports.CHANNEL = '__THEMING__';
 
 var themeListener = {
   contextTypes: (0, _defineProperty3.default)({}, CHANNEL, _propTypes2.default.object),

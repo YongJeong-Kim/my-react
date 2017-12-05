@@ -29,7 +29,14 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 // @inheritedComponent Paper
 
 var babelPluginFlowReactPropTypes_proptype_Props = {
+  /**
+   * @ignore
+   */
   className: require('prop-types').string,
+
+  /**
+   * If `true`, the card will use raised styling.
+   */
   raised: require('prop-types').bool
 };
 
