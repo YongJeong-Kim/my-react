@@ -54,7 +54,7 @@ const styleButton = {
   background: blue[500],
 };
 
-class ComposedTextField extends React.Component {
+class LoginForm extends React.Component {
   state = {
     username: 'Composed TextField',
     password: '',
@@ -67,13 +67,11 @@ class ComposedTextField extends React.Component {
   handleChangePassword = event => {
     this.setState({ password: event.target.value });
   };
-  componentDidMount() {
-    this.refs.form.onSubmit = () => this.handleSubmit();
-  }
+
   handleSubmit = (e) => {
     console.log(this.state.username);
     console.log(this.state.password);
-    e.preventDefault();
+
     var headers = {
         'Content-Type': 'application/json'
     }
@@ -83,6 +81,7 @@ class ComposedTextField extends React.Component {
     }, headers
   ).then( response => {
   		alert(response.data);
+      window.location = '/';
   	}).catch( error => {
       consoloe(error);
     });
@@ -92,7 +91,7 @@ class ComposedTextField extends React.Component {
     const classes = this.props.classes;
 
     return (
-      <form ref="form" className={classes.container}  >
+      <form ref="form" className={classes.container} onSubmit={this.handleSubmit}>
         <div className={classes.row}>
           <Avatar className={classes.pinkAvatar}>
             <PersonIcon />
@@ -114,7 +113,7 @@ class ComposedTextField extends React.Component {
         </div>
 
         <div className={classes.row}>
-          <Button  style={styleButton} className={classes.button} onClick={() => { history.push('/fff')}}>
+          <Button type="submit" style={styleButton} className={classes.button} >
             {'Login'}
           </Button>
         </div>
@@ -123,8 +122,8 @@ class ComposedTextField extends React.Component {
   }
 }
 
-ComposedTextField.propTypes = {
+LoginForm.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(ComposedTextField);
+export default withStyles(styles)(LoginForm);

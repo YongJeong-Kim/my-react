@@ -17,7 +17,7 @@ import BusinessVariables from './CheckBoxCus';
 import SimpleDialogDemo from './SimpleDialogDemo';
 import SimpleMediaCard from './SimpleMediaCard';
 
-import ProgressMobileStepper from './StepperProcess';
+
 import NestedList from './Lists';
 
 import {Router, Route, Link, browserHistory, IndexRoute } from 'react-router';
@@ -65,7 +65,6 @@ class App extends React.Component {
 						<LongMenu />
 						<h1>Hello ss</h1>
 						<Button> hi </Button>
-						<ProgressMobileStepper />
 					</Grid>
 				</Grid>
 			</div>
