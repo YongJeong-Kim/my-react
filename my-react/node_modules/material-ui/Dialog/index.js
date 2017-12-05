@@ -49,12 +49,12 @@ Object.defineProperty(exports, 'DialogContentText', {
   }
 });
 
-var _withResponsiveFullScreen = require('./withResponsiveFullScreen');
+var _withMobileDialog = require('./withMobileDialog');
 
-Object.defineProperty(exports, 'withResponsiveFullScreen', {
+Object.defineProperty(exports, 'withMobileDialog', {
   enumerable: true,
   get: function get() {
-    return _interopRequireDefault(_withResponsiveFullScreen).default;
+    return _interopRequireDefault(_withMobileDialog).default;
   }
 });
 

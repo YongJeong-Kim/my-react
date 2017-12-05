@@ -76,10 +76,6 @@ function createChainedFunction() {
   }).reduce(function (acc, func) {
     process.env.NODE_ENV !== "production" ? (0, _warning2.default)(typeof func === 'function', 'Material-UI: invalid Argument Type, must only provide functions, undefined, or null.') : void 0;
 
-    if (acc === null) {
-      return func;
-    }
-
     return function chainedFunction() {
       for (var _len2 = arguments.length, args = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
         args[_key2] = arguments[_key2];
@@ -88,5 +84,5 @@ function createChainedFunction() {
       acc.apply(this, args);
       func.apply(this, args);
     };
-  }, null);
+  }, function () {});
 }

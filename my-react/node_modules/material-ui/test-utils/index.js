@@ -40,4 +40,13 @@ Object.defineProperty(exports, 'getClasses', {
   }
 });
 
+var _unwrap = require('./unwrap');
+
+Object.defineProperty(exports, 'unwrap', {
+  enumerable: true,
+  get: function get() {
+    return _interopRequireDefault(_unwrap).default;
+  }
+});
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
