@@ -2,7 +2,6 @@ package com.kyj.entity;
 
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -11,6 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -29,10 +30,19 @@ public class User {
 	
 	public User() {}
 	
+	public User(User user) {
+		this.id = user.getId();
+		this.username = user.getUsername();
+		this.password = user.getPassword();
+		this.email = user.getEmail();
+		this.enabled = user.getEnabled();
+		this.ban = user.getBan();
+	}
+	
 	@ManyToMany(fetch=FetchType.LAZY)
 	@JoinTable(name = "user_role",
 		joinColumns = @JoinColumn(name="role_id"),
 		inverseJoinColumns = @JoinColumn(name="user_id"))
-//	@JoinTable
+	@JsonIgnore
 	private List<Role> roles;
 }
