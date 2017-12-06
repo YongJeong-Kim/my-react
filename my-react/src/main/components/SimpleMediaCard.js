@@ -5,8 +5,7 @@ import Card, { CardActions, CardContent, CardMedia } from 'material-ui/Card';
 import Button from 'material-ui/Button';
 import Typography from 'material-ui/Typography';
 
-import { createMuiTheme } from 'material-ui/styles';
-import { MuiThemeProvider } from 'material-ui/styles';
+import { MuiThemeProvider, createMuiTheme } from 'material-ui/styles';
 import orange from 'material-ui/colors/orange';
 
 const styles = {
@@ -62,10 +61,10 @@ function SimpleMediaCard(props) {
           </Typography>
         </CardContent>
         <CardActions>
-          <MuiThemeProvider theme={theme} >
+    {/*      <MuiThemeProvider theme={theme} >
               <Btns />
-          </MuiThemeProvider>
-              <Button dense color="primary">
+          </MuiThemeProvider>*/}
+              <Button raised color="primary">
                 Learn More
               </Button>
         </CardActions>

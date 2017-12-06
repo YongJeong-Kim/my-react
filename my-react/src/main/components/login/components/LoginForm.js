@@ -54,10 +54,10 @@ const styleButton = {
   background: blue[500],
 };
 
-class ComposedTextField extends React.Component {
+class LoginForm extends React.Component {
   state = {
-    username: 'Composed TextField',
-    password: '',
+    username: 'aaa',
+    password: '1234',
   }
 
   handleChangeName = event => {
@@ -67,39 +67,41 @@ class ComposedTextField extends React.Component {
   handleChangePassword = event => {
     this.setState({ password: event.target.value });
   };
-  componentDidMount() {
-    this.refs.form.onSubmit = () => this.handleSubmit();
-  }
+
   handleSubmit = (e) => {
     console.log(this.state.username);
     console.log(this.state.password);
-    e.preventDefault();
-    var headers = {
+
+
+{/*    var headers = {
         'Content-Type': 'application/json'
     }
-    axios.post('/post', {
+    axios.post('/login', {
       username: this.state.username,
       password: this.state.password
     }, headers
   ).then( response => {
   		alert(response.data);
+
   	}).catch( error => {
       consoloe(error);
-    });
+    });*/}
   }
+
+
 
   render() {
     const classes = this.props.classes;
 
     return (
-      <form ref="form" className={classes.container}  >
+      <form action="/login" method="post" ref="form" className={classes.container} >
         <div className={classes.row}>
           <Avatar className={classes.pinkAvatar}>
             <PersonIcon />
           </Avatar>
           <FormControl className={classes.formControl}>
             <InputLabel htmlFor="name-simple">Username</InputLabel>
-            <Input id="name-simple" value={this.state.username} onChange={this.handleChangeName} />
+            <Input id="name-simple" name="username" value={this.state.username} onChange={this.handleChangeName} />
           </FormControl>
         </div>
         <div className={classes.row}>
@@ -108,23 +110,37 @@ class ComposedTextField extends React.Component {
           </Avatar>
           <FormControl className={classes.formControl}>
             <InputLabel htmlFor="name-helper">Password</InputLabel>
-            <Input id="name-helper" type="password" value={this.state.password} onChange={this.handleChangePassword} />
+            <Input id="name-helper" type="password" name="password" value={this.state.password} onChange={this.handleChangePassword} />
             <FormHelperText>Some important helper text</FormHelperText>
           </FormControl>
         </div>
 
-        <div className={classes.row}>
-          <Button  style={styleButton} className={classes.button} onClick={() => { history.push('/fff')}}>
+  {/*      <div className={classes.row}>
+          <Button type="submit" style={styleButton} className={classes.button} >
             {'Login'}
           </Button>
+        </div>  */}
+
+        <div className={classes.row}>
+          <input
+                 className={classes.input}
+                 id="raised-button-file"
+                 multiple
+                 type="submit"  />
+          <label htmlFor="raised-button-file">
+            <Button raised component="span" style={styleButton} className={classes.button}>
+              Login
+            </Button>
+          </label>
         </div>
+        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
       </form>
     );
   }
 }
 
-ComposedTextField.propTypes = {
+LoginForm.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(ComposedTextField);
+export default withStyles(styles)(LoginForm);

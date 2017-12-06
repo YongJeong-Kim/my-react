@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 import Paper from 'material-ui/Paper';
 import Typography from 'material-ui/Typography';
-import ComposedTextField from './LoginForm';
+import LoginForm from './LoginForm';
 
 const styles = theme => ({
   root: theme.mixins.gutters({
@@ -29,7 +29,7 @@ function PaperSheet(props) {
         <Typography type="body1" component="p">
           Paper can be used to build surface or other elements for your application.
         </Typography> */}
-        <ComposedTextField />
+        <LoginForm />
       </Paper>
     </div>
   );
