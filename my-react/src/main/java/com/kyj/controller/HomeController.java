@@ -1,5 +1,7 @@
 package com.kyj.controller;
 
+import java.security.Principal;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,7 +14,8 @@ import com.kyj.entity.User;
 @Controller
 public class HomeController {
 	@GetMapping("/")
-	public String home() {
+	public String home(Principal principal) {
+		System.out.println(principal.getName());
 		return "index";
 	}
 	
