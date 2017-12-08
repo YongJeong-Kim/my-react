@@ -72,6 +72,7 @@ class LoginForm extends React.Component {
     console.log(this.state.username);
     console.log(this.state.password);
 
+    console.log("login clicked.");
 
 {/*    var headers = {
         'Content-Type': 'application/json'
@@ -88,13 +89,27 @@ class LoginForm extends React.Component {
     });*/}
   }
 
+  testSubmit = (e) => {
+
+    axios.get('http://localhost:3000/qqq')
+    .then((response) => {
+    window.location = '/';
+    });
+  }
 
 
   render() {
     const classes = this.props.classes;
-
+    const actionUrl = 'http://localhost:3000/login';
+{/*    let metas = document.getElementsByTagName('meta');
+    let metaValue = metas[0].content;
+    let metaName = metas[1].content;
+    console.log(metas);
+    console.log(metaValue);
+    console.log(metaName); */}
+    console.log(actionUrl);
     return (
-      <form action="/login" method="post" ref="form" className={classes.container} >
+      <form action={actionUrl} method="post" className={classes.container} onSubmit={this.handleSubmit}>
         <div className={classes.row}>
           <Avatar className={classes.pinkAvatar}>
             <PersonIcon />
@@ -128,13 +143,14 @@ class LoginForm extends React.Component {
                  multiple
                  type="submit"  />
           <label htmlFor="raised-button-file">
-            <Button raised component="span" style={styleButton} className={classes.button}>
+            <Button type="submit" raised component="span" style={styleButton} className={classes.button}>
               Login
             </Button>
           </label>
         </div>
-        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+  {/*      <input type="hidden" name={metaName} value={metaValue} /> */}
       </form>
+
     );
   }
 }

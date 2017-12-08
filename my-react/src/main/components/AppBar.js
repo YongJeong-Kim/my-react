@@ -24,6 +24,9 @@ const styles = {
     color: 'white',
     backgroundColor: blue[500],
   },
+  input: {
+    display: 'none',
+  }
 };
 let classes ;
 class ButtonAppBar extends React.Component {
@@ -58,6 +61,20 @@ class ButtonAppBar extends React.Component {
 		            Title
 		          </Typography>
 		          <Button color="contrast" onClick={this.handle}>Login</Button>
+
+              <form action="/logout" method="post">
+                <input
+                       className={classes.input}
+                       id="raised-button-file"
+                       multiple
+                       type="submit"  />
+                <label htmlFor="raised-button-file">
+                  <Button raised component="span" className={classes.button}>
+                    Logout
+                  </Button>
+                </label>
+              </form>
+
 		          <IconButton color="accent" className={classes.button} aria-label="Add to shopping cart">
 		          	<AddShoppingCartIcon />
 		          </IconButton>
