@@ -30,7 +30,7 @@ public class QUser extends EntityPathBase<User> {
 
     public final StringPath password = createString("password");
 
-    public final ListPath<Role, QRole> roles = this.<Role, QRole>createList("roles", Role.class, QRole.class, PathInits.DIRECT2);
+    public final ListPath<Roles, QRoles> roles = this.<Roles, QRoles>createList("roles", Roles.class, QRoles.class, PathInits.DIRECT2);
 
     public final StringPath username = createString("username");
 

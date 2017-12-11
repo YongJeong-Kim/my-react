@@ -11,14 +11,14 @@ import com.mysema.query.types.path.PathInits;
 
 
 /**
- * QRole is a Querydsl query type for Role
+ * QRoles is a Querydsl query type for Roles
  */
 @Generated("com.mysema.query.codegen.EntitySerializer")
-public class QRole extends EntityPathBase<Role> {
+public class QRoles extends EntityPathBase<Roles> {
 
-    private static final long serialVersionUID = 1661442850;
+    private static final long serialVersionUID = -34879087;
 
-    public static final QRole role1 = new QRole("role1");
+    public static final QRoles roles = new QRoles("roles");
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
@@ -26,16 +26,16 @@ public class QRole extends EntityPathBase<Role> {
 
     public final ListPath<User, QUser> users = this.<User, QUser>createList("users", User.class, QUser.class, PathInits.DIRECT2);
 
-    public QRole(String variable) {
-        super(Role.class, forVariable(variable));
+    public QRoles(String variable) {
+        super(Roles.class, forVariable(variable));
     }
 
-    public QRole(Path<? extends Role> path) {
+    public QRoles(Path<? extends Roles> path) {
         super(path.getType(), path.getMetadata());
     }
 
-    public QRole(PathMetadata<?> metadata) {
-        super(Role.class, metadata);
+    public QRoles(PathMetadata<?> metadata) {
+        super(Roles.class, metadata);
     }
 
 }

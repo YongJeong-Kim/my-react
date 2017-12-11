@@ -40,9 +40,9 @@ public class User {
 	}
 	
 	@ManyToMany(fetch=FetchType.LAZY)
-	@JoinTable(name = "user_role",
+	@JoinTable(name = "user_roles",
 		joinColumns = @JoinColumn(name="user_id"),
-		inverseJoinColumns = @JoinColumn(name="role_id"))
+		inverseJoinColumns = @JoinColumn(name="roles_id"))
 	@JsonIgnore
-	private List<Role> roles;
+	private List<Roles> roles;
 }

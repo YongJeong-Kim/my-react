@@ -7,14 +7,15 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.kyj.entity.Roles;
 import com.kyj.entity.User;
-import com.kyj.entity.User_Role;
+import com.kyj.entity.User_Roles;
 import com.kyj.repository.RoleRepository;
 import com.kyj.repository.UserRepository;
 import com.kyj.repository.UserRolesRepository;
+import com.kyj.service.LoginService;
 
 @RestController
 public class LoginController {
@@ -30,15 +31,18 @@ public class LoginController {
 	@Autowired
 	private RoleRepository roleRepository;
 	
+	@Autowired
+	private LoginService loginService;
+	
 	/*@GetMapping("/qqq")
 	public String qqq() {
 		return "qqq";
 	}*/
 	
-	@GetMapping("qqq")
-	public String postqqq() {
-		return "post qqq";
-	}
+/*	@GetMapping("qqq")
+	public List<String> postqqq() {
+		return loginService.loginUser();
+	}*/
 	
 	@GetMapping("/ttest")
 	public List<String> dd() {
@@ -51,14 +55,14 @@ public class LoginController {
 		else{
 //			List<String> userRoles = userRolesRepository.findRoleByUserName(username);
 			Long userId = user.map(User::getId).orElse(null);
-			List<User_Role> userRoles = userRolesRepository.findRoleByCompositeKey_UserId(userId);
-			List<Long> rolesId = userRoles.stream().map(ur -> ur.getCompositeKey().getRoleId()).collect(Collectors.toList());
+			List<User_Roles> userRoles = userRolesRepository.findRolesByCompositeKey_UserId(userId);
+			List<Long> rolesId = userRoles.stream().map(ur -> ur.getCompositeKey().getRolesId()).collect(Collectors.toList());
 			List<String>  rolesName = new ArrayList<>();
 			String g = roleRepository.findOne(rolesId.get(0)).getRole();
 			String gg = "";
-			/*rolesId.forEach(ri -> {
+			rolesId.forEach(ri -> {
 				rolesName.add(roleRepository.findRoleById(ri).toString());
-			});*/
+			});
 		//	list = rolesName;
 			list.add(g);
 			System.out.println(user.get().getUsername());
