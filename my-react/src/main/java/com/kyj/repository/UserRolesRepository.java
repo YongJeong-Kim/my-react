@@ -5,15 +5,15 @@ import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.kyj.composite.UserRolePK;
-import com.kyj.entity.User_Role;
+import com.kyj.composite.UserRolesPK;
+import com.kyj.entity.User_Roles;
 
-public interface UserRolesRepository extends JpaRepository<User_Role, UserRolePK>{
-	Optional<User_Role> findByCompositeKey(UserRolePK userRolePk);
+public interface UserRolesRepository extends JpaRepository<User_Roles, UserRolesPK>{
+	Optional<User_Roles> findByCompositeKey(UserRolesPK userRolePk);
 	
-	List<User_Role> findByCompositeKey_UserId(Long userId);
+	List<User_Roles> findByCompositeKey_UserId(Long userId);
 	
-	List<User_Role> findRoleByCompositeKey_UserId(Long userId);
+	List<User_Roles> findRolesByCompositeKey_UserId(Long userId);
 	
-	List<User_Role> findByCompositeKey_RoleId(Long roleId);
+	List<User_Roles> findByCompositeKey_RolesId(Long rolesId);
 }

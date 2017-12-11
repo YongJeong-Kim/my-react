@@ -17,7 +17,7 @@ import lombok.Setter;
 
 @Entity
 @Getter @Setter
-public class Role {
+public class Roles {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;

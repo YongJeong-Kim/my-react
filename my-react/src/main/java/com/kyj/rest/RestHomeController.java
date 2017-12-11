@@ -6,9 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.kyj.composite.UserRolePK;
+import com.kyj.composite.UserRolesPK;
 import com.kyj.entity.User;
-import com.kyj.entity.User_Role;
+import com.kyj.entity.User_Roles;
 import com.kyj.repository.UserRolesRepository;
 import com.kyj.service.UserService;
 
@@ -24,8 +24,8 @@ public class RestHomeController {
 	private UserRolesRepository userRolesRepository;
 	
 	@GetMapping("/userRole/composite-key")
-	public UserRolePK rest() {
-		UserRolePK urpk = new UserRolePK();
+	public UserRolesPK rest() {
+		UserRolesPK urpk = new UserRolesPK();
 		urpk.setUserId(1L);
 //		urpk.setRoleId(1L);
 		return userRoleRepository.findOne(urpk).getCompositeKey();
@@ -42,7 +42,7 @@ public class RestHomeController {
 	}
 	
 	@GetMapping("/userrole")
-	public List<User_Role> dg() {
+	public List<User_Roles> dg() {
 		return userRolesRepository.findByCompositeKey_UserId(1L);
 	}
 }

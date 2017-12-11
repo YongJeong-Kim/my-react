@@ -11,7 +11,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
-import com.kyj.entity.Role;
+import com.kyj.entity.Roles;
 import com.kyj.entity.User;
 import com.kyj.repository.RoleRepository;
 import com.kyj.repository.UserRepository;
@@ -22,7 +22,7 @@ public class InitUser {
 	private UserRepository userRepository;
 	
 	@Autowired
-	private RoleRepository roleRepository;
+	private RoleRepository rolesRepository;
 	
 	@PostConstruct
 	public void initUser() {
@@ -35,14 +35,14 @@ public class InitUser {
 			String hashedPassword = passwordEncoder.encode("1234");
 			
 			u.setPassword(hashedPassword);
-			Role r = new Role();
+			Roles r = new Roles();
 			r.setRole("ROLE_ADMIN");
 			
-			List<Role> rs = new ArrayList<>();
+			List<Roles> rs = new ArrayList<>();
 			rs.add(r);
 			u.setRoles(rs);
 			
-			roleRepository.save(r);
+			rolesRepository.save(r);
 			userRepository.save(u);
 		}
 	}

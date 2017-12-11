@@ -100,16 +100,16 @@ class LoginForm extends React.Component {
 
   render() {
     const classes = this.props.classes;
-    const actionUrl = 'http://localhost:3000/login';
+
 {/*    let metas = document.getElementsByTagName('meta');
     let metaValue = metas[0].content;
     let metaName = metas[1].content;
     console.log(metas);
     console.log(metaValue);
     console.log(metaName); */}
-    console.log(actionUrl);
+
     return (
-      <form action={actionUrl} method="post" className={classes.container} onSubmit={this.handleSubmit}>
+      <form action="/login" method="post" className={classes.container} onSubmit={this.handleSubmit}>
         <div className={classes.row}>
           <Avatar className={classes.pinkAvatar}>
             <PersonIcon />
