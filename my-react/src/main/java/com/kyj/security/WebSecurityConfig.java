@@ -4,22 +4,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
-
-import com.kyj.service.UserService;
 
 @Configuration
 @EnableWebSecurity
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-	@Autowired
-	private UserService userService;
-	
 	@Autowired
 	private UserDetailsService userDetailsService;
 
@@ -30,25 +27,21 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		//http.authorizeRequests().antMatchers("/").access("hasRole('ROLE_ADMIN')").anyRequest().permitAll()
-		http.authorizeRequests().antMatchers("/").authenticated().anyRequest().permitAll()
-			.antMatchers("/css/**", "/js/**", "/home").permitAll()
+		http.authorizeRequests()
+				.antMatchers("/", "/home/**").authenticated().anyRequest().permitAll()
+				.antMatchers("/admin/**").hasAuthority("ROLE_ADMIN")
+				.antMatchers("/user/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_USER")
+//				.antMatchers("/css/**", "/js/**").permitAll()
 			.and()
-				.formLogin().loginPage("/login").usernameParameter("username").passwordParameter("password").defaultSuccessUrl("/")
+				.formLogin().loginPage("/login").usernameParameter("username").passwordParameter("password").defaultSuccessUrl("/home")
 			.and()
 				.logout().logoutSuccessUrl("/login?logout")
 			.and()
-				.exceptionHandling().accessDeniedPage("/403")
+				.exceptionHandling().accessDeniedPage("/error/403")
 			.and()
 				.csrf().disable();
 		
-		/*http
-		.logout()
-			.logoutRequestMatcher(new AntPathRequestMatcher("/logout"));*/
-/*		 http
-         .csrf().disable()
-         .authorizeRequests()
-             .anyRequest().permitAll();*/
+		
 	}
 
 	@Bean(name = "passwordEncoder")
@@ -64,15 +57,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			and().logout().permitAll();
 	}*/
 	
-/*	@Override
+	@Override
     public void configure(WebSecurity web) throws Exception {
-		web.ignoring().antMatchers("/resources/**"); // #3
+	/*	web.ignoring().antMatchers("/resources/**"); // #3
         web.ignoring().antMatchers("/static/**"); // #3
         web.ignoring().antMatchers("/ajax/**");
         web.ignoring().antMatchers("/common/**");
         web.ignoring().antMatchers("/js/**");
-        web.ignoring().antMatchers("/css/**");
-    }*/
+        web.ignoring().antMatchers("/css/**");*/
+		web.ignoring().antMatchers("/css/**", "/js/**");
+    }
 
 	@Autowired
 	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {

@@ -8,14 +8,18 @@ import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.util.StringUtils;
 
+import com.kyj.entity.User;
+
 public class CustomUserDetails extends com.kyj.entity.User implements UserDetails {	
 	
 	private static final long serialVersionUID = 1L;
 	private List<String> userRoles;
+	private User user;
 
 	public CustomUserDetails(com.kyj.entity.User user, List<String> userRoles){
 		super(user);
-		this.userRoles=userRoles;
+		this.userRoles = userRoles;
+		this.user = user;
 	}
 	
 	@Override
@@ -27,20 +31,24 @@ public class CustomUserDetails extends com.kyj.entity.User implements UserDetail
 	@Override
 	public boolean isAccountNonExpired() {
 		// TODO Auto-generated method stub
-		return true;
+//		return true;
+		return user.getIsAccountNonExpired();
 	}
 	@Override
 	public boolean isAccountNonLocked() {
-		return true;
+//		return true;
+		return user.getIsAccountNonLocked();
 	}
 	
 	@Override
 	public boolean isCredentialsNonExpired() {
-		return true;
+//		return true;
+		return user.getIsCredentialsNonExpired();
 	}
 	@Override
 	public boolean isEnabled() {
-		return true;
+//		return true;
+		return user.getIsEnabled();
 	}
 
 	@Override
