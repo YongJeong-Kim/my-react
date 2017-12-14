@@ -6,7 +6,7 @@ import Grid from 'material-ui/Grid';
 
 import Button from 'material-ui/Button';
 import Palette from './FlatBtn';
-import ButtonAppBar from './AppBar';
+import IndexAppBar from './appbar/AppBar';
 
 import FlatButtons from './FlatBtn2';
 import FloatingActionButtons from './ActionBtn';
@@ -48,7 +48,7 @@ class App extends React.Component {
 			<div className={classes.root} >
 				<Grid container spacing={24}>
 					<Grid item xs>
-						<ButtonAppBar />
+						<IndexAppBar />
 					</Grid>
 				</Grid>
 				<Grid container spacing={24}>

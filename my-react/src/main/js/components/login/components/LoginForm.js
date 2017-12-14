@@ -1,22 +1,27 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withStyles } from 'material-ui/styles';
+import { withRouter } from 'react-router-dom'
+
+// material-ui components
 import Input, { InputLabel } from 'material-ui/Input';
 import { FormControl, FormHelperText } from 'material-ui/Form';
 import Button from 'material-ui/Button';
-
-import pink from 'material-ui/colors/pink';
-import blue from 'material-ui/colors/blue';
-import green from 'material-ui/colors/green';
 import Avatar from 'material-ui/Avatar';
+
+// material-ui icons
 import FolderIcon from 'material-ui-icons/Folder';
 import PageviewIcon from 'material-ui-icons/Pageview';
 import AssignmentIcon from 'material-ui-icons/Assignment';
 import PersonIcon from 'material-ui-icons/Person';
 import LockIcon from 'material-ui-icons/Lock';
 
+//material-ui colors and style
+import pink from 'material-ui/colors/pink';
+import blue from 'material-ui/colors/blue';
+import green from 'material-ui/colors/green';
+import { withStyles } from 'material-ui/styles';
+
 import axios from 'axios';
-import { withRouter } from 'react-router-dom'
 
 const styles = theme => ({
   container: {
@@ -68,35 +73,14 @@ class LoginForm extends React.Component {
     this.setState({ password: event.target.value });
   };
 
-  handleSubmit = (e) => {
-    console.log(this.state.username);
-    console.log(this.state.password);
+  componentWillMount() {
 
-    console.log("login clicked.");
 
-{/*    var headers = {
-        'Content-Type': 'application/json'
-    }
-    axios.post('/login', {
-      username: this.state.username,
-      password: this.state.password
-    }, headers
-  ).then( response => {
-  		alert(response.data);
-
-  	}).catch( error => {
-      consoloe(error);
-    });*/}
-  }
-
-  testSubmit = (e) => {
-
-    axios.get('http://localhost:3000/qqq')
+{/*    axios.get('http://localhost:3000/qqq')
     .then((response) => {
     window.location = '/';
-    });
+    }); */}
   }
-
 
   render() {
     const classes = this.props.classes;

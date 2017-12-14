@@ -30,6 +30,10 @@ public class InitUser {
 			User u = new User();
 			u.setEmail("aaa@email.com");
 			u.setUsername("aaa");
+			u.setIsAccountNonExpired(true);
+			u.setIsAccountNonLocked(true);
+			u.setIsCredentialsNonExpired(true);
+			u.setIsEnabled(true);
 			
 			PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 			String hashedPassword = passwordEncoder.encode("1234");

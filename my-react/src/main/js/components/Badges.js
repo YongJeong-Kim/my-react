@@ -5,6 +5,7 @@ import Badge from 'material-ui/Badge';
 import MailIcon from 'material-ui-icons/Mail';
 import FolderIcon from 'material-ui-icons/Folder';
 import IconButton from 'material-ui/IconButton';
+import Notifications from 'material-ui-icons/Notifications'
 import { red } from 'material-ui/colors';
 import { MuiThemeProvider, createMuiTheme } from 'material-ui/styles';
 
@@ -19,13 +20,30 @@ const theme = createMuiTheme({
     MuiBadge: {
       badge: {
         backgroundColor: red[500],
-      }
+      },
+    }
+  }
+});
+
+const themeNotification = createMuiTheme({
+  overrides: {
+    MuiBadge: {
+      badge: {
+        backgroundColor: red[500],
+        width: 10,
+        height: 10,
+        top: 0,
+        right: 0,
+      },
     }
   }
 });
 
 const mailIconOnClick = () => {
   alert();
+}
+const notificationOnClick = () => {
+  alert('notification');
 }
 function SimpleBadge(props) {
   const classes = props.classes;
@@ -37,11 +55,18 @@ function SimpleBadge(props) {
             <MailIcon />
           </Badge>
         </IconButton>
-          </MuiThemeProvider>
-          <MuiThemeProvider theme={theme} >
+      </MuiThemeProvider>
+      <MuiThemeProvider theme={theme} >
         <IconButton color="contrast" aria-label="Menu">
           <Badge badgeContent={10} >
             <FolderIcon />
+          </Badge>
+        </IconButton>
+      </MuiThemeProvider>
+      <MuiThemeProvider theme={themeNotification} >
+        <IconButton color="contrast" aria-label="Menu" onClick={notificationOnClick}>
+          <Badge badgeContent={''} >
+            <Notifications />
           </Badge>
         </IconButton>
       </MuiThemeProvider>

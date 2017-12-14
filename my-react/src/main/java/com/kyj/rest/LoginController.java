@@ -1,7 +1,9 @@
 package com.kyj.rest;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -9,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.kyj.entity.Roles;
 import com.kyj.entity.User;
 import com.kyj.entity.User_Roles;
 import com.kyj.repository.RoleRepository;
@@ -31,8 +32,19 @@ public class LoginController {
 	@Autowired
 	private RoleRepository roleRepository;
 	
-	@Autowired
-	private LoginService loginService;
+	@GetMapping("/test")
+	public Map<String, Object> test() {
+		Map<String, Object> map = new HashMap<>();
+		
+		Map<String, Object> userMap = new HashMap<>();
+		userMap.put("id", "1");
+		userMap.put("name", "aaa");
+		userMap.put("email", "aaa@aaa.com");
+		
+		map.put("user", userMap);
+		
+		return map;
+	}
 	
 	/*@GetMapping("/qqq")
 	public String qqq() {
