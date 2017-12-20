@@ -1,38 +1,76 @@
 package com.kyj.rest;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
+import java.security.Principal;
+import java.util.Map;
+
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.kyj.entity.Roles;
-import com.kyj.entity.User;
-import com.kyj.entity.User_Roles;
-import com.kyj.repository.RoleRepository;
-import com.kyj.repository.UserRepository;
-import com.kyj.repository.UserRolesRepository;
 import com.kyj.service.LoginService;
 
 @RestController
-public class LoginController {
-/*	@PostMapping("/login")
-	public void login(User user) {
-		System.out.println("login : " + user.getUsername());
-	}*/
-	
-	@Autowired
-	private UserRepository userRepository;
-	@Autowired
-	private UserRolesRepository userRolesRepository;
-	@Autowired
-	private RoleRepository roleRepository;
+@RequestMapping("/login")
+public class LoginController {	
+	@PersistenceContext
+	private EntityManager entityManager;
 	
 	@Autowired
 	private LoginService loginService;
+	
+	@PreAuthorize("hasAuthority('ROLE_ADMIN') or hasAuthority('ROLE_USER')")
+	@GetMapping("/user/info")
+	public Map<String, Object> loginUserInfo(Principal principal) {
+/*		List<Roles> roles = roleRepository.findAll();
+		Roles r = roleRepository.findOne(1L);
+		
+		ObjectMapper mapper = new ObjectMapper();
+		@SuppressWarnings("unchecked")
+		Map<String, Object> map = mapper.convertValue(r, Map.class);*/
+		
+		return loginService.getLoginUserInfo(principal.getName());
+	/*	JPAQueryFactory query = new JPAQueryFactory(entityManager);
+		QUser user = QUser.user;
+		QRoles roles = QRoles.roles;
+		QRoles r = new QRoles("r");
+		QUser_Roles qur = QUser_Roles.user_Roles;
+		
+		QUserRolesPK ur = QUserRolesPK.userRolesPK;*/
+		
+/*		Optional<User> userr = userRepository.findByUsername("aaa");
+		Map<String, Object> map = new HashMap<>();
+		List<String> ro = new ArrayList<>();
+		userr.ifPresent(u -> {
+			List<Roles> rs = u.getRoles();
+			rs.forEach(r -> ro.add(r.getRole()));
+		});
+		UserDTO udto = new UserDTO();
+		udto.setRoles(ro);
+		map.put("roles", udto.getRoles());
+		ObjectMapper mapper = new ObjectMapper();
+		User ser = new User();
+		ser.setUsername("bbbbbbb");
+		ser.setId(222L);*/
+//		mapper.convertValue(userr.get().getRoles(), Map.class);
+//		System.out.println(mapper);
+//		query.from(user).where(user.username.eq(new JPASubQuery().from(user).where(user.id.eq(1L)).unique(user.username)));
+//		query.from(user).innerJoin(user.roles, roles).on(user.username.eq("aaa")).distinct().unique(Projections.constructor(UserDTO.class, user))
+//		return query.from(user).innerJoin(user.roles, roles).on(user.username.eq("aaa")).list(Projections.bean(Test2.class, user.id, roles.role));
+		
+//		return query.from(user).innerJoin(user.roles, roles).on(user.username.eq("aaa")).list(Projections.constructor(UserDTO.class, user, roles));
+//		return query.from(user).innerJoin(user.roles, roles).on(user.username.eq("aaa")).list(Projections.constructor(UserDTO.class, user, roles)).add;
+//		return query.from(user).innerJoin(user.roles, roles).on(user.username.eq("aaa")).list(Projections.constructor(UserDTO.class, user));
+//		return query.from(roles).transform(groupBy(roles).as(list(roles.role)));
+//		return query.selectFrom(user).innerJoin(user.roles, roles).on(user.username.eq("aaa"))
+//				.select(roles).fetch();
+				//.transform(GroupBy.groupBy(roles.role).as(list(roles)));
+
+	}
 	
 	/*@GetMapping("/qqq")
 	public String qqq() {
@@ -44,29 +82,5 @@ public class LoginController {
 		return loginService.loginUser();
 	}*/
 	
-	@GetMapping("/ttest")
-	public List<String> dd() {
-		List<User> uu = userRepository.findAll();
-		Optional<User> user = userRepository.findByUsername("aaa");
-		List<String> list = new ArrayList<>();
-		if(!user.isPresent()){
-	//		throw new UsernameNotFoundException("No user present with username: " + username);
-		}
-		else{
-//			List<String> userRoles = userRolesRepository.findRoleByUserName(username);
-			Long userId = user.map(User::getId).orElse(null);
-			List<User_Roles> userRoles = userRolesRepository.findRolesByCompositeKey_UserId(userId);
-			List<Long> rolesId = userRoles.stream().map(ur -> ur.getCompositeKey().getRolesId()).collect(Collectors.toList());
-			List<String>  rolesName = new ArrayList<>();
-			String g = roleRepository.findOne(rolesId.get(0)).getRole();
-			String gg = "";
-			rolesId.forEach(ri -> {
-				rolesName.add(roleRepository.findRoleById(ri).toString());
-			});
-		//	list = rolesName;
-			list.add(g);
-			System.out.println(user.get().getUsername());
-		}
-		return list;
-	}
+	
 }

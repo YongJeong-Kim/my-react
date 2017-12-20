@@ -1,28 +1,39 @@
 package com.kyj.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.transaction.Transactional;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.kyj.entity.QRoles;
-import com.kyj.entity.QUser;
-import com.kyj.entity.Roles;
-import com.mysema.query.jpa.impl.JPAQuery;
+import com.kyj.entity.User;
+import com.kyj.repository.RoleRepository;
+import com.kyj.repository.UserRepository;
 
 @Service
 public class LoginService {
-	@PersistenceContext
-	private EntityManager entityManager;
+	@Autowired
+	private RoleRepository roleRepository;
 	
-	public List<String> loginUser(String username) {
-		JPAQuery query = new JPAQuery(entityManager);
-		QUser user = QUser.user;
-		QRoles roles = QRoles.roles;
+	@Autowired
+	private UserRepository userRepository;
+	
+	public List<String> getLoginUserRoles(String username) {
+		return roleRepository.getLoginUserRoles(username);
+	}
+	
+	public Map<String, Object> getLoginUserInfo(String username) {
+		Map<String, Object> map = new HashMap<>();
+		Optional<User> user = userRepository.findByUsername(username);
 		
-		return query.from(user).leftJoin(user.roles, roles).where(user.username.eq(username)).list(roles.role);
+		user.ifPresent(u -> {
+			List<String> roles = getLoginUserRoles(username);
+			map.put("user", u);
+			map.put("roles", roles);
+		});
+		
+		return map;
 	}
 }

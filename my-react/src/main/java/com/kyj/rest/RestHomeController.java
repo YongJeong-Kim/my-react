@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kyj.composite.UserRolesPK;
-import com.kyj.entity.User;
 import com.kyj.entity.User_Roles;
 import com.kyj.repository.UserRolesRepository;
 import com.kyj.service.UserService;
@@ -29,11 +28,6 @@ public class RestHomeController {
 		urpk.setUserId(1L);
 //		urpk.setRoleId(1L);
 		return userRoleRepository.findOne(urpk).getCompositeKey();
-	}
-	
-	@GetMapping("/gg")
-	public User u() {
-		return userService.dd();
 	}
 	
 	@GetMapping("/removeUser")

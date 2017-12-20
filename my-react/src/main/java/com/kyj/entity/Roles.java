@@ -20,6 +20,7 @@ import lombok.Setter;
 public class Roles {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
+	@JsonIgnore
 	private Long id;
 	private String role;
 	
