@@ -1,22 +1,22 @@
 package com.kyj.entity;
 
-import static com.mysema.query.types.PathMetadataFactory.*;
+import static com.querydsl.core.types.PathMetadataFactory.*;
 
-import com.mysema.query.types.path.*;
+import com.querydsl.core.types.dsl.*;
 
-import com.mysema.query.types.PathMetadata;
+import com.querydsl.core.types.PathMetadata;
 import javax.annotation.Generated;
-import com.mysema.query.types.Path;
-import com.mysema.query.types.path.PathInits;
+import com.querydsl.core.types.Path;
+import com.querydsl.core.types.dsl.PathInits;
 
 
 /**
  * QRoles is a Querydsl query type for Roles
  */
-@Generated("com.mysema.query.codegen.EntitySerializer")
+@Generated("com.querydsl.codegen.EntitySerializer")
 public class QRoles extends EntityPathBase<Roles> {
 
-    private static final long serialVersionUID = -34879087;
+    private static final long serialVersionUID = -34879087L;
 
     public static final QRoles roles = new QRoles("roles");
 
@@ -34,7 +34,7 @@ public class QRoles extends EntityPathBase<Roles> {
         super(path.getType(), path.getMetadata());
     }
 
-    public QRoles(PathMetadata<?> metadata) {
+    public QRoles(PathMetadata metadata) {
         super(Roles.class, metadata);
     }
 

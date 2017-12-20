@@ -1,32 +1,36 @@
 package com.kyj.entity;
 
-import static com.mysema.query.types.PathMetadataFactory.*;
+import static com.querydsl.core.types.PathMetadataFactory.*;
 
-import com.mysema.query.types.path.*;
+import com.querydsl.core.types.dsl.*;
 
-import com.mysema.query.types.PathMetadata;
+import com.querydsl.core.types.PathMetadata;
 import javax.annotation.Generated;
-import com.mysema.query.types.Path;
-import com.mysema.query.types.path.PathInits;
+import com.querydsl.core.types.Path;
+import com.querydsl.core.types.dsl.PathInits;
 
 
 /**
  * QUser is a Querydsl query type for User
  */
-@Generated("com.mysema.query.codegen.EntitySerializer")
+@Generated("com.querydsl.codegen.EntitySerializer")
 public class QUser extends EntityPathBase<User> {
 
-    private static final long serialVersionUID = 1661535863;
+    private static final long serialVersionUID = 1661535863L;
 
     public static final QUser user = new QUser("user");
 
-    public final BooleanPath ban = createBoolean("ban");
-
     public final StringPath email = createString("email");
 
-    public final BooleanPath enabled = createBoolean("enabled");
-
     public final NumberPath<Long> id = createNumber("id", Long.class);
+
+    public final BooleanPath isAccountNonExpired = createBoolean("isAccountNonExpired");
+
+    public final BooleanPath isAccountNonLocked = createBoolean("isAccountNonLocked");
+
+    public final BooleanPath isCredentialsNonExpired = createBoolean("isCredentialsNonExpired");
+
+    public final BooleanPath isEnabled = createBoolean("isEnabled");
 
     public final StringPath password = createString("password");
 
@@ -42,7 +46,7 @@ public class QUser extends EntityPathBase<User> {
         super(path.getType(), path.getMetadata());
     }
 
-    public QUser(PathMetadata<?> metadata) {
+    public QUser(PathMetadata metadata) {
         super(User.class, metadata);
     }
 

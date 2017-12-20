@@ -32,13 +32,13 @@ configurations {
 
 dependencies {
 	def querydslVersion = "4.1.4"
-    def queryDSL = '3.2.4'
  
-    compile group: 'com.mysema.querydsl', name: 'querydsl-core', version:"$queryDSL"
-    compile group: 'com.mysema.querydsl', name: 'querydsl-jpa', version:"$queryDSL"
-    compile group: 'com.mysema.querydsl', name: 'querydsl-sql', version:"$queryDSL"
+ 	compile ("com.querydsl:querydsl-core:$querydslVersion")
+    compile ("com.querydsl:querydsl-apt:$querydslVersion")
+    compile ("com.querydsl:querydsl-jpa:$querydslVersion")
 
-	compile "com.mysema.querydsl:querydsl-apt:$queryDSL"
+ //   compile group: 'com.querydsl', name: 'querydsl-sql', version:"$queryDSL"
+
 	compile group: 'org.hibernate.javax.persistence', name: 'hibernate-jpa-2.1-api', version: '1.0.0.Final'
 
 	compile('org.springframework.boot:spring-boot-starter-data-jpa')
@@ -65,7 +65,7 @@ task generateQueryDSL(type: JavaCompile, group: 'build') {
      classpath = configurations.compile
      options.compilerArgs = [
           "-proc:only",
-          "-processor", "com.mysema.query.apt.jpa.JPAAnnotationProcessor"
+          "-processor", "com.querydsl.apt.jpa.JPAAnnotationProcessor"
      ]
      destinationDir = sourceSets.generated.java.srcDirs.iterator().next()
 }

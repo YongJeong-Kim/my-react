@@ -1,4 +1,4 @@
-import '../../typeface-roboto/index.css';
+import '../../../typeface-roboto/index.css';
 
 import React from 'react';
 import ReactDOM from 'react-dom';

@@ -3,8 +3,8 @@ var webpack = require('webpack');
 module.exports = {
  //   entry: './src/index.js',
 	entry: {
-		index: './src/main/index.js',
-		login: './src/main/components/login/index.js',
+		index: './src/main/js/index.js',
+		login: './src/main/js/components/login/index.js',
 	},
 
     output: {
@@ -20,6 +20,7 @@ module.exports = {
         inline: true,
         host: '0.0.0.0',
         port: 3000,
+//				historyApiFallback: true,
    /*     contentBase: __dirname + '/src/main/resources/static/built/',*/
         publicPath: '/built/',
         proxy: {
@@ -35,10 +36,15 @@ module.exports = {
                     cacheDirectory: true,
                     presets: ['es2015', 'react']
                 })],*/
-                loaders: [
+                /*loaders: [
                     'react-hot-loader',
                     'babel-loader?presets[]=react,presets[]=es2015,presets[]=stage-0'
-                  ],
+                  ], */
+								loader: 'babel-loader',
+        				query: {
+          				presets: ['react', 'es2015', 'stage-0'],
+          				plugins: ['transform-class-properties', 'transform-decorators-legacy'],
+        				},
                 exclude: /node_modules/,
 
             },

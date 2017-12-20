@@ -1,21 +1,21 @@
 package com.kyj.composite;
 
-import static com.mysema.query.types.PathMetadataFactory.*;
+import static com.querydsl.core.types.PathMetadataFactory.*;
 
-import com.mysema.query.types.path.*;
+import com.querydsl.core.types.dsl.*;
 
-import com.mysema.query.types.PathMetadata;
+import com.querydsl.core.types.PathMetadata;
 import javax.annotation.Generated;
-import com.mysema.query.types.Path;
+import com.querydsl.core.types.Path;
 
 
 /**
  * QCompositeUserRole is a Querydsl query type for CompositeUserRole
  */
-@Generated("com.mysema.query.codegen.EmbeddableSerializer")
+@Generated("com.querydsl.codegen.EmbeddableSerializer")
 public class QCompositeUserRole extends BeanPath<CompositeUserRole> {
 
-    private static final long serialVersionUID = -2006565854;
+    private static final long serialVersionUID = -2006565854L;
 
     public static final QCompositeUserRole compositeUserRole = new QCompositeUserRole("compositeUserRole");
 
@@ -31,7 +31,7 @@ public class QCompositeUserRole extends BeanPath<CompositeUserRole> {
         super(path.getType(), path.getMetadata());
     }
 
-    public QCompositeUserRole(PathMetadata<?> metadata) {
+    public QCompositeUserRole(PathMetadata metadata) {
         super(CompositeUserRole.class, metadata);
     }
 
