@@ -72,8 +72,12 @@ public class HomeController {
 	
 	@GetMapping("/error/403")
 	public String accessDenied(Principal principal) {
-		System.out.println(principal);
-		return "/error/403";
+		if (principal == null) {
+    		return "redirect:/login";
+    	}
+    	else {
+    		return "/error/403"; 
+    	}
 	}
 	
 	// 이 컨트롤러가 없고 config/ErrorPageConfig.java가 없어도 404에러일 경우 뷰 error/404.html 가 자동 매핑됨 

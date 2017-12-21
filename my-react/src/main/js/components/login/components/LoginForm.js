@@ -31,13 +31,23 @@ const styles = theme => ({
   formControl: {
     margin: theme.spacing.unit,
   },
-  avatar: {
-   margin: 10,
+  inputLabelFocused: {
+    color: blue[500],
   },
-  pinkAvatar: {
+  inputInkbar: {
+    '&:after': {
+      backgroundColor: blue[500],
+    },
+  },
+  lock: {
+   margin: 10,
+   color: '#fff',
+   backgroundColor: blue[500],
+  },
+  avatar: {
     margin: 10,
     color: '#fff',
-    backgroundColor: pink[500],
+    backgroundColor: blue[500],
   },
   row: {
     display: 'flex',
@@ -45,7 +55,7 @@ const styles = theme => ({
   },
   button: {
     margin: theme.spacing.unit,
-    color: 'white',
+    color: '#fff',
   },
   label: {
     textTransform: 'capitalize',
@@ -95,16 +105,19 @@ class LoginForm extends React.Component {
     return (
       <form action="/login" method="post" className={classes.container} onSubmit={this.handleSubmit}>
         <div className={classes.row}>
-          <Avatar className={classes.pinkAvatar}>
+          <Avatar className={classes.avatar}>
             <PersonIcon />
           </Avatar>
           <FormControl className={classes.formControl}>
-            <InputLabel htmlFor="name-simple">Username</InputLabel>
-            <Input id="name-simple" name="username" value={this.state.username} onChange={this.handleChangeName} />
+            <InputLabel
+              FormControlClasses={{
+                focused: classes.inputLabelFocused }}
+              htmlFor="name-simple">Username</InputLabel>
+            <Input classes={{inkbar: classes.inputInkbar}} id="name-simple" name="username" value={this.state.username} onChange={this.handleChangeName} />
           </FormControl>
         </div>
         <div className={classes.row}>
-          <Avatar className={classes.avatar}>
+          <Avatar className={classes.lock}>
             <LockIcon />
           </Avatar>
           <FormControl className={classes.formControl}>
@@ -120,18 +133,21 @@ class LoginForm extends React.Component {
           </Button>
         </div>  */}
 
+
         <div className={classes.row}>
           <input
                  className={classes.input}
                  id="raised-button-file"
                  multiple
-                 type="submit"  />
-          <label htmlFor="raised-button-file">
+                 type="submit" />
+          <label htmlFor="raised-button-file" >
             <Button type="submit" raised component="span" style={styleButton} className={classes.button}>
               Login
             </Button>
           </label>
         </div>
+
+
   {/*      <input type="hidden" name={metaName} value={metaValue} /> */}
       </form>
 

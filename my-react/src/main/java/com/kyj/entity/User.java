@@ -12,6 +12,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 
+import org.springframework.data.annotation.Transient;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Getter;
@@ -22,8 +24,11 @@ import lombok.Setter;
 public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
+	@JsonIgnore
 	private Long id;
 	private String username;
+	
+	@JsonIgnore
 	private String password;
 	private String email;
 	@Column(name="isEnabled")
@@ -35,6 +40,13 @@ public class User {
 	@Column(name="isCredentialsNonExpired")
 	private Boolean isCredentialsNonExpired;
 	
+	@ManyToMany(fetch=FetchType.LAZY)
+	@JoinTable(name = "user_roles",
+		joinColumns = @JoinColumn(name="user_id"),
+		inverseJoinColumns = @JoinColumn(name="roles_id"))
+	@JsonIgnore
+	private List<Roles> roles;
+
 	public User() {}
 	
 	public User(User user) {
@@ -47,11 +59,4 @@ public class User {
 		this.isAccountNonLocked = user.getIsAccountNonLocked();
 		this.isCredentialsNonExpired = user.getIsCredentialsNonExpired();
 	}
-	
-	@ManyToMany(fetch=FetchType.LAZY)
-	@JoinTable(name = "user_roles",
-		joinColumns = @JoinColumn(name="user_id"),
-		inverseJoinColumns = @JoinColumn(name="roles_id"))
-	@JsonIgnore
-	private List<Roles> roles;
 }

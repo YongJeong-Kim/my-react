@@ -1,9 +1,8 @@
 export default function reducer(state={
-    user: {
-      id: null,
-      name: null,
-      email: null,
-    },
+    user: {},
+    roles: [],
+    loggedIn: false,
+    fetching: false,
   }, action) {
 
     switch (action.type) {
@@ -29,6 +28,15 @@ export default function reducer(state={
         return {
           ...state,
           user: {...state.user, age: action.payload},
+        }
+      }
+      case "LOGGED_IN_USER": {
+        return {...state, loggedIn: true,}
+      }
+      case "LOGIN_USER_INFO": {
+        return {
+          ...state,
+          user: action.payload.user, roles: action.payload.roles,
         }
       }
     }

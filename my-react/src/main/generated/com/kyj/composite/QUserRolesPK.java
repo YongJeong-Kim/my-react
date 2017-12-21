@@ -1,21 +1,21 @@
 package com.kyj.composite;
 
-import static com.mysema.query.types.PathMetadataFactory.*;
+import static com.querydsl.core.types.PathMetadataFactory.*;
 
-import com.mysema.query.types.path.*;
+import com.querydsl.core.types.dsl.*;
 
-import com.mysema.query.types.PathMetadata;
+import com.querydsl.core.types.PathMetadata;
 import javax.annotation.Generated;
-import com.mysema.query.types.Path;
+import com.querydsl.core.types.Path;
 
 
 /**
  * QUserRolesPK is a Querydsl query type for UserRolesPK
  */
-@Generated("com.mysema.query.codegen.EmbeddableSerializer")
+@Generated("com.querydsl.codegen.EmbeddableSerializer")
 public class QUserRolesPK extends BeanPath<UserRolesPK> {
 
-    private static final long serialVersionUID = -485600185;
+    private static final long serialVersionUID = -485600185L;
 
     public static final QUserRolesPK userRolesPK = new QUserRolesPK("userRolesPK");
 
@@ -31,7 +31,7 @@ public class QUserRolesPK extends BeanPath<UserRolesPK> {
         super(path.getType(), path.getMetadata());
     }
 
-    public QUserRolesPK(PathMetadata<?> metadata) {
+    public QUserRolesPK(PathMetadata metadata) {
         super(UserRolesPK.class, metadata);
     }
 

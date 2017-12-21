@@ -6,7 +6,7 @@ import Grid from 'material-ui/Grid';
 
 import Button from 'material-ui/Button';
 import Palette from './FlatBtn';
-import IndexAppBar from './appbar/AppBar';
+import IndexAppBar from './appbar/IndexAppBar';
 
 import FlatButtons from './FlatBtn2';
 import FloatingActionButtons from './ActionBtn';
@@ -22,6 +22,10 @@ import NestedList from './Lists';
 
 import {Router, Route, Link, browserHistory, IndexRoute } from 'react-router';
 
+import { connect } from "react-redux"
+
+import { fetchUser, setUserName, getLoginUserInfo } from "../actions/loginActions"
+
 
 let classes;
 const styles = theme => ({
@@ -35,6 +39,13 @@ const styles = theme => ({
     color: theme.palette.text.secondary,
   },
 });
+
+@connect((store) => {
+  return {
+    user: store.login.user,
+    roles: store.login.roles,
+  }
+})
 class App extends React.Component {
 
 	constructor(props) {
@@ -42,8 +53,13 @@ class App extends React.Component {
 		classes = props.classes;
 	}
 
+  componentWillMount() {
+    this.props.dispatch(getLoginUserInfo());
+  }
 
 	render() {
+    console.log('login success');
+    console.log(this.props.user);
 		return (
 			<div className={classes.root} >
 				<Grid container spacing={24}>
@@ -63,8 +79,6 @@ class App extends React.Component {
 						<FloatingActionButtons />
 						<SimpleDialogDemo />
 						<LongMenu />
-						<h1>Hello ss</h1>
-						<Button> hi </Button>
 					</Grid>
 				</Grid>
 			</div>

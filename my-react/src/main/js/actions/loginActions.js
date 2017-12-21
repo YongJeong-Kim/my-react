@@ -1,3 +1,5 @@
+import axios from "axios";
+
 export function fetchUser() {
   return {
     type: "FETCH_USER_FULFILLED",
@@ -19,5 +21,20 @@ export function setUserAge(age) {
   return {
     type: 'SET_USER_AGE',
     payload: age,
+  }
+}
+
+export function getLoginUserInfo() {
+  return function(dispatch) {
+    dispatch({type: "FETCH_USER"});
+
+    axios.get("/login/user/info")
+      .then((response) => {
+        console.log(response);
+        dispatch({type: "LOGIN_USER_INFO", payload: response.data});
+      })
+      .catch((err) => {
+        console.log('error');
+      })
   }
 }
