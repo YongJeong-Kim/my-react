@@ -19,7 +19,7 @@ public class RoleRepositoryImpl implements RoleRepositoryCustom {
 		JPAQueryFactory queryFactory = new JPAQueryFactory(entityManager);
 		QUser user = QUser.user;
 		QRoles roles = QRoles.roles;
-		
+		System.out.println("test test");
 		return queryFactory.selectFrom(user)
 					.innerJoin(user.roles, roles).on(user.username.eq(username))
 					.select(roles.role).fetch();
