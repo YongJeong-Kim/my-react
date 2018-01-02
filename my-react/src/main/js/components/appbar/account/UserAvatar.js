@@ -24,7 +24,6 @@ import Divider from 'material-ui/Divider';
 import AppBar from 'material-ui/AppBar';
 import Toolbar from 'material-ui/Toolbar';
 import Typography from 'material-ui/Typography';
-import Slide from 'material-ui/transitions/Slide';
 import Grid from 'material-ui/Grid';
 
 import { Manager, Target, Popper } from 'react-popper';
@@ -40,6 +39,7 @@ import StarBorder from 'material-ui-icons/StarBorder';
 
 import ImageAvatars from './ImageAvatars'
 import { NoMarginImageAvatars } from './ImageAvatars'
+import { ChatModalWrapped, ProfileModalWrapped } from './UserAvatarModals'
 
 
 const styles = theme => ({
@@ -75,9 +75,7 @@ const styles = theme => ({
   },
 });
 
-function Transition(props) {
-  return <Slide direction="up" {...props} />;
-}
+
 
 @connect((store) => {
   return {
@@ -87,6 +85,7 @@ function Transition(props) {
 })
 class UserAvatar extends Component {
   state = {
+    receiveUserProps: false,
     anchorEl: null,
     profileOpen: false,
     profileName: '',
@@ -94,6 +93,11 @@ class UserAvatar extends Component {
     chatOpen: false,
   };
 
+  componentWillReceiveProps() {
+    this.setState({
+      receiveUserProps: true,
+    });
+  }
   handleMenu = event => {
     this.setState({ anchorEl: event.currentTarget });
   }
@@ -101,21 +105,20 @@ class UserAvatar extends Component {
     this.setState({ anchorEl: null });
   }
   handleRequestProfile = () => {
-    console.log(this.props);
     this.setState({
       profileOpen: true, anchorEl: null,
       profileName: this.props.user.username,
       profileEmail: this.props.user.email,
     });
   }
-  handleRequestProfileClose = () => {
-    this.setState({ profileOpen: false });
+  handleRequestProfileClose = (profileOpen) => {
+    this.setState({ profileOpen: profileOpen });
   }
   handleRequestChat = () => {
     this.setState({ chatOpen: true, anchorEl: null, });
   }
-  handleRequestChatClose = () => {
-    this.setState({ chatOpen: false });
+  handleRequestChatClose = (chatOpen) => {
+    this.setState({ chatOpen: chatOpen });
   }
   handleLogout = () => {
     this.setState({ anchorEl: null });
@@ -129,12 +132,8 @@ class UserAvatar extends Component {
       })
   }
 
-  onChangeProfileEmail = (e) => {
-    this.setState({ profileEmail: e.target.value });
-  }
-
   render() {
-    const { anchorEl, profileOpen, profileEmail } = this.state;
+    const { anchorEl, profileOpen, profileEmail, receiveUserProps } = this.state;
     const dropMenuOpen = Boolean(anchorEl);
     const { classes } = this.props;
 
@@ -148,7 +147,7 @@ class UserAvatar extends Component {
               onClick={this.handleMenu}
               color="contrast"
             >
-              <ImageAvatars />
+              {receiveUserProps && <ImageAvatars />}
             </IconButton>
           </Target>
           <Popper
@@ -161,108 +160,15 @@ class UserAvatar extends Component {
                 <Paper>
                   <MenuList role="menu">
                     <MenuItem onClick={this.handleRequestProfile}>Profile
-                      <Dialog open={profileOpen} ignoreBackdropClick >
-                        <DialogTitle>Profile</DialogTitle>
-
-                        <DialogContent>
-                          <div className={classes.container}>
-                            <Avatar alt="Remy Sharp" src="/images/ggobu2.png" className={classes.bigAvatar} />
-                            <FormControl className={classes.formControl} >
-                              <InputLabel htmlFor="name-disabled">Name</InputLabel>
-                              <Input id="name-disabled" value={this.state.profileName} />
-                              {/*<FormHelperText>Disabled</FormHelperText> */}
-                            </FormControl>
-                            <FormControl className={classes.formControl} >
-                              <InputLabel htmlFor="name-disabled">Email</InputLabel>
-                              <Input id="name-disabled" value={this.state.profileEmail} onChange={this.onChangeProfileEmail}/>
-                              {/*<FormHelperText>Disabled</FormHelperText> */}
-                            </FormControl>
-                          </div>
-                          <DialogContentText>
-                            To subscribe to this website, please enter your email address here. We will send
-                            updates occationally.
-                          </DialogContentText>
-                          <TextField
-                            autoFocus
-                            margin="dense"
-                            id="name"
-                            label="Email Address"
-                            type="email"
-                            fullWidth
-                          />
-                        </DialogContent>
-                        <DialogActions>
-                          <Button onClick={this.handleRequestProfileClose} className={classes.button} >
-                            Cancel
-                          </Button>
-                          <Button onClick={this.handleRequestProfileClose} className={classes.button} >
-                            Subscribe
-                          </Button>
-                        </DialogActions>
-                      </Dialog>
+                      <ProfileModalWrapped handleRequestProfileClose={this.handleRequestProfileClose}
+                                           profileOpen={this.state.profileOpen} />
                     </MenuItem>
                     <MenuItem onClick={this.handleRequestClose}>My account</MenuItem>
                     <MenuItem onClick={this.handleRequestChat}>Chat
-                      <div>
-                        <Dialog
-                          fullScreen
-                          open={this.state.chatOpen}
-                          onRequestClose={this.handleRequestChatClose}
-                          transition={Transition}
-                        >
-                          <AppBar className={classes.appBar}>
-                            <Toolbar>
-                              <IconButton color="contrast" onClick={this.handleRequestChatClose} aria-label="Close">
-                                <CloseIcon />
-                              </IconButton>
-                              <Typography type="title" color="inherit" className={classes.flex}>
-                                Sound
-                              </Typography>
-                              <Button color="contrast" onClick={this.handleRequestClose}>
-                                save
-                              </Button>
-                            </Toolbar>
-                          </AppBar>
-
-                          <Grid container spacing={24}>
-                            <Grid item sm={3}>
-                              <List>
-                                <ListItem button>
-                                  <ListItemIcon>
-                                    <StarBorder />
-                                  </ListItemIcon>
-                                  <ListItemText primary="Phone ringtone" secondary="Titania" />
-                                </ListItem>
-                                <Divider />
-                                <ListItem button>
-                                  <ListItemIcon>
-                                    <ImageAvatars noMargin="true" />
-                                  </ListItemIcon>
-                                  <ListItemText primary="Default notification ringtone" secondary="Tethys" />
-                                </ListItem>
-                              </List>
-                            </Grid>
-
-                            <Grid item sm>
-                              <List>
-                                <ListItem button>
-                                  <ListItemIcon>
-                                    <StarBorder />
-                                  </ListItemIcon>
-                                  <ListItemText primary="Phone ringtone" secondary="Titania" />
-                                </ListItem>
-                                <Divider />
-                                <ListItem button>
-                                  <ListItemIcon>
-                                    <ImageAvatars noMargin="true" />
-                                  </ListItemIcon>
-                                  <ListItemText primary="Default notification ringtone" secondary="Tethys" />
-                                </ListItem>
-                              </List>
-                            </Grid>
-                          </Grid>
-                        </Dialog>
-                      </div>
+                      {receiveUserProps && 
+                        <ChatModalWrapped handleRequestChatClose={this.handleRequestChatClose}
+                                          chatOpen={this.state.chatOpen} />
+                      }
                     </MenuItem>
                     <MenuItem onClick={this.handleLogout}>Logout</MenuItem>
                   </MenuList>

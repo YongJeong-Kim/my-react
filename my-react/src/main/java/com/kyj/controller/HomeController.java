@@ -1,14 +1,21 @@
 package com.kyj.controller;
 
+import java.io.IOException;
+import java.net.URISyntaxException;
 import java.security.Principal;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.kyj.component.EncodeDecode;
+import com.kyj.service.UserService;
 
 @Controller
 public class HomeController {
@@ -93,5 +100,25 @@ public class HomeController {
 	public String internalServerError() {
 		return "/error/500";
 	}*/
+	
+	@Autowired
+	private EncodeDecode encodeDecode;
+	
+	@GetMapping("/test")
+	public ModelAndView aa(ModelAndView mav) throws IOException, URISyntaxException {
+		String imagePath = "C:\\Users\\yjk\\Desktop\\yjk\\workspace\\git\\my-react\\my-react\\src\\main\\resources\\static\\images\\9k=.jpg";
+		String base64Image = encodeDecode.encodeImage(imagePath);
+		
+		// decode : encode String, output path
+		encodeDecode.decodeImage(base64Image, "C:\\Users\\yjk\\Desktop\\aabbcc.png");
+
+//		System.out.println(base64Image);
+		mav.addObject("base64Image", base64Image);
+		mav.setViewName("test");
+		
+	//	encodeDecode.encodeString();
+		
+		return mav;
+	}
 	
 }

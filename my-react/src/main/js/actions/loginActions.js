@@ -30,7 +30,6 @@ export function getLoginUserInfo() {
 
     axios.get("/login/user/info")
       .then((response) => {
-        console.log(response);
         dispatch({type: "LOGIN_USER_INFO", payload: response.data});
       })
       .catch((err) => {

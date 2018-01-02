@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from "react-redux"
 import classNames from 'classnames';
 import { withStyles } from 'material-ui/styles';
 import Avatar from 'material-ui/Avatar';
@@ -18,9 +19,38 @@ const styles = {
   },
 };
 
+@connect((store) => {
+  return {
+    user: store.login.user,
+    role: store.login.role,
+  }
+})
+class ImageAvatars extends Component {
+  render() {
+    const { classes, noMargin } = this.props;
+    const userImage = this.props.user.userImage;
+    let Avar = null;
+    if (noMargin === "true") {
+      Avar = <div className={classes.row}>
+              <Avatar alt="Remy Sharp" src={"data:image/png;base64," + userImage.avatarEncodeImage} />
+             </div>
+    } else {
+      Avar = <div className={classes.row}>
+              <Avatar alt="Remy Sharp" src={"data:image/png;base64," + userImage.avatarEncodeImage} className={classes.avatar} />
+             </div>
+    }
+
+    return (
+      <div>
+        {Avar}
+      </div>
+    )
+  }
+}
+{/*
 function ImageAvatars(props) {
   const { classes, noMargin } = props;
-
+  console.log(props.user);
   let Avar = null;
   if (noMargin === "true") {
     Avar = <div className={classes.row}>
@@ -38,7 +68,7 @@ function ImageAvatars(props) {
     </div>
   );
 }
-
+*/}
 ImageAvatars.propTypes = {
   classes: PropTypes.object.isRequired,
 };

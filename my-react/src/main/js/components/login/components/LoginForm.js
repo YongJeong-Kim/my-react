@@ -7,6 +7,8 @@ import Input, { InputLabel } from 'material-ui/Input';
 import { FormControl, FormHelperText } from 'material-ui/Form';
 import Button from 'material-ui/Button';
 import Avatar from 'material-ui/Avatar';
+import Paper from 'material-ui/Paper';
+import Typography from 'material-ui/Typography';
 
 // material-ui icons
 import FolderIcon from 'material-ui-icons/Folder';
@@ -20,8 +22,6 @@ import pink from 'material-ui/colors/pink';
 import blue from 'material-ui/colors/blue';
 import green from 'material-ui/colors/green';
 import { withStyles } from 'material-ui/styles';
-
-import axios from 'axios';
 
 const styles = theme => ({
   container: {
@@ -63,11 +63,22 @@ const styles = theme => ({
   input: {
     display: 'none',
   },
+  root: theme.mixins.gutters({
+    paddingTop: 16,
+    paddingBottom: 16,
+    marginTop: theme.spacing.unit * 3,
+    maxWidth: '900px',
+    margin: '0 auto',
+  }),
+  col: {
+    display: 'flex',
+  },
 });
 
 const styleButton = {
   background: blue[500],
 };
+
 
 class LoginForm extends React.Component {
   state = {
@@ -103,54 +114,57 @@ class LoginForm extends React.Component {
     console.log(metaName); */}
 
     return (
-      <form action="/login" method="post" className={classes.container} onSubmit={this.handleSubmit}>
-        <div className={classes.row}>
-          <Avatar className={classes.avatar}>
-            <PersonIcon />
-          </Avatar>
-          <FormControl className={classes.formControl}>
-            <InputLabel
-              FormControlClasses={{
-                focused: classes.inputLabelFocused }}
-              htmlFor="name-simple">Username</InputLabel>
-            <Input classes={{inkbar: classes.inputInkbar}} id="name-simple" name="username" value={this.state.username} onChange={this.handleChangeName} />
-          </FormControl>
-        </div>
-        <div className={classes.row}>
-          <Avatar className={classes.lock}>
-            <LockIcon />
-          </Avatar>
-          <FormControl className={classes.formControl}>
-            <InputLabel htmlFor="name-helper">Password</InputLabel>
-            <Input id="name-helper" type="password" name="password" value={this.state.password} onChange={this.handleChangePassword} />
-            <FormHelperText>Some important helper text</FormHelperText>
-          </FormControl>
-        </div>
+      <div className={classes.col}>
+        <Paper className={classes.root} elevation={4} >
+          <form action="/login" method="post" className={classes.container} onSubmit={this.handleSubmit}>
+            <div className={classes.row}>
+              <Avatar className={classes.avatar}>
+                <PersonIcon />
+              </Avatar>
+              <FormControl className={classes.formControl}>
+                <InputLabel
+                  FormControlClasses={{
+                    focused: classes.inputLabelFocused }}
+                  htmlFor="name-simple">Username</InputLabel>
+                <Input classes={{inkbar: classes.inputInkbar}} id="name-simple" name="username" value={this.state.username} onChange={this.handleChangeName} />
+              </FormControl>
+            </div>
+            <div className={classes.row}>
+              <Avatar className={classes.lock}>
+                <LockIcon />
+              </Avatar>
+              <FormControl className={classes.formControl}>
+                <InputLabel htmlFor="name-helper">Password</InputLabel>
+                <Input id="name-helper" type="password" name="password" value={this.state.password} onChange={this.handleChangePassword} />
+                <FormHelperText>Some important helper text</FormHelperText>
+              </FormControl>
+            </div>
 
-  {/*      <div className={classes.row}>
-          <Button type="submit" style={styleButton} className={classes.button} >
-            {'Login'}
-          </Button>
-        </div>  */}
-
-
-        <div className={classes.row}>
-          <input
-                 className={classes.input}
-                 id="raised-button-file"
-                 multiple
-                 type="submit" />
-          <label htmlFor="raised-button-file" >
-            <Button type="submit" raised component="span" style={styleButton} className={classes.button}>
-              Login
-            </Button>
-          </label>
-        </div>
+      {/*      <div className={classes.row}>
+              <Button type="submit" style={styleButton} className={classes.button} >
+                {'Login'}
+              </Button>
+            </div>  */}
 
 
-  {/*      <input type="hidden" name={metaName} value={metaValue} /> */}
-      </form>
+            <div className={classes.row}>
+              <input
+                     className={classes.input}
+                     id="raised-button-file"
+                     multiple
+                     type="submit" />
+              <label htmlFor="raised-button-file" >
+                <Button type="submit" raised component="span" style={styleButton} className={classes.button}>
+                  Login
+                </Button>
+              </label>
+            </div>
 
+
+      {/*      <input type="hidden" name={metaName} value={metaValue} /> */}
+          </form>
+        </Paper>
+      </div>
     );
   }
 }

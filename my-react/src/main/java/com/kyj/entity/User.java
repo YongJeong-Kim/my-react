@@ -2,7 +2,7 @@ package com.kyj.entity;
 
 import java.util.List;
 
-import javax.persistence.Column;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -10,9 +10,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
+import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
-
-import org.springframework.data.annotation.Transient;
+import javax.persistence.OneToOne;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -31,13 +31,9 @@ public class User {
 	@JsonIgnore
 	private String password;
 	private String email;
-	@Column(name="isEnabled")
 	private Boolean isEnabled;
-	@Column(name="isAccountNonExpired")
 	private Boolean isAccountNonExpired;
-	@Column(name="isAccountNonLocked")
 	private Boolean isAccountNonLocked;
-	@Column(name="isCredentialsNonExpired")
 	private Boolean isCredentialsNonExpired;
 	
 	@ManyToMany(fetch=FetchType.LAZY)
@@ -46,6 +42,9 @@ public class User {
 		inverseJoinColumns = @JoinColumn(name="roles_id"))
 	@JsonIgnore
 	private List<Roles> roles;
+	
+	@OneToOne(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private UserImage userImage;
 
 	public User() {}
 	

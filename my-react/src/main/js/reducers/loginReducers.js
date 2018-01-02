@@ -1,6 +1,7 @@
 export default function reducer(state={
     user: {},
     roles: [],
+    avatar: {},
     loggedIn: false,
     fetching: false,
   }, action) {
@@ -37,6 +38,7 @@ export default function reducer(state={
         return {
           ...state,
           user: action.payload.user, roles: action.payload.roles,
+          avatar: action.payload.avatar,
         }
       }
     }

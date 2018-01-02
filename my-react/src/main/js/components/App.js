@@ -1,24 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withStyles } from 'material-ui/styles';
-
-import Grid from 'material-ui/Grid';
-
-import Button from 'material-ui/Button';
-
-import IndexAppBar from './appbar/IndexAppBar';
-
-import SimpleMediaCard from './SimpleMediaCard';
-
-
 import {Router, Route, Link, browserHistory, IndexRoute } from 'react-router';
-
 import { connect } from "react-redux"
 
+// material-ui components
+import Grid from 'material-ui/Grid';
+import Button from 'material-ui/Button';
+import IndexAppBar from './appbar/IndexAppBar';
+
+//material-ui colors and style
+import { withStyles } from 'material-ui/styles';
+
 import { fetchUser, setUserName, getLoginUserInfo } from "../actions/loginActions"
+import SimpleMediaCard from './SimpleMediaCard';
 
-
-let classes;
 const styles = theme => ({
   root: {
     flexGrow: 1,
@@ -30,22 +25,26 @@ const styles = theme => ({
   return {
     user: store.login.user,
     roles: store.login.roles,
+    avatar: store.login.avatar,
   }
 })
 class App extends React.Component {
-
-	constructor(props) {
-		super(props);
-		classes = props.classes;
-	}
+  state = {
+    receiveProps: false,
+  }
 
   componentWillMount() {
     this.props.dispatch(getLoginUserInfo());
   }
 
+  componentWillReceiveProps() {
+    this.setState({
+      receiveProps: true,
+    });
+  }
+
 	render() {
-    console.log('login success');
-    console.log(this.props.user);
+    const classes = this.props.classes;
 		return (
 			<div className={classes.root} >
 				<Grid container spacing={24}>
@@ -54,10 +53,12 @@ class App extends React.Component {
 					</Grid>
 				</Grid>
 				<Grid container spacing={24}>
-					<Grid item md={2}>
-						<SimpleMediaCard />
+					<Grid item >
+            {this.state.receiveProps &&
+              <SimpleMediaCard />
+            }
 					</Grid>
-					<Grid item xs >
+					<Grid item xs={8} >
 						<div>sdfsdfdf</div>
 					</Grid>
 				</Grid>
