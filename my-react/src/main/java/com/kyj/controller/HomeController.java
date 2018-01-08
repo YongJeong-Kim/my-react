@@ -49,17 +49,6 @@ public class HomeController {
 	public String login() {
 		return "login";
 	}
-
-	@GetMapping("/admin")
-    public String admin() {
-        return "/admin";
-    }
-
-    @GetMapping("/user")
-    public String user() {
-    	System.out.println();
-        return "/user";
-    }
 	
 //	@PreAuthorize("hasRole('USER') or hasRole('ADMIN')") success
 //	@PreAuthorize("hasAuthority('USER') or hasAuthority('ADMIN')") success
@@ -93,5 +82,4 @@ public class HomeController {
 	public String internalServerError() {
 		return "/error/500";
 	}*/
-	
 }

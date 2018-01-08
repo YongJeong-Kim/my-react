@@ -36,11 +36,9 @@ dependencies {
  	compile ("com.querydsl:querydsl-core:$querydslVersion")
     compile ("com.querydsl:querydsl-apt:$querydslVersion")
     compile ("com.querydsl:querydsl-jpa:$querydslVersion")
+	compile ("com.querydsl:querydsl-sql:$querydslVersion")
 
- //   compile group: 'com.querydsl', name: 'querydsl-sql', version:"$queryDSL"
-
-	compile group: 'org.hibernate.javax.persistence', name: 'hibernate-jpa-2.1-api', version: '1.0.0.Final'
-
+	compile group: 'commons-io', name: 'commons-io', version: '2.6'
 	compile('org.springframework.boot:spring-boot-starter-data-jpa')
 	compile('org.springframework.boot:spring-boot-starter-thymeleaf')
 	compile('org.springframework.boot:spring-boot-starter-security')

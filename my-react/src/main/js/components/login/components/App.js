@@ -1,13 +1,12 @@
 import React from 'react';
-import PaperSheet from './PaperSheet';
 
+// material-ui components
+import LoginForm from './LoginForm';
 
 export default class App extends React.Component {
-
-
   render() {
     return(
-      <PaperSheet />
+      <LoginForm />
     );
   }
 }

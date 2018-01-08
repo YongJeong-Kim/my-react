@@ -17,9 +17,7 @@ import { blue } from 'material-ui/colors';
 import { withStyles } from 'material-ui/styles';
 
 import SimpleBadge from '../Badges';
-
 import UserAvatar from './account/UserAvatar'
-
 
 const styles = {
   root: {
@@ -41,7 +39,7 @@ const styles = {
     marginRight: 20,
   },
 };
-let classes ;
+
 class IndexAppBar extends React.Component {
 
 	render() {

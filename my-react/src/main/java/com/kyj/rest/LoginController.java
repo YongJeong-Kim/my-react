@@ -72,10 +72,10 @@ public class LoginController {
 
 	}
 	
-	/*@GetMapping("/qqq")
-	public String qqq() {
-		return "qqq";
-	}*/
+	@GetMapping("/qqq")
+	public Map<String, Object> qqq() {
+		return loginService.getLoginUserInfo("aaa");
+	}
 	
 /*	@GetMapping("qqq")
 	public List<String> postqqq() {

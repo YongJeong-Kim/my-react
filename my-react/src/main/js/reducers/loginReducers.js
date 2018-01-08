@@ -1,6 +1,7 @@
 export default function reducer(state={
     user: {},
     roles: [],
+    avatar: {},
     loggedIn: false,
     fetching: false,
   }, action) {
@@ -36,7 +37,16 @@ export default function reducer(state={
       case "LOGIN_USER_INFO": {
         return {
           ...state,
-          user: action.payload.user, roles: action.payload.roles,
+          user: action.payload.user,
+        }
+      }
+      case "SET_USER_PROFILE": {
+        return {
+          ...state,
+          user: {
+            ...state.user,
+            avatarEncodeImage: action.payload.imagePreviewUrl,
+          }
         }
       }
     }

@@ -8,6 +8,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kyj.dto.UserDTO;
 import com.kyj.entity.User;
 import com.kyj.repository.RoleRepository;
 import com.kyj.repository.UserRepository;
@@ -30,8 +31,8 @@ public class LoginService {
 		
 		user.ifPresent(u -> {
 			List<String> roles = getLoginUserRoles(username);
-			map.put("user", u);
-			map.put("roles", roles);
+			UserDTO userDTO = new UserDTO(u, roles);
+			map.put("user", userDTO);
 		});
 		
 		return map;

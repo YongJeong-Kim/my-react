@@ -30,11 +30,37 @@ export function getLoginUserInfo() {
 
     axios.get("/login/user/info")
       .then((response) => {
-        console.log(response);
         dispatch({type: "LOGIN_USER_INFO", payload: response.data});
       })
       .catch((err) => {
         console.log('error');
+      })
+  }
+}
+
+export const setUserProfile = (profile) => {
+  let profileDTO = {
+    ...profile,
+    file: {
+      lastModified: profile.file.lastModified,
+      lastModifiedDate : profile.file.lastModifiedDate,
+      name: profile.file.name,
+      size: profile.file.size,
+      type: profile.file.type,
+      webkitRelativePath: profile.file.webkitRelativePath,
+    }
+  }
+
+  let headers = {
+    accept: 'application/json',
+    'Content-Type': 'application/json'
+  }
+  return (dispatch) => {
+    axios.post("/user/set/profile", profileDTO, headers)
+      .then((response) => {
+        dispatch({type: "SET_USER_PROFILE", payload: profileDTO});
+      }).catch((err) => {
+        console.log('err');
       })
   }
 }

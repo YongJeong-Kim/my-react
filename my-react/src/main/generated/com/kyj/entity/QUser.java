@@ -20,7 +20,15 @@ public class QUser extends EntityPathBase<User> {
 
     public static final QUser user = new QUser("user");
 
+    public final StringPath avatarEncodeImage = createString("avatarEncodeImage");
+
+    public final StringPath avatarExtension = createString("avatarExtension");
+
     public final StringPath email = createString("email");
+
+    public final StringPath encodeImage = createString("encodeImage");
+
+    public final StringPath extension = createString("extension");
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
