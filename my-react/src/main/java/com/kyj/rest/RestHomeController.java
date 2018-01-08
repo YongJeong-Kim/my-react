@@ -7,12 +7,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kyj.composite.UserRolesPK;
-import com.kyj.entity.User;
 import com.kyj.entity.User_Roles;
-import com.kyj.repository.UserImageRepository;
-import com.kyj.repository.UserRepository;
 import com.kyj.repository.UserRolesRepository;
-import com.kyj.service.UserImageService;
 import com.kyj.service.UserService;
 
 @RestController

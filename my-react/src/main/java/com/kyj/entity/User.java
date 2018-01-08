@@ -35,6 +35,13 @@ public class User {
 	private Boolean isAccountNonExpired;
 	private Boolean isAccountNonLocked;
 	private Boolean isCredentialsNonExpired;
+	@Lob
+	private String avatarEncodeImage;
+	private String avatarExtension;
+	
+	@Lob
+	private String encodeImage;
+	private String extension;
 	
 	@ManyToMany(fetch=FetchType.LAZY)
 	@JoinTable(name = "user_roles",
@@ -42,9 +49,6 @@ public class User {
 		inverseJoinColumns = @JoinColumn(name="roles_id"))
 	@JsonIgnore
 	private List<Roles> roles;
-	
-	@OneToOne(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	private UserImage userImage;
 
 	public User() {}
 	

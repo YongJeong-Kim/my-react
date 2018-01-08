@@ -42,21 +42,20 @@ Btns = withStyles(btnStyles)(Btns);
 @connect((store) => {
   return {
     user: store.login.user,
-    roles: store.login.roles,
   }
 })
 class SimpleMediaCard extends React.Component {
 
   render() {
     const classes = this.props.classes;
-    const userImage = this.props.user.userImage;
+    const userImage = this.props.user.encodeImage;
 
     return (
       <div>
         <Card className={classes.card}>
           <CardMedia
             className={classes.media}
-            image={"data:image/png;base64," + userImage.encodeImage}
+            image={userImage}
             title="Contemplative Reptile"
           />
           <CardContent>

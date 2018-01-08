@@ -22,21 +22,21 @@ const styles = {
 @connect((store) => {
   return {
     user: store.login.user,
-    role: store.login.role,
   }
 })
 class ImageAvatars extends Component {
   render() {
     const { classes, noMargin } = this.props;
-    const userImage = this.props.user.userImage;
+    const userImage = this.props.user.avatarEncodeImage;
     let Avar = null;
+
     if (noMargin === "true") {
       Avar = <div className={classes.row}>
-              <Avatar alt="Remy Sharp" src={"data:image/png;base64," + userImage.avatarEncodeImage} />
+              <Avatar alt="Remy Sharp" src={userImage} />
              </div>
     } else {
       Avar = <div className={classes.row}>
-              <Avatar alt="Remy Sharp" src={"data:image/png;base64," + userImage.avatarEncodeImage} className={classes.avatar} />
+              <Avatar alt="Remy Sharp" src={userImage} className={classes.avatar} />
              </div>
     }
 
@@ -47,28 +47,7 @@ class ImageAvatars extends Component {
     )
   }
 }
-{/*
-function ImageAvatars(props) {
-  const { classes, noMargin } = props;
-  console.log(props.user);
-  let Avar = null;
-  if (noMargin === "true") {
-    Avar = <div className={classes.row}>
-            <Avatar alt="Remy Sharp" src="/images/ggobu2.png" />
-           </div>
-  } else {
-    Avar = <div className={classes.row}>
-            <Avatar alt="Remy Sharp" src="/images/ggobu2.png" className={classes.avatar} />
-           </div>
-  }
 
-  return (
-    <div>
-      {Avar}
-    </div>
-  );
-}
-*/}
 ImageAvatars.propTypes = {
   classes: PropTypes.object.isRequired,
 };

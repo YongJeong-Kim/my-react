@@ -15,7 +15,6 @@ import org.springframework.stereotype.Component;
 
 import com.kyj.entity.Roles;
 import com.kyj.entity.User;
-import com.kyj.entity.UserImage;
 import com.kyj.repository.RoleRepository;
 import com.kyj.repository.UserRepository;
 
@@ -52,7 +51,7 @@ public class InitUser {
 			rs.add(r);
 			u.setRoles(rs);
 			
-			UserImage image = new UserImage();
+//			UserImage image = new UserImage();
 			ClassLoader classLoader = getClass().getClassLoader();
 			File file = new File(classLoader.getResource("static/images/9k=.jpg").toURI());
 			
@@ -61,10 +60,10 @@ public class InitUser {
 			String path = FilenameUtils.getFullPath(file.getPath());
 			String base64Image = encodeDecode.encodeImage(path + filename + "." + extension);
 			
-			image.setEncodeImage(base64Image);
+/*			image.setEncodeImage("data:image/" + extension + ";base64," + base64Image);
 			image.setExtension(extension);
 			image.setFilename(filename);
-			image.setPath(path);
+			image.setPath(path);*/
 			
 			File file2 = new File(classLoader.getResource("static/images/ggobu2.png").toURI());
 			
@@ -73,14 +72,18 @@ public class InitUser {
 			String avatarPath = FilenameUtils.getFullPath(file2.getPath());
 			String avatarBase64Image = encodeDecode.encodeImage(avatarPath + avatarFilename + "." + avatarExtension);
 			
-			image.setAvatarEncodeImage(avatarBase64Image);
+			/*image.setAvatarEncodeImage("data:image/" + avatarExtension + ";base64," + avatarBase64Image);
 			image.setAvatarExtension(avatarExtension);
 			image.setAvatarFilename(avatarFilename);
 			image.setAvatarPath(avatarPath);
 			
-			image.setUser(u);
+			image.setUser(u);*/
+			u.setAvatarEncodeImage("data:image/" + avatarExtension + ";base64," + avatarBase64Image);
+			u.setAvatarExtension(avatarExtension);
+			u.setEncodeImage("data:image/" + extension + ";base64," + base64Image);
+			u.setExtension(extension);
 			
-			u.setUserImage(image);
+//			u.setUserImage(image);
 			
 			rolesRepository.save(r);
 			userRepository.save(u);

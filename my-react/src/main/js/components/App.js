@@ -24,8 +24,6 @@ const styles = theme => ({
 @connect((store) => {
   return {
     user: store.login.user,
-    roles: store.login.roles,
-    avatar: store.login.avatar,
   }
 })
 class App extends React.Component {

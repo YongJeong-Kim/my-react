@@ -39,8 +39,8 @@ import StarBorder from 'material-ui-icons/StarBorder';
 
 import ImageAvatars from './ImageAvatars'
 import { NoMarginImageAvatars } from './ImageAvatars'
-import { ChatModalWrapped, ProfileModalWrapped } from './UserAvatarModals'
-
+import ChatModal from './modals/ChatModal'
+import ProfileModal from './modals/ProfileModal'
 
 const styles = theme => ({
   root: {
@@ -80,7 +80,6 @@ const styles = theme => ({
 @connect((store) => {
   return {
     user: store.login.user,
-    roles: store.login.roles,
   }
 })
 class UserAvatar extends Component {
@@ -160,13 +159,13 @@ class UserAvatar extends Component {
                 <Paper>
                   <MenuList role="menu">
                     <MenuItem onClick={this.handleRequestProfile}>Profile
-                      <ProfileModalWrapped handleRequestProfileClose={this.handleRequestProfileClose}
+                      <ProfileModal handleRequestProfileClose={this.handleRequestProfileClose}
                                            profileOpen={this.state.profileOpen} />
                     </MenuItem>
                     <MenuItem onClick={this.handleRequestClose}>My account</MenuItem>
                     <MenuItem onClick={this.handleRequestChat}>Chat
-                      {receiveUserProps && 
-                        <ChatModalWrapped handleRequestChatClose={this.handleRequestChatClose}
+                      {receiveUserProps &&
+                        <ChatModal handleRequestChatClose={this.handleRequestChatClose}
                                           chatOpen={this.state.chatOpen} />
                       }
                     </MenuItem>
