@@ -11,7 +11,7 @@ import IndexAppBar from './appbar/IndexAppBar';
 //material-ui colors and style
 import { withStyles } from 'material-ui/styles';
 
-import { fetchUser, setUserName, getLoginUserInfo } from "../actions/loginActions"
+import { fetchUser, setUserName, getLoginUserInfo } from "../actions/userActions"
 import SimpleMediaCard from './SimpleMediaCard';
 
 const styles = theme => ({

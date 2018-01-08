@@ -23,7 +23,7 @@ import { MuiThemeProvider, createMuiTheme } from 'material-ui/styles';
 
 import ImageAvatars from '../ImageAvatars'
 import { NoMarginImageAvatars } from '../ImageAvatars'
-import { setUserProfile } from "../../../../actions/loginActions"
+import { setUserProfile } from "../../../../actions/userActions"
 
 const profileStyles = theme => ({
   root: {
