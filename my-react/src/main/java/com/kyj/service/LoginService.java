@@ -1,5 +1,6 @@
 package com.kyj.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -9,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kyj.dto.UserDTO;
-import com.kyj.entity.User;
 import com.kyj.repository.RoleRepository;
 import com.kyj.repository.UserRepository;
 
@@ -27,10 +27,14 @@ public class LoginService {
 	
 	public Map<String, Object> getLoginUserInfo(String username) {
 		Map<String, Object> map = new HashMap<>();
-		Optional<User> user = userRepository.findByUsername(username);
-		
-		user.ifPresent(u -> {
-			List<String> roles = getLoginUserRoles(username);
+		Optional<UserDTO> userInfo = userRepository.findUserInfo(username);
+
+		userInfo.ifPresent(u -> {
+			String[] roleArr= u.getMergedRoles().split(",");
+			List<String> roles = new ArrayList<>();
+			for ( int i = 0; i < roleArr.length; i++) {
+				roles.add(roleArr[i]);
+			}
 			UserDTO userDTO = new UserDTO(u, roles);
 			map.put("user", userDTO);
 		});

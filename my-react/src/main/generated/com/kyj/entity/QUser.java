@@ -22,13 +22,11 @@ public class QUser extends EntityPathBase<User> {
 
     public final StringPath avatarEncodeImage = createString("avatarEncodeImage");
 
-    public final StringPath avatarExtension = createString("avatarExtension");
-
     public final StringPath email = createString("email");
 
     public final StringPath encodeImage = createString("encodeImage");
 
-    public final StringPath extension = createString("extension");
+    public final StringPath headline = createString("headline");
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
@@ -39,6 +37,8 @@ public class QUser extends EntityPathBase<User> {
     public final BooleanPath isCredentialsNonExpired = createBoolean("isCredentialsNonExpired");
 
     public final BooleanPath isEnabled = createBoolean("isEnabled");
+
+    public final StringPath notification = createString("notification");
 
     public final StringPath password = createString("password");
 

@@ -1,9 +1,12 @@
 package com.kyj.repository.impl;
 
+import java.nio.charset.Charset;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import com.kyj.dto.ProfileDTO;
+import com.kyj.dto.UserDTO;
 import com.kyj.entity.QUser;
 import com.kyj.repository.querydsl.UserRepositoryCustom;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -32,9 +35,23 @@ public class UserRepositoryImpl implements UserRepositoryCustom {
 		queryFactory
 			.update(user)
 			.set(user.avatarEncodeImage, profileDTO.getImagePreviewUrl())
-			.set(user.avatarExtension, profileDTO.getFile().getType().split("/")[1])
 			.where(user.username.eq(username))
 		.execute();
-		
 	}
+
+	@Override
+	public void setUserCard(UserDTO userDTO, String username) {
+		JPAQueryFactory queryFactory = new JPAQueryFactory(entityManager);
+		QUser user = QUser.user;
+		
+		queryFactory
+			.update(user)
+			.set(user.encodeImage, userDTO.getEncodeImage())
+			.set(user.headline, userDTO.getHeadline())
+			.set(user.notification, userDTO.getNotification())
+			.where(user.username.eq(username))
+		.execute();	
+	}
+	
+	
 }

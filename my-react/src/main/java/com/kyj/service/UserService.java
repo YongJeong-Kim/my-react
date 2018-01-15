@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kyj.dto.ProfileDTO;
+import com.kyj.dto.UserDTO;
 import com.kyj.repository.UserRepository;
 
 @Service
@@ -25,5 +26,9 @@ public class UserService {
 	
 	public void setUserProfile(ProfileDTO profileDTO, Principal principal) {
 		userRepository.setUserProfile(profileDTO, principal.getName());
+	}
+	
+	public void setUserCard(UserDTO userDTO, Principal principal) {
+		userRepository.setUserCard(userDTO, principal.getName());
 	}
 }

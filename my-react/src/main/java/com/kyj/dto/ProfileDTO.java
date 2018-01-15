@@ -1,7 +1,5 @@
 package com.kyj.dto;
 
-import org.springframework.web.multipart.MultipartFile;
-
 import lombok.Getter;
 import lombok.Setter;
 
@@ -14,4 +12,16 @@ public class ProfileDTO {
 //	private MultipartFile file;
 	
 	public ProfileDTO() {}
+}
+
+@Getter @Setter
+class ProfileImageFileDTO {
+	private Long lastModified;
+	private String lastModifiedDate;
+	private String name;
+	private Long size;
+	private String type;
+	private String webkitRelativePath;
+	
+	public ProfileImageFileDTO() {}
 }
