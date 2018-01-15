@@ -2,7 +2,7 @@ package com.kyj.dto;
 
 import java.util.List;
 
-import com.kyj.entity.User;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -33,22 +33,57 @@ public class UserDTO {
 	private Boolean isAccountNonLocked;
 	private Boolean isCredentialsNonExpired;
 	private String avatarEncodeImage;
-	private String avatarExtension;
 	private String encodeImage;
-	private String extension;
+	private String headline;
+	private String notification;
+	@JsonIgnore
+	private String mergedRoles;
+	
 	private List<String> roles;
 	
-	public UserDTO(User user, List<String> roles) {
-		this.username = user.getUsername();
-		this.email = user.getEmail();
-		this.isEnabled = user.getIsEnabled();
-		this.isAccountNonExpired = user.getIsAccountNonExpired();
-		this.isAccountNonLocked = user.getIsAccountNonLocked();
-		this.isCredentialsNonExpired = user.getIsCredentialsNonExpired();
-		this.avatarEncodeImage = user.getAvatarEncodeImage();
-		this.avatarExtension = user.getAvatarExtension();
-		this.encodeImage = user.getEncodeImage();
-		this.extension = user.getExtension();
+	public UserDTO() {}
+	
+	public UserDTO(String headline, String notification) {
+//		this.encodeImage = encodeImage;
+		this.headline = headline;
+		this.notification = notification;
+	}
+	
+	public UserDTO(String username,
+				   String email,
+				   Boolean isEnabled,
+				   Boolean isAccountNonExpired,    
+				   Boolean isAccountNonLocked,
+				   Boolean isCredentialsNonExpired,
+				   String avatarEncodeImage,
+				   String encodeImage,
+				   String headline,
+				   String notification,
+				   String mergedRoles) {
+		this.username = username;
+		this.email = email;
+		this.isEnabled = isEnabled;
+		this.isAccountNonExpired = isAccountNonExpired;
+		this.isAccountNonLocked = isAccountNonLocked;
+		this.isCredentialsNonExpired = isCredentialsNonExpired;
+		this.avatarEncodeImage = avatarEncodeImage;
+		this.encodeImage = encodeImage;
+		this.headline = headline;
+		this.notification = notification;
+		this.mergedRoles = mergedRoles;
+	}
+	
+	public UserDTO(UserDTO userDto, List<String> roles) {
+		this.username = userDto.getUsername();
+		this.email = userDto.getEmail();
+		this.isEnabled = userDto.getIsEnabled();
+		this.isAccountNonExpired = userDto.getIsAccountNonExpired();
+		this.isAccountNonLocked = userDto.getIsAccountNonLocked();
+		this.isCredentialsNonExpired = userDto.getIsCredentialsNonExpired();
+		this.avatarEncodeImage = userDto.getAvatarEncodeImage();
+		this.encodeImage = userDto.getEncodeImage();
+		this.headline = userDto.getHeadline();
+		this.notification = userDto.getNotification();
 		this.roles = roles;
 	}
 	

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kyj.dto.ProfileDTO;
+import com.kyj.dto.UserDTO;
 import com.kyj.service.UserService;
 
 @RestController
@@ -18,8 +19,13 @@ public class UserController {
 	private UserService userService;
 	
 	@PostMapping(value="/set/profile")
-	public void setUserProfileAvatar(@RequestBody ProfileDTO profileDTO, Principal principal) {
+	public void setUserProfile(@RequestBody ProfileDTO profileDTO, Principal principal) {
 		userService.setUserProfile(profileDTO, principal);
+	}
+	
+	@PostMapping("/set/card")
+	public void setUserCard(@RequestBody UserDTO userDTO, Principal principal) {
+		userService.setUserCard(userDTO, principal);
 	}
 	
 }

@@ -79,11 +79,13 @@ public class InitUser {
 			
 			image.setUser(u);*/
 			u.setAvatarEncodeImage("data:image/" + avatarExtension + ";base64," + avatarBase64Image);
-			u.setAvatarExtension(avatarExtension);
+//			u.setAvatarExtension(avatarExtension);
 			u.setEncodeImage("data:image/" + extension + ";base64," + base64Image);
-			u.setExtension(extension);
+//			u.setExtension(extension);
 			
 //			u.setUserImage(image);
+			u.setHeadline("Lizard");
+			u.setNotification("Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging across all continents except Antarctica");
 			
 			rolesRepository.save(r);
 			userRepository.save(u);

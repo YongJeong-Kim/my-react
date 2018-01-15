@@ -1,43 +1,48 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withStyles } from 'material-ui/styles';
+import { connect } from "react-redux"
+
+// material-ui components
 import Card, { CardActions, CardContent, CardMedia } from 'material-ui/Card';
 import Button from 'material-ui/Button';
 import Typography from 'material-ui/Typography';
 
+//material-ui colors and style
 import { MuiThemeProvider, createMuiTheme } from 'material-ui/styles';
 import orange from 'material-ui/colors/orange';
+import teal from 'material-ui/colors/teal';
+import { withStyles } from 'material-ui/styles';
 
-import { connect } from "react-redux"
+import EditModal from './modals/EditModal'
 
-const styles = {
+const cardStyles = {
   card: {
     maxWidth: 345,
+    width: 345,
   },
   media: {
     height: 200,
   },
-};
-
-const btnStyles = theme => ({
-  button : {
-    color: theme.status.color,
-  }
+  nextLine: {
+    whiteSpace: 'pre-line',
+  },
+}
+const styles = theme => ({
+  ...cardStyles,
 });
 
 const theme = createMuiTheme({
-  status: {
-    color: orange[300],
-  }
+  palette: {
+    primary: {
+      ...teal,
+      "500": "#B2DFDB",
+    },
+    secondary: {
+      ...teal,
+      "A200": "#004D40",
+    },
+  },
 });
-
-let Btns = props =>
-  <Button dense color="primary" className={props.classes.button}>
-    Share
-  </Button>;
-
-Btns = withStyles(btnStyles)(Btns);
-
 
 @connect((store) => {
   return {
@@ -45,73 +50,70 @@ Btns = withStyles(btnStyles)(Btns);
   }
 })
 class SimpleMediaCard extends React.Component {
-
+  state = {
+    editOpen: false,
+  }
+  handleEditOpen = () => {
+    this.setState({ editOpen: true, })
+  }
+  handleEditCancel = (editOpen) => {
+    this.setState({ editOpen, })
+  }
+  handleEditEdit = (editOpen) => {
+    this.setState({ editOpen, })
+  }
+  adminCheck = (roles) => {
+    let isAdmin;
+    for (let role of roles) {
+      if (role === 'ROLE_ADMIN') {
+        isAdmin = true;
+        return isAdmin;
+      }
+      else
+        isAdmin = false;
+    }
+    return isAdmin;
+  }
   render() {
     const classes = this.props.classes;
     const userImage = this.props.user.encodeImage;
+    const isAdmin = this.adminCheck(this.props.user.roles);
+    const { headline, notification } = this.props.user;
 
     return (
-      <div>
-        <Card className={classes.card}>
-          <CardMedia
-            className={classes.media}
-            image={userImage}
-            title="Contemplative Reptile"
-          />
-          <CardContent>
-            <Typography type="headline" component="h2">
-              Lizard
-            </Typography>
-            <Typography component="p">
-              Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging
-              across all continents except Antarctica
-            </Typography>
-          </CardContent>
-          <CardActions>
-      {/*      <MuiThemeProvider theme={theme} >
-                <Btns />
-            </MuiThemeProvider>*/}
-                <Button raised color="primary">
-                  Learn More
-                </Button>
-          </CardActions>
-        </Card>
-      </div>
-    );
-  }
-}
-
-{/*
-function SimpleMediaCard(props) {
-  const classes = props.classes;
-
-  return (
-    <div>
       <Card className={classes.card}>
         <CardMedia
           className={classes.media}
-          image={"data:image/png;base64," + props.avatar.encodeImage}
+          image={userImage}
           title="Contemplative Reptile"
         />
         <CardContent>
           <Typography type="headline" component="h2">
-            Lizard
+            {headline}
           </Typography>
-          <Typography component="p">
-            Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging
-            across all continents except Antarctica
+          <Typography component="p" className={classes.nextLine}>
+            {notification}
           </Typography>
         </CardContent>
-        <CardActions>
 
-              <Button raised color="primary">
-                Learn More
+        <MuiThemeProvider theme={theme} >
+          <CardActions>
+            {isAdmin &&
+              <Button color="accent" onClick={this.handleEditOpen}> {'edit'}
+                <EditModal editOpen={this.state.editOpen}
+                           handleEditClose={this.handleEditCancel}
+                           handleEditEdit={this.handleEditEdit} />
               </Button>
-        </CardActions>
+            }
+            <Button color="primary">
+              Learn More
+            </Button>
+          </CardActions>
+        </MuiThemeProvider>
       </Card>
-    </div>
-  );
-}*/}
+    );
+  }
+}
 
 SimpleMediaCard.propTypes = {
   classes: PropTypes.object.isRequired,

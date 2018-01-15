@@ -57,10 +57,7 @@ const profileStyles = theme => ({
 
 const buttonTheme = createMuiTheme({
   palette: {
-    primary: {
-      ...blue,
-      "900": "#0D47A1",
-    }, // Purple and green play nicely together.
+    primary: blue,
     secondary: pink,
   },
 });
@@ -73,7 +70,6 @@ const buttonTheme = createMuiTheme({
 class ProfileModal extends Component {
   state = {
     profileOpen: false,
-    modified: false,
     profile: {
       name: 'aaa',
       email: 'aaa@email.com',
@@ -83,12 +79,21 @@ class ProfileModal extends Component {
   }
 
   handleRequestProfileClose = () => {
-    this.setState({ profileOpen: false, });
+    let profile = this.state.profile;
+
+    profile.imagePreviewUrl = this.props.user.avatarEncodeImage;
+    this.setState({ profileOpen: false, profile, });
     this.props.handleRequestProfileClose(this.state.profileOpen);
   }
   onChangeProfileEmail = (e) => {
-    console.log(e.target.value);
-    this.setState({ profile: { email: e.target.value }});
+    let profile = this.state.profile;
+    profile.email = e.target.value;
+    this.setState(prevState => ({ profile: prevState.profile }));
+  }
+  onChangeProfileName = (e) => {
+    let profile = this.state.profile;
+    profile.name = e.target.value;
+    this.setState({ profile, });
   }
   handleOnChange = (e) => {
     let reader = new FileReader();
@@ -96,7 +101,13 @@ class ProfileModal extends Component {
 
     if (file.type.includes('image')) {
       reader.onloadend = () => {
-        this.setState({ profile: {...this.state.profile, file, imagePreviewUrl: reader.result }});
+        this.setState({
+          profile: {
+            ...this.state.profile,
+            file,
+            imagePreviewUrl: reader.result,
+          },
+        });
       }
       reader.readAsDataURL(file);
     }
@@ -112,13 +123,14 @@ class ProfileModal extends Component {
     const avatarImage = this.props.user.avatarEncodeImage;
     const { profile } = this.state;
     let profileImage = null;
+
     if (profile.imagePreviewUrl)
       profileImage = <Avatar alt="No Image" src={profile.imagePreviewUrl} className={classes.bigAvatar} />
     else
       profileImage = <Avatar alt="No Image" src={avatarImage} className={classes.bigAvatar} />
     return (
       <div>
-        <Dialog open={this.props.profileOpen} ignoreBackdropClick >
+        <Dialog open={this.props.profileOpen} disableBackdropClick >
           <DialogTitle>Profile</DialogTitle>
 
           <DialogContent>
@@ -129,7 +141,7 @@ class ProfileModal extends Component {
               </label>
               <FormControl className={classes.formControl} >
                 <InputLabel htmlFor="name-disabled">Name</InputLabel>
-                <Input id="name-disabled" value={this.state.profile.name} />
+                <Input id="name-disabled" value={this.state.profile.name} onChange={this.onChangeProfileName}/>
                 {/*<FormHelperText>Disabled</FormHelperText> */}
               </FormControl>
               <FormControl className={classes.formControl} >
@@ -142,14 +154,6 @@ class ProfileModal extends Component {
               To subscribe to this website, please enter your email address here. We will send
               updates occationally.
             </DialogContentText>
-            <TextField
-              autoFocus
-              margin="dense"
-              id="name"
-              label="Email Address"
-              type="email"
-              fullWidth
-            />
           </DialogContent>
           <MuiThemeProvider theme={buttonTheme}>
             <DialogActions>

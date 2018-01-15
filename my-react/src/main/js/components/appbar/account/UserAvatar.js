@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import axios from 'axios';
 import { connect } from "react-redux"
+import { Manager, Target, Popper } from 'react-popper';
 
 // material-ui components
 import TextField from 'material-ui/TextField';
@@ -25,8 +26,6 @@ import AppBar from 'material-ui/AppBar';
 import Toolbar from 'material-ui/Toolbar';
 import Typography from 'material-ui/Typography';
 import Grid from 'material-ui/Grid';
-
-import { Manager, Target, Popper } from 'react-popper';
 import ClickAwayListener from 'material-ui/utils/ClickAwayListener';
 import Input, { InputLabel } from 'material-ui/Input';
 import Avatar from 'material-ui/Avatar';
@@ -87,8 +86,6 @@ class UserAvatar extends Component {
     receiveUserProps: false,
     anchorEl: null,
     profileOpen: false,
-    profileName: '',
-    profileEmail: '',
     chatOpen: false,
   };
 
@@ -106,18 +103,16 @@ class UserAvatar extends Component {
   handleRequestProfile = () => {
     this.setState({
       profileOpen: true, anchorEl: null,
-      profileName: this.props.user.username,
-      profileEmail: this.props.user.email,
     });
   }
   handleRequestProfileClose = (profileOpen) => {
-    this.setState({ profileOpen: profileOpen });
+    this.setState({ profileOpen, });
   }
   handleRequestChat = () => {
     this.setState({ chatOpen: true, anchorEl: null, });
   }
   handleRequestChatClose = (chatOpen) => {
-    this.setState({ chatOpen: chatOpen });
+    this.setState({ chatOpen, });
   }
   handleLogout = () => {
     this.setState({ anchorEl: null });
@@ -160,7 +155,7 @@ class UserAvatar extends Component {
                   <MenuList role="menu">
                     <MenuItem onClick={this.handleRequestProfile}>Profile
                       <ProfileModal handleRequestProfileClose={this.handleRequestProfileClose}
-                                           profileOpen={this.state.profileOpen} />
+                                           profileOpen={profileOpen} />
                     </MenuItem>
                     <MenuItem onClick={this.handleRequestClose}>My account</MenuItem>
                     <MenuItem onClick={this.handleRequestChat}>Chat
@@ -169,6 +164,7 @@ class UserAvatar extends Component {
                                           chatOpen={this.state.chatOpen} />
                       }
                     </MenuItem>
+                    <Divider />
                     <MenuItem onClick={this.handleLogout}>Logout</MenuItem>
                   </MenuList>
                 </Paper>

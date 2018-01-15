@@ -49,6 +49,17 @@ export default function reducer(state={
           }
         }
       }
+      case "SET_USER_CARD": {
+        return {
+          ...state,
+          user: {
+            ...state.user,
+            encodeImage: action.payload.encodeImage,
+            headline: action.payload.headline,
+            notification: action.payload.notification,
+          }
+        }
+      }
     }
 
     return state

@@ -48,12 +48,12 @@ export const setUserProfile = (profile) => {
       size: profile.file.size,
       type: profile.file.type,
       webkitRelativePath: profile.file.webkitRelativePath,
-    }
+    },
   }
 
   let headers = {
     accept: 'application/json',
-    'Content-Type': 'application/json'
+    'Content-Type': 'application/json',
   }
   return (dispatch) => {
     axios.post("/user/set/profile", profileDTO, headers)
@@ -61,6 +61,21 @@ export const setUserProfile = (profile) => {
         dispatch({type: "SET_USER_PROFILE", payload: profileDTO});
       }).catch((err) => {
         console.log('err');
+      })
+  }
+}
+
+export let setUserCard = (edit) => {
+  let headers = {
+    accept: 'application/json',
+    'Content-Type': 'application/json',
+  }
+  return (dispatch) => {
+    axios.post("/user/set/card", edit, headers)
+      .then((response) => {
+          dispatch({ type: "SET_USER_CARD", payload: edit })
+      }).catch((err) => {
+        console.log('err card');
       })
   }
 }

@@ -39,5 +39,4 @@ public class RestHomeController {
 	public List<User_Roles> dg() {
 		return userRolesRepository.findByCompositeKey_UserId(1L);
 	}
-	
 }
