@@ -45,12 +45,11 @@ public class EncodeDecode {
 	
 	public void encodeString() {
 		try {
-            byte[] name = Base64.getEncoder().encode("取芋取芋取芋取芋".getBytes());
-            byte[] decodedString = Base64.getDecoder().decode(new String(name).getBytes("UTF-8"));
-            System.out.println(new String(decodedString));
-        } catch (UnsupportedEncodingException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+      byte[] name = Base64.getEncoder().encode("取芋取芋取芋取芋".getBytes());
+      byte[] decodedString = Base64.getDecoder().decode(new String(name).getBytes("UTF-8"));
+      System.out.println(new String(decodedString));
+    } catch (UnsupportedEncodingException e) {
+      e.printStackTrace();
+    }
 	}
 }
