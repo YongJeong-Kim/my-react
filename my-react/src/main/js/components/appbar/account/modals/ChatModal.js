@@ -51,7 +51,7 @@ const chatStyles = theme => ({
     display: 'flex',
     justifyContent: 'center',
     flexWrap: 'wrap',
-  }
+  },
 });
 
 function Transition(props) {
@@ -221,13 +221,13 @@ class ChatModal extends Component {
         >
           <AppBar className={classes.appBar}>
             <Toolbar>
-              <IconButton color="contrast" onClick={this.handleRequestChatClose} aria-label="Close">
+              <IconButton color="inherit" onClick={this.handleRequestChatClose} aria-label="Close">
                 <CloseIcon />
               </IconButton>
-              <Typography type="title" color="inherit" className={classes.flex}>
+              <Typography variant="title" color="inherit" className={classes.flex}>
                 Sound
               </Typography>
-              <Button color="contrast" >
+              <Button color="inherit" >
                 save
               </Button>
             </Toolbar>

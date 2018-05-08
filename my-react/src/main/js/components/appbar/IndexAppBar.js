@@ -22,7 +22,7 @@ import UserAvatar from './account/UserAvatar'
 const styles = {
   root: {
     /*marginTop: 30,*/
-    width: '100%',
+    flexGrow: 1,
   },
   flex: {
     flex: 1,
@@ -50,14 +50,14 @@ class IndexAppBar extends React.Component {
 
 	      <AppBar position="static" className={classes.badge}>
 	        <Toolbar>
-	          <IconButton color="contrast" aria-label="Menu">
-	            <MenuIcon />
-	          </IconButton>
-	          <Typography type="title" color="inherit" className={classes.flex}>
-	            Title
-	          </Typography>
+            <IconButton className={classes.menuButton} color="inherit" aria-label="Menu">
+               <MenuIcon />
+            </IconButton>
+            <Typography variant="title" color="inherit" className={classes.flex}>
+              Title
+            </Typography>
 
-	          <IconButton color="accent" className={classes.button} aria-label="Add to shopping cart">
+	          <IconButton color="secondary" className={classes.button} aria-label="Add to shopping cart">
 	          	<AddShoppingCartIcon />
 	          </IconButton>
 

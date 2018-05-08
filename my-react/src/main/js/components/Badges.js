@@ -32,14 +32,14 @@ function SimpleBadge(props) {
   return (
     <div>
       <MuiThemeProvider theme={theme} >
-        <IconButton color="contrast" aria-label="Menu" onClick={mailIconOnClick}>
+        <IconButton color="inherit" aria-label="Menu" onClick={mailIconOnClick}>
           <Badge className={classes.badge} badgeContent={'99+'} >
             <MailIcon />
           </Badge>
         </IconButton>
           </MuiThemeProvider>
           <MuiThemeProvider theme={theme} >
-        <IconButton color="contrast" aria-label="Menu">
+        <IconButton color="inherit" aria-label="Menu">
           <Badge badgeContent={10} >
             <FolderIcon />
           </Badge>

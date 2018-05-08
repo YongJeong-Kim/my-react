@@ -139,7 +139,7 @@ class UserAvatar extends Component {
               aria-owns={dropMenuOpen ? 'menu-appbar' : null}
               aria-haspopup="true"
               onClick={this.handleMenu}
-              color="contrast"
+              color="inherit"
             >
               {receiveUserProps && <ImageAvatars />}
             </IconButton>

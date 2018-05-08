@@ -21,7 +21,9 @@ const cardStyles = {
     width: 345,
   },
   media: {
-    height: 200,
+   height: 200,
+    // height: 0,
+    // paddingTop: '56.25%', // 16:9
   },
   nextLine: {
     whiteSpace: 'pre-line',
@@ -88,7 +90,7 @@ class SimpleMediaCard extends React.Component {
           title="Contemplative Reptile"
         />
         <CardContent>
-          <Typography type="headline" component="h2">
+          <Typography gutterBottom variant="headline" component="h2">
             {headline}
           </Typography>
           <Typography component="p" className={classes.nextLine}>
@@ -99,7 +101,7 @@ class SimpleMediaCard extends React.Component {
         <MuiThemeProvider theme={theme} >
           <CardActions>
             {isAdmin &&
-              <Button color="accent" onClick={this.handleEditOpen}> {'edit'}
+              <Button color="secondary" onClick={this.handleEditOpen}> {'edit'}
                 <EditModal editOpen={this.state.editOpen}
                            handleEditClose={this.handleEditCancel}
                            handleEditEdit={this.handleEditEdit} />

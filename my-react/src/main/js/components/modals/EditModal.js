@@ -29,12 +29,15 @@ const inputStyles = {
   input: {
     display: 'none',
   },
-  inputLabelFocused: {
-    color: pink[500],
+  cssFocusedLabel: {
+    '&$cssFocused': {
+      color: blue[500],
+    },
   },
+  cssFocused: {},
   inputInkbar: {
     '&:after': {
-      backgroundColor: pink[500],
+      backgroundColor: blue[500],
     },
   },
   disableScrollY: {
@@ -181,25 +184,24 @@ class EditModal extends Component {
               <CardContent>
                 <FormControl fullWidth className={classes.formControl} >
                   <InputLabel
-                    FormControlClasses={{focused: classes.inputLabelFocused,}}
+                    FormLabelClasses={{root: classes.cssFocusedLabel, focused: classes.cssFocused,}}
                     htmlFor="name-simple">Headline</InputLabel>
                   <Input
-                    classes={{inkbar: classes.inputInkbar,}}
+                    classes={{underline: classes.inputInkbar,}}
                     className={classes.disableScrollY}
                     id="name-simple"
                     value={this.state.edit.headline}
                     onChange={this.onChangeEditHeadLine} />
                 </FormControl>
-                <FormControl className={classes.formControl} >
+                <FormControl fullWidth className={classes.formControl} >
                   <InputLabel
-                    FormControlClasses={{focused: classes.inputLabelFocused,}}
-                    htmlFor="name-disabled">Notification</InputLabel>
+                    FormLabelClasses={{root: classes.cssFocusedLabel, focused: classes.cssFocused,}}
+                    htmlFor="name-disabled">{'Notification'}</InputLabel>
                   <Input
-                    classes={{inkbar: classes.inputInkbar,}}
+                    classes={{underline: classes.inputInkbar,}}
                     id="name-disabled"
                     multiline
                     rows="5"
-                    rowsMax="55"
                     value={this.state.edit.notification}
                     onChange={this.onChangeEditNotification} />
                 </FormControl>
@@ -209,7 +211,7 @@ class EditModal extends Component {
         </DialogContent>
         <MuiThemeProvider theme={buttonTheme}>
           <DialogActions>
-            <Button color="accent" onClick={this.handleEditCancel}>
+            <Button color="secondary" onClick={this.handleEditCancel}>
               Cancel
             </Button>
             <Button color="primary" onClick={this.handleEditEdit}>

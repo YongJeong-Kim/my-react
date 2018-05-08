@@ -53,6 +53,17 @@ const profileStyles = theme => ({
   input: {
     display: 'none',
   },
+  cssFocusedLabel: {
+    '&$cssFocused': {
+      color: blue[500],
+    },
+  },
+  cssFocused: {},
+  inputInkbar: {
+    '&:after': {
+      backgroundColor: blue[500],
+    },
+  },
 })
 
 const buttonTheme = createMuiTheme({
@@ -140,13 +151,17 @@ class ProfileModal extends Component {
                 {profileImage}
               </label>
               <FormControl className={classes.formControl} >
-                <InputLabel htmlFor="name-disabled">Name</InputLabel>
-                <Input id="name-disabled" value={this.state.profile.name} onChange={this.onChangeProfileName}/>
+              <InputLabel
+                FormLabelClasses={{root: classes.cssFocusedLabel, focused: classes.cssFocused,}}
+                htmlFor="name-simple">Name</InputLabel>
+                <Input id="name-disabled" classes={{underline: classes.inputInkbar,}} value={this.state.profile.name} onChange={this.onChangeProfileName}/>
                 {/*<FormHelperText>Disabled</FormHelperText> */}
               </FormControl>
               <FormControl className={classes.formControl} >
-                <InputLabel htmlFor="name-disabled">Email</InputLabel>
-                <Input id="name-disabled" value={this.state.profile.email} onChange={this.onChangeProfileEmail}/>
+              <InputLabel
+                FormLabelClasses={{root: classes.cssFocusedLabel, focused: classes.cssFocused,}}
+                htmlFor="name-disabled">Email</InputLabel>
+                <Input id="name-disabled" classes={{underline: classes.inputInkbar,}} value={this.state.profile.email} onChange={this.onChangeProfileEmail}/>
                 {/*<FormHelperText>Disabled</FormHelperText> */}
               </FormControl>
             </div>
@@ -157,7 +172,7 @@ class ProfileModal extends Component {
           </DialogContent>
           <MuiThemeProvider theme={buttonTheme}>
             <DialogActions>
-              <Button onClick={this.handleRequestProfileClose} color="accent" >
+              <Button onClick={this.handleRequestProfileClose} color="secondary" >
                 Cancel
               </Button>
               <Button onClick={this.handleSubcribe} color="primary" >

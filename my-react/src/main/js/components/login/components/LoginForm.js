@@ -123,10 +123,10 @@ class LoginForm extends React.Component {
               </Avatar>
               <FormControl className={classes.formControl}>
                 <InputLabel
-                  FormControlClasses={{
+                  FormLabelClasses={{
                     focused: classes.inputLabelFocused }}
                   htmlFor="name-simple">Username</InputLabel>
-                <Input classes={{inkbar: classes.inputInkbar}} id="name-simple" name="username" value={this.state.username} onChange={this.handleChangeName} />
+                <Input classes={{underline: classes.inputInkbar}} id="name-simple" name="username" value={this.state.username} onChange={this.handleChangeName} />
               </FormControl>
             </div>
             <div className={classes.row}>
@@ -154,7 +154,7 @@ class LoginForm extends React.Component {
                      multiple
                      type="submit" />
               <label htmlFor="raised-button-file" >
-                <Button type="submit" raised component="span" style={styleButton} className={classes.button}>
+                <Button type="submit" component="span" style={styleButton} className={classes.button}>
                   Login
                 </Button>
               </label>
