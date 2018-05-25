@@ -3,33 +3,37 @@ import PropTypes from 'prop-types';
 import { connect } from "react-redux"
 
 // material-ui components
-import Dialog, {
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
-} from 'material-ui/Dialog';
-import Slide from 'material-ui/transitions/Slide';
-import AppBar from 'material-ui/AppBar';
-import Toolbar from 'material-ui/Toolbar';
-import Grid from 'material-ui/Grid';
-import List, { ListItem, ListItemIcon, ListItemText } from 'material-ui/List';
-import IconButton from 'material-ui/IconButton';
-import Typography from 'material-ui/Typography';
-import Button from 'material-ui/Button';
-import Divider from 'material-ui/Divider';
-import Avatar from 'material-ui/Avatar';
-import { FormControl, FormHelperText } from 'material-ui/Form';
-import Input, { InputLabel } from 'material-ui/Input';
-import TextField from 'material-ui/TextField';
-import Drawer from 'material-ui/Drawer';
-import Chip from 'material-ui/Chip';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import Slide from '@material-ui/core/Slide';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import Grid from '@material-ui/core/Grid';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
+import IconButton from '@material-ui/core/IconButton';
+import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
+import Divider from '@material-ui/core/Divider';
+import Avatar from '@material-ui/core/Avatar';
+import FormControl from '@material-ui/core/FormControl';
+import FormHelperText from '@material-ui/core/FormHelperText';
+import Input from '@material-ui/core/Input';
+import InputLabel from '@material-ui/core/InputLabel';
+import TextField from '@material-ui/core/TextField';
+import Drawer from '@material-ui/core/Drawer';
+import Chip from '@material-ui/core/Chip';
 
 //material-ui colors and style
-import { blue } from 'material-ui/colors';
-import { withStyles } from 'material-ui/styles';
-import CloseIcon from 'material-ui-icons/Close';
-import StarBorder from 'material-ui-icons/StarBorder';
+import { blue } from '@material-ui/core/colors';
+import { withStyles } from '@material-ui/core/styles';
+import CloseIcon from '@material-ui/icons/Close';
+import StarBorder from '@material-ui/icons/StarBorder';
 
 import ImageAvatars from '../ImageAvatars'
 import { NoMarginImageAvatars } from '../ImageAvatars'
@@ -51,20 +55,20 @@ const chatStyles = theme => ({
     display: 'flex',
     justifyContent: 'center',
     flexWrap: 'wrap',
-  }
+  },
 });
 
 function Transition(props) {
   return <Slide direction="up" {...props} />;
 }
 const drawerWidth = 240;
-import InboxIcon from 'material-ui-icons/MoveToInbox';
-import DraftsIcon from 'material-ui-icons/Drafts';
-import StarIcon from 'material-ui-icons/Star';
-import SendIcon from 'material-ui-icons/Send';
-import MailIcon from 'material-ui-icons/Mail';
-import DeleteIcon from 'material-ui-icons/Delete';
-import ReportIcon from 'material-ui-icons/Report';
+import InboxIcon from '@material-ui/icons/MoveToInbox';
+import DraftsIcon from '@material-ui/icons/Drafts';
+import StarIcon from '@material-ui/icons/Star';
+import SendIcon from '@material-ui/icons/Send';
+import MailIcon from '@material-ui/icons/Mail';
+import DeleteIcon from '@material-ui/icons/Delete';
+import ReportIcon from '@material-ui/icons/Report';
 const mailFolderListItems = (
   <div>
     <ListItem button>
@@ -221,13 +225,13 @@ class ChatModal extends Component {
         >
           <AppBar className={classes.appBar}>
             <Toolbar>
-              <IconButton color="contrast" onClick={this.handleRequestChatClose} aria-label="Close">
+              <IconButton color="inherit" onClick={this.handleRequestChatClose} aria-label="Close">
                 <CloseIcon />
               </IconButton>
-              <Typography type="title" color="inherit" className={classes.flex}>
+              <Typography variant="title" color="inherit" className={classes.flex}>
                 Sound
               </Typography>
-              <Button color="contrast" >
+              <Button color="inherit" >
                 save
               </Button>
             </Toolbar>

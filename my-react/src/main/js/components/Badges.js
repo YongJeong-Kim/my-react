@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withStyles } from 'material-ui/styles';
-import Badge from 'material-ui/Badge';
-import MailIcon from 'material-ui-icons/Mail';
-import FolderIcon from 'material-ui-icons/Folder';
-import IconButton from 'material-ui/IconButton';
-import { red } from 'material-ui/colors';
-import { MuiThemeProvider, createMuiTheme } from 'material-ui/styles';
+import { withStyles } from '@material-ui/core/styles';
+import Badge from '@material-ui/core/Badge';
+import MailIcon from '@material-ui/icons/Mail';
+import FolderIcon from '@material-ui/icons/Folder';
+import IconButton from '@material-ui/core/IconButton';
+import { red } from '@material-ui/core/colors';
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 
 const styles = theme => ({
   badge: {
@@ -32,14 +32,14 @@ function SimpleBadge(props) {
   return (
     <div>
       <MuiThemeProvider theme={theme} >
-        <IconButton color="contrast" aria-label="Menu" onClick={mailIconOnClick}>
+        <IconButton color="inherit" aria-label="Menu" onClick={mailIconOnClick}>
           <Badge className={classes.badge} badgeContent={'99+'} >
             <MailIcon />
           </Badge>
         </IconButton>
           </MuiThemeProvider>
           <MuiThemeProvider theme={theme} >
-        <IconButton color="contrast" aria-label="Menu">
+        <IconButton color="inherit" aria-label="Menu">
           <Badge badgeContent={10} >
             <FolderIcon />
           </Badge>

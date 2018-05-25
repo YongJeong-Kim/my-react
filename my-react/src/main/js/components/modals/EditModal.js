@@ -3,25 +3,29 @@ import PropTypes from 'prop-types';
 import { connect } from "react-redux"
 
 // material-ui components
-import Dialog, {
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
-} from 'material-ui/Dialog';
-import Button from 'material-ui/Button';
-import Avatar from 'material-ui/Avatar';
-import { FormControl, FormHelperText } from 'material-ui/Form';
-import Input, { InputLabel } from 'material-ui/Input';
-import TextField from 'material-ui/TextField';
-import Card, { CardActions, CardContent, CardMedia } from 'material-ui/Card';
-import Typography from 'material-ui/Typography';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import Button from '@material-ui/core/Button';
+import Avatar from '@material-ui/core/Avatar';
+import FormHelperText from '@material-ui/core/FormHelperText';
+import FormControl from '@material-ui/core/FormControl';
+import Input from '@material-ui/core/Input';
+import InputLabel from '@material-ui/core/InputLabel';
+import TextField from '@material-ui/core/TextField';
+import Card from '@material-ui/core/Card';
+import CardActions from '@material-ui/core/CardActions';
+import CardContent from '@material-ui/core/CardContent';
+import CardMedia from '@material-ui/core/CardMedia';
+import Typography from '@material-ui/core/Typography';
 
 //material-ui colors and style
-import blue from 'material-ui/colors/blue';
-import pink from 'material-ui/colors/pink';
-import { withStyles } from 'material-ui/styles';
-import { MuiThemeProvider, createMuiTheme } from 'material-ui/styles';
+import blue from '@material-ui/core/colors/blue';
+import pink from '@material-ui/core/colors/pink';
+import { withStyles } from '@material-ui/core/styles';
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 
 import { setUserCard } from "../../actions/userActions"
 
@@ -29,12 +33,15 @@ const inputStyles = {
   input: {
     display: 'none',
   },
-  inputLabelFocused: {
-    color: pink[500],
+  cssFocusedLabel: {
+    '&$cssFocused': {
+      color: blue[500],
+    },
   },
+  cssFocused: {},
   inputInkbar: {
     '&:after': {
-      backgroundColor: pink[500],
+      backgroundColor: blue[500],
     },
   },
   disableScrollY: {
@@ -90,11 +97,10 @@ const buttonTheme = createMuiTheme({
   }
 })
 class EditModal extends Component {
-
   state = {
     editOpen: false,
     edit: {
-      encodeImage: '',
+      encodeImage: this.props.user.encodeImage,
       headline: 'dd',
       notification: 'noti',
     },
@@ -138,6 +144,7 @@ class EditModal extends Component {
   }
   handleEditEdit = () => {
     this.setState({ editOpen: false, })
+
     this.props.dispatch(setUserCard(this.state.edit));
     this.props.handleEditEdit(this.state.editOpen);
   }
@@ -181,25 +188,24 @@ class EditModal extends Component {
               <CardContent>
                 <FormControl fullWidth className={classes.formControl} >
                   <InputLabel
-                    FormControlClasses={{focused: classes.inputLabelFocused,}}
+                    FormLabelClasses={{root: classes.cssFocusedLabel, focused: classes.cssFocused,}}
                     htmlFor="name-simple">Headline</InputLabel>
                   <Input
-                    classes={{inkbar: classes.inputInkbar,}}
+                    classes={{underline: classes.inputInkbar,}}
                     className={classes.disableScrollY}
                     id="name-simple"
                     value={this.state.edit.headline}
                     onChange={this.onChangeEditHeadLine} />
                 </FormControl>
-                <FormControl className={classes.formControl} >
+                <FormControl fullWidth className={classes.formControl} >
                   <InputLabel
-                    FormControlClasses={{focused: classes.inputLabelFocused,}}
-                    htmlFor="name-disabled">Notification</InputLabel>
+                    FormLabelClasses={{root: classes.cssFocusedLabel, focused: classes.cssFocused,}}
+                    htmlFor="name-disabled">{'Notification'}</InputLabel>
                   <Input
-                    classes={{inkbar: classes.inputInkbar,}}
+                    classes={{underline: classes.inputInkbar,}}
                     id="name-disabled"
                     multiline
                     rows="5"
-                    rowsMax="55"
                     value={this.state.edit.notification}
                     onChange={this.onChangeEditNotification} />
                 </FormControl>
@@ -209,7 +215,7 @@ class EditModal extends Component {
         </DialogContent>
         <MuiThemeProvider theme={buttonTheme}>
           <DialogActions>
-            <Button color="accent" onClick={this.handleEditCancel}>
+            <Button color="secondary" onClick={this.handleEditCancel}>
               Cancel
             </Button>
             <Button color="primary" onClick={this.handleEditEdit}>

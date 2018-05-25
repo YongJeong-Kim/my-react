@@ -3,23 +3,24 @@ import PropTypes from 'prop-types';
 import { connect } from "react-redux"
 
 // material-ui components
-import Dialog, {
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
-} from 'material-ui/Dialog';
-import Button from 'material-ui/Button';
-import Avatar from 'material-ui/Avatar';
-import { FormControl, FormHelperText } from 'material-ui/Form';
-import Input, { InputLabel } from 'material-ui/Input';
-import TextField from 'material-ui/TextField';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import Button from '@material-ui/core/Button';
+import Avatar from '@material-ui/core/Avatar';
+import FormControl from '@material-ui/core/FormControl';
+import FormHelperText from '@material-ui/core/FormHelperText';
+import Input from '@material-ui/core/Input';
+import InputLabel from '@material-ui/core/InputLabel';
+import TextField from '@material-ui/core/TextField';
 
 //material-ui colors and style
-import blue from 'material-ui/colors/blue';
-import pink from 'material-ui/colors/pink';
-import { withStyles } from 'material-ui/styles';
-import { MuiThemeProvider, createMuiTheme } from 'material-ui/styles';
+import blue from '@material-ui/core/colors/blue';
+import pink from '@material-ui/core/colors/pink';
+import { withStyles } from '@material-ui/core/styles';
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 
 import ImageAvatars from '../ImageAvatars'
 import { NoMarginImageAvatars } from '../ImageAvatars'
@@ -53,6 +54,17 @@ const profileStyles = theme => ({
   input: {
     display: 'none',
   },
+  cssFocusedLabel: {
+    '&$cssFocused': {
+      color: blue[500],
+    },
+  },
+  cssFocused: {},
+  inputInkbar: {
+    '&:after': {
+      backgroundColor: blue[500],
+    },
+  },
 })
 
 const buttonTheme = createMuiTheme({
@@ -73,7 +85,7 @@ class ProfileModal extends Component {
     profile: {
       name: 'aaa',
       email: 'aaa@email.com',
-      imagePreviewUrl: '',
+      imagePreviewUrl: this.props.user.avatarEncodeImage,
       file: '',
     }
   }
@@ -140,13 +152,17 @@ class ProfileModal extends Component {
                 {profileImage}
               </label>
               <FormControl className={classes.formControl} >
-                <InputLabel htmlFor="name-disabled">Name</InputLabel>
-                <Input id="name-disabled" value={this.state.profile.name} onChange={this.onChangeProfileName}/>
+              <InputLabel
+                FormLabelClasses={{root: classes.cssFocusedLabel, focused: classes.cssFocused,}}
+                htmlFor="name-simple">Name</InputLabel>
+                <Input id="name-disabled" classes={{underline: classes.inputInkbar,}} value={this.state.profile.name} onChange={this.onChangeProfileName}/>
                 {/*<FormHelperText>Disabled</FormHelperText> */}
               </FormControl>
               <FormControl className={classes.formControl} >
-                <InputLabel htmlFor="name-disabled">Email</InputLabel>
-                <Input id="name-disabled" value={this.state.profile.email} onChange={this.onChangeProfileEmail}/>
+              <InputLabel
+                FormLabelClasses={{root: classes.cssFocusedLabel, focused: classes.cssFocused,}}
+                htmlFor="name-disabled">Email</InputLabel>
+                <Input id="name-disabled" classes={{underline: classes.inputInkbar,}} value={this.state.profile.email} onChange={this.onChangeProfileEmail}/>
                 {/*<FormHelperText>Disabled</FormHelperText> */}
               </FormControl>
             </div>
@@ -157,7 +173,7 @@ class ProfileModal extends Component {
           </DialogContent>
           <MuiThemeProvider theme={buttonTheme}>
             <DialogActions>
-              <Button onClick={this.handleRequestProfileClose} color="accent" >
+              <Button onClick={this.handleRequestProfileClose} color="secondary" >
                 Cancel
               </Button>
               <Button onClick={this.handleSubcribe} color="primary" >

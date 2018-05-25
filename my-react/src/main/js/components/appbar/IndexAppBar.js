@@ -2,19 +2,19 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 // material-ui components
-import AppBar from 'material-ui/AppBar';
-import Toolbar from 'material-ui/Toolbar';
-import Typography from 'material-ui/Typography';
-import IconButton from 'material-ui/IconButton';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
+import IconButton from '@material-ui/core/IconButton';
 
 // material-ui icons
-import MenuIcon from 'material-ui-icons/Menu';
-import AddShoppingCartIcon from 'material-ui-icons/AddShoppingCart';
-import AccountCircle from 'material-ui-icons/AccountCircle';
+import MenuIcon from '@material-ui/icons/Menu';
+import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
+import AccountCircle from '@material-ui/icons/AccountCircle';
 
 //material-ui colors and style
-import { blue } from 'material-ui/colors';
-import { withStyles } from 'material-ui/styles';
+import { blue } from '@material-ui/core/colors';
+import { withStyles } from '@material-ui/core/styles';
 
 import SimpleBadge from '../Badges';
 import UserAvatar from './account/UserAvatar'
@@ -22,7 +22,7 @@ import UserAvatar from './account/UserAvatar'
 const styles = {
   root: {
     /*marginTop: 30,*/
-    width: '100%',
+    flexGrow: 1,
   },
   flex: {
     flex: 1,
@@ -50,14 +50,14 @@ class IndexAppBar extends React.Component {
 
 	      <AppBar position="static" className={classes.badge}>
 	        <Toolbar>
-	          <IconButton color="contrast" aria-label="Menu">
-	            <MenuIcon />
-	          </IconButton>
-	          <Typography type="title" color="inherit" className={classes.flex}>
-	            Title
-	          </Typography>
+            <IconButton className={classes.menuButton} color="inherit" aria-label="Menu">
+               <MenuIcon />
+            </IconButton>
+            <Typography variant="title" color="inherit" className={classes.flex}>
+              Title
+            </Typography>
 
-	          <IconButton color="accent" className={classes.button} aria-label="Add to shopping cart">
+	          <IconButton color="secondary" className={classes.button} aria-label="Add to shopping cart">
 	          	<AddShoppingCartIcon />
 	          </IconButton>
 

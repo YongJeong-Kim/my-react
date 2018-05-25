@@ -3,15 +3,18 @@ import PropTypes from 'prop-types';
 import { connect } from "react-redux"
 
 // material-ui components
-import Card, { CardActions, CardContent, CardMedia } from 'material-ui/Card';
-import Button from 'material-ui/Button';
-import Typography from 'material-ui/Typography';
+import Card from '@material-ui/core/Card';
+import CardActions from '@material-ui/core/CardActions';
+import CardContent from '@material-ui/core/CardContent';
+import CardMedia from '@material-ui/core/CardMedia';
+import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
 
 //material-ui colors and style
-import { MuiThemeProvider, createMuiTheme } from 'material-ui/styles';
-import orange from 'material-ui/colors/orange';
-import teal from 'material-ui/colors/teal';
-import { withStyles } from 'material-ui/styles';
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import orange from '@material-ui/core/colors/orange';
+import teal from '@material-ui/core/colors/teal';
+import { withStyles } from '@material-ui/core/styles';
 
 import EditModal from './modals/EditModal'
 
@@ -21,7 +24,9 @@ const cardStyles = {
     width: 345,
   },
   media: {
-    height: 200,
+   height: 200,
+    // height: 0,
+    // paddingTop: '56.25%', // 16:9
   },
   nextLine: {
     whiteSpace: 'pre-line',
@@ -52,7 +57,7 @@ const theme = createMuiTheme({
 class SimpleMediaCard extends React.Component {
   state = {
     editOpen: false,
-  }
+  };
   handleEditOpen = () => {
     this.setState({ editOpen: true, })
   }
@@ -88,7 +93,7 @@ class SimpleMediaCard extends React.Component {
           title="Contemplative Reptile"
         />
         <CardContent>
-          <Typography type="headline" component="h2">
+          <Typography gutterBottom variant="headline" component="h2">
             {headline}
           </Typography>
           <Typography component="p" className={classes.nextLine}>
@@ -99,12 +104,11 @@ class SimpleMediaCard extends React.Component {
         <MuiThemeProvider theme={theme} >
           <CardActions>
             {isAdmin &&
-              <Button color="accent" onClick={this.handleEditOpen}> {'edit'}
-                <EditModal editOpen={this.state.editOpen}
-                           handleEditClose={this.handleEditCancel}
-                           handleEditEdit={this.handleEditEdit} />
-              </Button>
+              <Button color="secondary" onClick={this.handleEditOpen}> {'edit'} </Button>
             }
+            <EditModal editOpen={this.state.editOpen}
+                       handleEditClose={this.handleEditCancel}
+                       handleEditEdit={this.handleEditEdit} />
             <Button color="primary">
               Learn More
             </Button>

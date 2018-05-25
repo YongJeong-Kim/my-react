@@ -3,6 +3,7 @@ package com.kyj.rest;
 import java.security.Principal;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,11 +20,13 @@ public class UserController {
 	private UserService userService;
 	
 	@PostMapping(value="/set/profile")
+	@Transactional
 	public void setUserProfile(@RequestBody ProfileDTO profileDTO, Principal principal) {
 		userService.setUserProfile(profileDTO, principal);
 	}
 	
 	@PostMapping("/set/card")
+	@Transactional
 	public void setUserCard(@RequestBody UserDTO userDTO, Principal principal) {
 		userService.setUserCard(userDTO, principal);
 	}

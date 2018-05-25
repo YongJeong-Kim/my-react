@@ -6,35 +6,32 @@ import { connect } from "react-redux"
 import { Manager, Target, Popper } from 'react-popper';
 
 // material-ui components
-import TextField from 'material-ui/TextField';
-import Dialog, {
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
-} from 'material-ui/Dialog';
-import Menu, { MenuItem, MenuList } from 'material-ui/Menu';
-import IconButton from 'material-ui/IconButton';
-import { FormControl, FormHelperText } from 'material-ui/Form';
-import Switch from 'material-ui/Switch';
-import Button from 'material-ui/Button';
-import Grow from 'material-ui/transitions/Grow';
-import Paper from 'material-ui/Paper';
-import List, { ListItem, ListItemIcon, ListItemText } from 'material-ui/List';
-import Divider from 'material-ui/Divider';
-import AppBar from 'material-ui/AppBar';
-import Toolbar from 'material-ui/Toolbar';
-import Typography from 'material-ui/Typography';
-import Grid from 'material-ui/Grid';
-import ClickAwayListener from 'material-ui/utils/ClickAwayListener';
-import Input, { InputLabel } from 'material-ui/Input';
-import Avatar from 'material-ui/Avatar';
+import TextField from '@material-ui/core/TextField';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
+import MenuList from '@material-ui/core/MenuList';
+import IconButton from '@material-ui/core/IconButton';
+import FormControl from '@material-ui/core/FormControl';
+import FormHelperText from '@material-ui/core/FormHelperText';
+import Switch from '@material-ui/core/Switch';
+import Button from '@material-ui/core/Button';
+import Grow from '@material-ui/core/Grow';
+import Paper from '@material-ui/core/Paper';
+import Divider from '@material-ui/core/Divider';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
+import Grid from '@material-ui/core/Grid';
+import ClickAwayListener from '@material-ui/core/ClickAwayListener';
+import Input from '@material-ui/core/Input';
+import InputLabel from '@material-ui/core/InputLabel';
+import Avatar from '@material-ui/core/Avatar';
 
 //material-ui colors and style
-import { blue } from 'material-ui/colors';
-import { withStyles } from 'material-ui/styles';
-import CloseIcon from 'material-ui-icons/Close';
-import StarBorder from 'material-ui-icons/StarBorder';
+import { blue } from '@material-ui/core/colors';
+import { withStyles } from '@material-ui/core/styles';
+import CloseIcon from '@material-ui/icons/Close';
+import StarBorder from '@material-ui/icons/StarBorder';
 
 import ImageAvatars from './ImageAvatars'
 import { NoMarginImageAvatars } from './ImageAvatars'
@@ -83,6 +80,7 @@ const styles = theme => ({
 })
 class UserAvatar extends Component {
   state = {
+    open: false,
     receiveUserProps: false,
     anchorEl: null,
     profileOpen: false,
@@ -94,11 +92,14 @@ class UserAvatar extends Component {
       receiveUserProps: true,
     });
   }
-  handleMenu = event => {
-    this.setState({ anchorEl: event.currentTarget });
+  handleMenu = () => {
+    this.setState({ open: !this.state.open })
   }
   handleRequestClose = () => {
-    this.setState({ anchorEl: null });
+    if (this.target1.contains(event.target)) {
+      return;
+    }
+    this.setState({ anchorEl: null, open: false, })
   }
   handleRequestProfile = () => {
     this.setState({
@@ -127,7 +128,7 @@ class UserAvatar extends Component {
   }
 
   render() {
-    const { anchorEl, profileOpen, profileEmail, receiveUserProps } = this.state;
+    const { anchorEl, profileOpen, profileEmail, receiveUserProps, open } = this.state;
     const dropMenuOpen = Boolean(anchorEl);
     const { classes } = this.props;
 
@@ -135,35 +136,39 @@ class UserAvatar extends Component {
       <div>
         <Manager>
           <Target>
+            <div
+              ref={node => {
+                this.target1 = node;
+              }}
+            >
             <IconButton
-              aria-owns={dropMenuOpen ? 'menu-appbar' : null}
+              aria-owns={open ? 'menu-list-grow' : null}
               aria-haspopup="true"
               onClick={this.handleMenu}
-              color="contrast"
+              color="inherit"
             >
               {receiveUserProps && <ImageAvatars />}
             </IconButton>
+            </div>
           </Target>
           <Popper
             placement="bottom-start"
-            eventsEnabled={dropMenuOpen}
-            className={classNames({ [classes.popperClose]: !dropMenuOpen })}
+            eventsEnabled={open}
+            className={classNames({ [classes.popperClose]: !open })}
           >
             <ClickAwayListener onClickAway={this.handleRequestClose}>
-              <Grow in={dropMenuOpen} id="menu-list" style={{ transformOrigin: '0 0 0' }}>
+              <Grow in={open} id="menu-list" style={{ transformOrigin: '0 0 0' }}>
                 <Paper>
                   <MenuList role="menu">
-                    <MenuItem onClick={this.handleRequestProfile}>Profile
-                      <ProfileModal handleRequestProfileClose={this.handleRequestProfileClose}
-                                           profileOpen={profileOpen} />
-                    </MenuItem>
+                    <MenuItem onClick={this.handleRequestProfile}>Profile</MenuItem>
+                    <ProfileModal handleRequestProfileClose={this.handleRequestProfileClose}
+                                         profileOpen={profileOpen} />
                     <MenuItem onClick={this.handleRequestClose}>My account</MenuItem>
-                    <MenuItem onClick={this.handleRequestChat}>Chat
-                      {receiveUserProps &&
-                        <ChatModal handleRequestChatClose={this.handleRequestChatClose}
-                                          chatOpen={this.state.chatOpen} />
-                      }
-                    </MenuItem>
+                    <MenuItem onClick={this.handleRequestChat}>Chat</MenuItem>
+                    {receiveUserProps &&
+                      <ChatModal handleRequestChatClose={this.handleRequestChatClose}
+                                        chatOpen={this.state.chatOpen} />
+                    }
                     <Divider />
                     <MenuItem onClick={this.handleLogout}>Logout</MenuItem>
                   </MenuList>

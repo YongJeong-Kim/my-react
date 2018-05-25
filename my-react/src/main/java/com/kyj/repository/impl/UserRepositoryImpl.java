@@ -1,7 +1,5 @@
 package com.kyj.repository.impl;
 
-import java.nio.charset.Charset;
-
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
