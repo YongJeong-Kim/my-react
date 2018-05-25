@@ -4,12 +4,12 @@ import {Router, Route, Link, browserHistory, IndexRoute } from 'react-router';
 import { connect } from "react-redux"
 
 // material-ui components
-import Grid from 'material-ui/Grid';
-import Button from 'material-ui/Button';
+import Grid from '@material-ui/core/Grid';
+import Button from '@material-ui/core/Button';
 import IndexAppBar from './appbar/IndexAppBar';
 
 //material-ui colors and style
-import { withStyles } from 'material-ui/styles';
+import { withStyles } from '@material-ui/core/styles';
 
 import { fetchUser, setUserName, getLoginUserInfo } from "../actions/userActions"
 import SimpleMediaCard from './SimpleMediaCard';
@@ -57,7 +57,7 @@ class App extends React.Component {
             }
 					</Grid>
 					<Grid item xs={8} >
-						<div>sdfsdfdf</div>
+						<div>sdfsdfdfsdf</div>
 					</Grid>
 				</Grid>
 			</div>

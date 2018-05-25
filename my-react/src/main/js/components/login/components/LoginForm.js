@@ -3,25 +3,27 @@ import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom'
 
 // material-ui components
-import Input, { InputLabel } from 'material-ui/Input';
-import { FormControl, FormHelperText } from 'material-ui/Form';
-import Button from 'material-ui/Button';
-import Avatar from 'material-ui/Avatar';
-import Paper from 'material-ui/Paper';
-import Typography from 'material-ui/Typography';
+import Input from '@material-ui/core/Input';
+import InputLabel from '@material-ui/core/InputLabel';
+import FormHelperText from '@material-ui/core/FormHelperText';
+import FormControl from '@material-ui/core/FormControl';
+import Button from '@material-ui/core/Button';
+import Avatar from '@material-ui/core/Avatar';
+import Paper from '@material-ui/core/Paper';
+import Typography from '@material-ui/core/Typography';
 
 // material-ui icons
-import FolderIcon from 'material-ui-icons/Folder';
-import PageviewIcon from 'material-ui-icons/Pageview';
-import AssignmentIcon from 'material-ui-icons/Assignment';
-import PersonIcon from 'material-ui-icons/Person';
-import LockIcon from 'material-ui-icons/Lock';
+import FolderIcon from '@material-ui/icons/Folder';
+import PageviewIcon from '@material-ui/icons/Pageview';
+import AssignmentIcon from '@material-ui/icons/Assignment';
+import PersonIcon from '@material-ui/icons/Person';
+import LockIcon from '@material-ui/icons/Lock';
 
 //material-ui colors and style
-import pink from 'material-ui/colors/pink';
-import blue from 'material-ui/colors/blue';
-import green from 'material-ui/colors/green';
-import { withStyles } from 'material-ui/styles';
+import pink from '@material-ui/core/colors/pink';
+import blue from '@material-ui/core/colors/blue';
+import green from '@material-ui/core/colors/green';
+import { withStyles } from '@material-ui/core/styles';
 
 const styles = theme => ({
   container: {
@@ -133,10 +135,9 @@ class LoginForm extends React.Component {
               <Avatar className={classes.lock}>
                 <LockIcon />
               </Avatar>
-              <FormControl className={classes.formControl}>
+              <FormControl className={classes.formControl} aria-describedby="name-helper-text">
                 <InputLabel htmlFor="name-helper">Password</InputLabel>
                 <Input id="name-helper" type="password" name="password" value={this.state.password} onChange={this.handleChangePassword} />
-                <FormHelperText>Some important helper text</FormHelperText>
               </FormControl>
             </div>
 

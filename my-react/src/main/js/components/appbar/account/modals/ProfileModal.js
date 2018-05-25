@@ -3,23 +3,24 @@ import PropTypes from 'prop-types';
 import { connect } from "react-redux"
 
 // material-ui components
-import Dialog, {
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
-} from 'material-ui/Dialog';
-import Button from 'material-ui/Button';
-import Avatar from 'material-ui/Avatar';
-import { FormControl, FormHelperText } from 'material-ui/Form';
-import Input, { InputLabel } from 'material-ui/Input';
-import TextField from 'material-ui/TextField';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import Button from '@material-ui/core/Button';
+import Avatar from '@material-ui/core/Avatar';
+import FormControl from '@material-ui/core/FormControl';
+import FormHelperText from '@material-ui/core/FormHelperText';
+import Input from '@material-ui/core/Input';
+import InputLabel from '@material-ui/core/InputLabel';
+import TextField from '@material-ui/core/TextField';
 
 //material-ui colors and style
-import blue from 'material-ui/colors/blue';
-import pink from 'material-ui/colors/pink';
-import { withStyles } from 'material-ui/styles';
-import { MuiThemeProvider, createMuiTheme } from 'material-ui/styles';
+import blue from '@material-ui/core/colors/blue';
+import pink from '@material-ui/core/colors/pink';
+import { withStyles } from '@material-ui/core/styles';
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 
 import ImageAvatars from '../ImageAvatars'
 import { NoMarginImageAvatars } from '../ImageAvatars'
@@ -111,6 +112,8 @@ class ProfileModal extends Component {
     let file = e.target.files[0];
 
     if (file.type.includes('image')) {
+      if (reader.result)
+        reader.result = this.props.user.encodeImage;
       reader.onloadend = () => {
         this.setState({
           profile: {
