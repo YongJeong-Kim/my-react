@@ -85,7 +85,7 @@ class ProfileModal extends Component {
     profile: {
       name: 'aaa',
       email: 'aaa@email.com',
-      imagePreviewUrl: '',
+      imagePreviewUrl: this.props.user.avatarEncodeImage,
       file: '',
     }
   }
@@ -112,8 +112,6 @@ class ProfileModal extends Component {
     let file = e.target.files[0];
 
     if (file.type.includes('image')) {
-      if (reader.result)
-        reader.result = this.props.user.encodeImage;
       reader.onloadend = () => {
         this.setState({
           profile: {

@@ -100,7 +100,7 @@ class EditModal extends Component {
   state = {
     editOpen: false,
     edit: {
-      encodeImage: '',
+      encodeImage: this.props.user.encodeImage,
       headline: 'dd',
       notification: 'noti',
     },
@@ -111,8 +111,6 @@ class EditModal extends Component {
     let file = e.target.files[0];
 
     if (file.type.includes('image')) {
-      if (reader.result)
-        reader.result = this.props.user.encodeImage;
       reader.onloadend = () => {
         this.setState({
           edit: {
