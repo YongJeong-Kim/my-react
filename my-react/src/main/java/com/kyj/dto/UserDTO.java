@@ -5,9 +5,11 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter @Setter
+@NoArgsConstructor
 public class UserDTO {
 	/*private User user;
 	private List<String> roles;
@@ -41,15 +43,13 @@ public class UserDTO {
 	
 	private List<String> roles;
 	
-	public UserDTO() {}
-	
 	public UserDTO(String headline, String notification) {
 //		this.encodeImage = encodeImage;
 		this.headline = headline;
 		this.notification = notification;
 	}
 	
-	public UserDTO(String username,
+/*	public UserDTO(String username,
 				   String email,
 				   Boolean isEnabled,
 				   Boolean isAccountNonExpired,    
@@ -71,7 +71,7 @@ public class UserDTO {
 		this.headline = headline;
 		this.notification = notification;
 		this.mergedRoles = mergedRoles;
-	}
+	}*/
 	
 	public UserDTO(UserDTO userDto, List<String> roles) {
 		this.username = userDto.getUsername();

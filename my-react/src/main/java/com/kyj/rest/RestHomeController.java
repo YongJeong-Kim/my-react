@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.kyj.composite.UserRolesPK;
 import com.kyj.entity.User_Roles;
+import com.kyj.repository.UserRepository;
 import com.kyj.repository.UserRolesRepository;
 import com.kyj.service.UserService;
 
@@ -15,6 +16,9 @@ import com.kyj.service.UserService;
 public class RestHomeController {
 	@Autowired
 	private UserRolesRepository userRoleRepository;
+	
+	@Autowired
+	private UserRepository userRepository;
 	
 	@Autowired
 	private UserService userService;
@@ -27,7 +31,13 @@ public class RestHomeController {
 		UserRolesPK urpk = new UserRolesPK();
 		urpk.setUserId(1L);
 //		urpk.setRoleId(1L);
-		return userRoleRepository.findOne(urpk).getCompositeKey();
+//		return userRoleRepository.findOne(urpk).getCompositeKey();
+		return null;
+	}
+	
+	@GetMapping("/ttest")
+	public void ddd() {
+		userRepository.findUserInfo("aaa");
 	}
 	
 	@GetMapping("/removeUser")
