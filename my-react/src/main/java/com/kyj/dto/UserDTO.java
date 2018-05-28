@@ -49,30 +49,6 @@ public class UserDTO {
 		this.notification = notification;
 	}
 	
-/*	public UserDTO(String username,
-				   String email,
-				   Boolean isEnabled,
-				   Boolean isAccountNonExpired,    
-				   Boolean isAccountNonLocked,
-				   Boolean isCredentialsNonExpired,
-				   String avatarEncodeImage,
-				   String encodeImage,
-				   String headline,
-				   String notification,
-				   String mergedRoles) {
-		this.username = username;
-		this.email = email;
-		this.isEnabled = isEnabled;
-		this.isAccountNonExpired = isAccountNonExpired;
-		this.isAccountNonLocked = isAccountNonLocked;
-		this.isCredentialsNonExpired = isCredentialsNonExpired;
-		this.avatarEncodeImage = avatarEncodeImage;
-		this.encodeImage = encodeImage;
-		this.headline = headline;
-		this.notification = notification;
-		this.mergedRoles = mergedRoles;
-	}*/
-	
 	public UserDTO(UserDTO userDto, List<String> roles) {
 		this.username = userDto.getUsername();
 		this.email = userDto.getEmail();
