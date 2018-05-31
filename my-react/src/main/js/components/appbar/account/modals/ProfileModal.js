@@ -124,7 +124,7 @@ class ProfileModal extends Component {
       reader.readAsDataURL(file);
     }
   }
-  handleSubcribe = () => {
+  handleSubscribe = () => {
     const { profile } = this.state;
     this.props.dispatch(setUserProfile(profile));
     this.setState({ profileOpen: false, });
@@ -176,7 +176,7 @@ class ProfileModal extends Component {
               <Button onClick={this.handleRequestProfileClose} color="secondary" >
                 Cancel
               </Button>
-              <Button onClick={this.handleSubcribe} color="primary" >
+              <Button onClick={this.handleSubscribe} color="primary" >
                 Subscribe
               </Button>
             </DialogActions>
