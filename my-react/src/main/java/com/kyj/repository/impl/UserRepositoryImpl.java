@@ -5,6 +5,7 @@ import java.util.Optional;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import com.kyj.composite.QUserRolesPK;
 import com.kyj.dto.ProfileDTO;
 import com.kyj.dto.UserDTO;
 import com.kyj.entity.QRoles;
@@ -67,6 +68,7 @@ public class UserRepositoryImpl implements UserRepositoryCustom {
 		QUser user = QUser.user;
 		QRoles role = QRoles.roles;
 		QUser_Roles ur = QUser_Roles.user_Roles;
+		QUserRolesPK urpk = new QUserRolesPK("user_roles");
 		
 		JPASQLQuery<?> query = new JPASQLQuery<Void>(entityManager, templates);
 		
@@ -86,8 +88,10 @@ public class UserRepositoryImpl implements UserRepositoryCustom {
 			.distinct()
 			.from(user)
 				.innerJoin(ur)
+					.on(urpk.userId.eq(user.id))
 				.innerJoin(role)
-					.on(user.username.eq(username))
+					.on(role.id.eq(urpk.rolesId))
+			.where(user.username.eq(username))
 			.fetchOne());
 	}
 }
