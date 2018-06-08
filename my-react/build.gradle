@@ -35,11 +35,12 @@ dependencies {
 	def querydslVersion = "4.2.1"
  
  	compile ("com.querydsl:querydsl-core:$querydslVersion")
-    compile ("com.querydsl:querydsl-apt:$querydslVersion")
-    compile ("com.querydsl:querydsl-jpa:$querydslVersion")
+  compile ("com.querydsl:querydsl-apt:$querydslVersion")
+  compile ("com.querydsl:querydsl-jpa:$querydslVersion")
 	compile ("com.querydsl:querydsl-sql:$querydslVersion")
 	compile group: 'ch.simas.qlrm', name: 'qlrm', version: '1.7.1'
 
+	compile group: 'io.reactivex.rxjava2', name: 'rxjava', version: '2.1.14'
 	compile group: 'commons-io', name: 'commons-io', version: '2.6'
 	compile('org.springframework.boot:spring-boot-starter-data-jpa')
 	compile('org.springframework.boot:spring-boot-starter-thymeleaf')
@@ -53,33 +54,33 @@ dependencies {
 }
 
 sourceSets {
-    generated {
-        java {
-            srcDirs = ['src/main/generated']
-        }
+  generated {
+    java {
+      srcDirs = ['src/main/generated']
     }
+  }
 }
 
 task generateQueryDSL(type: JavaCompile, group: 'build') {
-     source = sourceSets.main.java
-     classpath = configurations.compile
-     options.compilerArgs = [
-          "-proc:only",
-          "-processor", "com.querydsl.apt.jpa.JPAAnnotationProcessor"
-     ]
-     destinationDir = sourceSets.generated.java.srcDirs.iterator().next()
+   source = sourceSets.main.java
+   classpath = configurations.compile
+   options.compilerArgs = [
+      "-proc:only",
+      "-processor", "com.querydsl.apt.jpa.JPAAnnotationProcessor"
+   ]
+   destinationDir = sourceSets.generated.java.srcDirs.iterator().next()
 }
 
 compileJava {
-     dependsOn generateQueryDSL
-     source generateQueryDSL.destinationDir
+   dependsOn generateQueryDSL
+   source generateQueryDSL.destinationDir
 }
 compileGeneratedJava {
-     dependsOn generateQueryDSL
-     options.warnings = false
-     classpath += sourceSets.main.runtimeClasspath
+   dependsOn generateQueryDSL
+   options.warnings = false
+   classpath += sourceSets.main.runtimeClasspath
 }
 
 clean {
-     delete sourceSets.generated.java.srcDirs
+   delete sourceSets.generated.java.srcDirs
 }
