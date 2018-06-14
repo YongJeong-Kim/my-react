@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Badge from '@material-ui/core/Badge';
@@ -27,26 +27,47 @@ const theme = createMuiTheme({
 const mailIconOnClick = () => {
   alert();
 }
-function Mail(props) {
-  const classes = props.classes;
-  return (
-    <div>
-      <MuiThemeProvider theme={theme} >
-        <IconButton color="inherit" aria-label="Menu" onClick={mailIconOnClick}>
-          <Badge className={classes.badge} badgeContent={'99+'} >
-            <MailIcon />
-          </Badge>
-        </IconButton>
-          </MuiThemeProvider>
-          <MuiThemeProvider theme={theme} >
-        <IconButton color="inherit" aria-label="Menu">
-          <Badge badgeContent={10} >
-            <FolderIcon />
-          </Badge>
-        </IconButton>
-      </MuiThemeProvider>
-    </div>
-  );
+class Mail extends Component {
+  state = {
+    messageCount: 95,
+    messageStringCount: '95',
+  }
+
+  componentWillReceiveProps = (props) => {
+    if (props.notification.to) {
+      const messageCount = this.state.messageCount + 1
+      let messageStringCount = ''
+
+      this.setState({messageCount, }, () => {
+         messageStringCount = this.state.messageCount > 99? '99+' : this.state.messageCount + ''
+         this.setState({messageStringCount, })
+      })
+    }
+  }
+
+  render() {
+    const classes = this.props.classes;
+    const notification = this.props.notification
+
+    return (
+      <div>
+        <MuiThemeProvider theme={theme} >
+          <IconButton color="inherit" aria-label="Menu" onClick={mailIconOnClick}>
+            <Badge className={classes.badge} badgeContent={this.state.messageStringCount} >
+              <MailIcon />
+            </Badge>
+          </IconButton>
+        </MuiThemeProvider>
+        <MuiThemeProvider theme={theme} >
+          <IconButton color="inherit" aria-label="Menu">
+            <Badge badgeContent={10} >
+              <FolderIcon />
+            </Badge>
+          </IconButton>
+        </MuiThemeProvider>
+      </div>
+    );
+  }
 }
 
 Mail.propTypes = {

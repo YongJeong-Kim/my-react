@@ -11,8 +11,9 @@ import IndexAppBar from './appbar/IndexAppBar';
 //material-ui colors and style
 import { withStyles } from '@material-ui/core/styles';
 
-import { fetchUser, setUserName, getLoginUserInfo } from "../actions/userActions"
+import { getLoginUserInfo } from "../actions/userActions"
 import SimpleMediaCard from './SimpleMediaCard';
+import ContentTab from './content/ContentTab'
 
 const styles = theme => ({
   root: {
@@ -20,6 +21,10 @@ const styles = theme => ({
 /*    marginTop: 30, */
   },
 });
+
+const Test = (msg) => (
+  <ConsecutiveSnackbars message={msg} open={true} />
+)
 
 @connect((store) => {
   return {
@@ -34,15 +39,18 @@ class App extends React.Component {
   componentWillMount() {
     this.props.dispatch(getLoginUserInfo());
   }
-
   componentWillReceiveProps() {
     this.setState({
       receiveProps: true,
     });
   }
+  handleRecentTab = (recentTab) => {
+    this.setState({ recentTab, })
+  }
 
 	render() {
     const classes = this.props.classes;
+
 		return (
 			<div className={classes.root} >
 				<Grid container spacing={24}>
@@ -57,7 +65,9 @@ class App extends React.Component {
             }
 					</Grid>
 					<Grid item xs={8} >
-						<div>sdfsdfdfsdf</div>
+						<div>
+              <ContentTab />
+            </div>
 					</Grid>
 				</Grid>
 			</div>
