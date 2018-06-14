@@ -35,9 +35,17 @@ export default function reducer(state={
         return {...state, loggedIn: true,}
       }
       case "LOGIN_USER_INFO": {
+        let user = action.payload.user
+        user['tab'] = {
+          tabs: [
+            { title: 'main', value: 0, },
+            { title: 'second', value: 1, },
+          ],
+          selected: 0,
+        }
         return {
           ...state,
-          user: action.payload.user,
+          user,
         }
       }
       case "SET_USER_PROFILE": {
@@ -57,6 +65,15 @@ export default function reducer(state={
             encodeImage: action.payload.encodeImage,
             headline: action.payload.headline,
             notification: action.payload.notification,
+          }
+        }
+      }
+      case "SET_CONTENT_TAB": {
+        return {
+          ...state,
+          user: {
+            ...state.user,
+            tab: action.payload,
           }
         }
       }

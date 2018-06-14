@@ -11,23 +11,6 @@ import lombok.Setter;
 @Getter @Setter
 @NoArgsConstructor
 public class UserDTO {
-	/*private User user;
-	private List<String> roles;
-	private String role;
-	
-	public UserDTO() {}
-	
-	@QueryProjection
-	public UserDTO(User user) {
-		this.user = user;
-	}*/
-	
-/*	@QueryProjection
-	public UserDTO(User user, List<Roles> roles) {
-		this.user = user;
-		this.role = roles.getRole();
-	}*/
-	
 	private String username;
 	private String email;
 	private Boolean isEnabled;

@@ -79,3 +79,9 @@ export let setUserCard = (edit) => {
       })
   }
 }
+
+export const setContentTab = (tab) => {
+  return (dispatch) => {
+    dispatch({ type: "SET_CONTENT_TAB", payload: tab, })
+  }
+}
