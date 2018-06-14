@@ -13,6 +13,7 @@ import com.kyj.entity.QUser;
 import com.kyj.entity.QUser_Roles;
 import com.kyj.repository.querydsl.UserRepositoryCustom;
 import com.querydsl.core.types.Projections;
+import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.querydsl.jpa.sql.JPASQLQuery;
 import com.querydsl.sql.MySQLTemplates;
@@ -82,7 +83,8 @@ public class UserRepositoryImpl implements UserRepositoryCustom {
 				user.isAccountNonLocked,
 				user.isCredentialsNonExpired,
 				user.avatarEncodeImage,
-				user.encodeImage,
+//				user.encodeImage,
+				SQLExpressions.select(user.encodeImage).from(user).where(user.encodeImage.isNotNull().and(user.encodeImage.isNotEmpty())).as("encodeImage"),
 				user.headline,
 				user.notification))
 			.distinct()
