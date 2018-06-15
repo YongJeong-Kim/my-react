@@ -11,9 +11,14 @@ import com.kyj.dto.UserDTO;
 import com.kyj.entity.QRoles;
 import com.kyj.entity.QUser;
 import com.kyj.entity.QUser_Roles;
+import com.kyj.entity.User;
 import com.kyj.repository.querydsl.UserRepositoryCustom;
+import com.querydsl.core.Tuple;
 import com.querydsl.core.types.Projections;
+import com.querydsl.core.types.dsl.SimpleExpression;
 import com.querydsl.jpa.JPAExpressions;
+import com.querydsl.jpa.JPQLQuery;
+import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.querydsl.jpa.sql.JPASQLQuery;
 import com.querydsl.sql.MySQLTemplates;
@@ -67,9 +72,23 @@ public class UserRepositoryImpl implements UserRepositoryCustom {
 	@Override
 	public Optional<UserDTO> findUserInfo(String username) {
 		QUser user = QUser.user;
+		QUser subuser = new QUser("subuser");
 		QRoles role = QRoles.roles;
 		QUser_Roles ur = QUser_Roles.user_Roles;
 		QUserRolesPK urpk = new QUserRolesPK("user_roles");
+		
+/*		JPQLQuery<User> dddd = JPAExpressions.selectFrom(subuser).where(subuser.username.eq("aaa"));
+		JPAQuery<User> q = new JPAQuery<>();
+		q.select(subuser).from(subuser).where(subuser.username.eq("aaa"));*/
+		
+		SimpleExpression<Tuple> subQuery = SQLExpressions
+			.select(user.encodeImage, user.headline, user.notification)
+				.from(user)
+					.join(ur)
+						.on(urpk.userId.eq(user.id))
+					.join(role)
+						.on(urpk.rolesId.eq(role.id))
+					.where(role.role.eq("ROLE_ADMIN")).as(subuser);
 		
 		JPASQLQuery<?> query = new JPASQLQuery<Void>(entityManager, templates);
 		
@@ -83,12 +102,11 @@ public class UserRepositoryImpl implements UserRepositoryCustom {
 				user.isAccountNonLocked,
 				user.isCredentialsNonExpired,
 				user.avatarEncodeImage,
-//				user.encodeImage,
-				SQLExpressions.select(user.encodeImage).from(user).where(user.encodeImage.isNotNull().and(user.encodeImage.isNotEmpty())).as("encodeImage"),
-				user.headline,
-				user.notification))
+				subuser.encodeImage,
+				subuser.headline,
+				subuser.notification))
 			.distinct()
-			.from(user)
+			.from(subQuery, user)
 				.innerJoin(ur)
 					.on(urpk.userId.eq(user.id))
 				.innerJoin(role)
