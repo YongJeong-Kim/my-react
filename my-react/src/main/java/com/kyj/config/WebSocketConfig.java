@@ -1,10 +1,19 @@
 package com.kyj.config;
 
+import java.util.Map;
+
+import javax.servlet.http.HttpSession;
+
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.server.ServerHttpRequest;
+import org.springframework.http.server.ServerHttpResponse;
+import org.springframework.http.server.ServletServerHttpRequest;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
+import org.springframework.web.socket.WebSocketHandler;
 import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
 import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
 import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerConfigurer;
+import org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor;
 
 @Configuration
 @EnableWebSocketMessageBroker
@@ -25,7 +34,7 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     // Register the "/ws" endpoint, enabling the SockJS protocol.
     // SockJS is used (both client and server side) to allow alternative 
     // messaging options if WebSocket is not available.
-    registry.addEndpoint("/ws").setAllowedOrigins("*").withSockJS();
+    registry.addEndpoint("/ws").setAllowedOrigins("*").addInterceptors(new HttpSessionIdHandshakeInterceptor()).withSockJS();
     
     return;
   }
@@ -47,3 +56,23 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 //  }
 
 } // class WebSocketConfig
+
+class HttpSessionIdHandshakeInterceptor extends HttpSessionHandshakeInterceptor {
+	@Override
+	public boolean beforeHandshake(ServerHttpRequest request, ServerHttpResponse response, WebSocketHandler wshandler, Map<String, Object> attributes) throws Exception {
+		if(request instanceof ServletServerHttpRequest) {
+			ServletServerHttpRequest servletRequest = (ServletServerHttpRequest) request;
+			HttpSession session = servletRequest.getServletRequest().getSession(false);
+			
+			if(session != null) {
+				attributes.put("SESSION_ID", session.getId());
+			}
+		}
+		return super.beforeHandshake(request, response, wshandler, attributes);
+	}
+	
+	@Override
+	public void afterHandshake(ServerHttpRequest request, ServerHttpResponse response, WebSocketHandler wsHandler, Exception ex) {
+		super.afterHandshake(request, response, wsHandler, ex);
+	}
+}

@@ -1,6 +1,7 @@
 package com.kyj.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.servlet.ServletListenerRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -9,9 +10,12 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.session.SessionRegistry;
+import org.springframework.security.core.session.SessionRegistryImpl;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.session.HttpSessionEventPublisher;
 
 @Configuration
 @EnableWebSecurity
@@ -33,16 +37,28 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/user/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_USER")
 //				.antMatchers("/css/**", "/js/**").permitAll()
 			.and()
-				.formLogin().loginPage("/login").usernameParameter("username").passwordParameter("password").defaultSuccessUrl("/home")
+			.formLogin().loginPage("/login").usernameParameter("username").passwordParameter("password").successHandler(new NoRedirectSavedRequestAwareAuthenticationSuccessHandler()).defaultSuccessUrl("/home")
 			.and()
-				.logout().logoutSuccessUrl("/login?logout")
+			.logout().logoutSuccessUrl("/login?logout")
 			.and()
-				.exceptionHandling().accessDeniedPage("/error/403")
+			.exceptionHandling().accessDeniedPage("/error/403")
+//			.and()
+//				.sessionManagement().maximumSessions(1).sessionRegistry(sessionRegistry());
 			.and()
 				.csrf().disable();
 		
-		
+		http.sessionManagement().maximumSessions(1).expiredUrl("/login").sessionRegistry(sessionRegistry());
 	}
+	
+	@Bean
+  public SessionRegistry sessionRegistry() {
+      return new SessionRegistryImpl();
+  }
+
+  @Bean
+  public ServletListenerRegistrationBean<HttpSessionEventPublisher> httpSessionEventPublisher() {
+      return new ServletListenerRegistrationBean<HttpSessionEventPublisher>(new HttpSessionEventPublisher());
+  }
 
 	@Bean(name = "passwordEncoder")
 	public PasswordEncoder passwordencoder() {
