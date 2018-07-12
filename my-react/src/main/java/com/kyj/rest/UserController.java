@@ -17,6 +17,8 @@ import com.kyj.dto.UserDTO;
 import com.kyj.entity.User;
 import com.kyj.service.UserService;
 
+import reactor.core.publisher.Mono;
+
 @RestController
 @RequestMapping("/user")
 public class UserController {
@@ -39,7 +41,7 @@ public class UserController {
 	}
 	
 	@PostMapping("/currentLoggedUsers")
-	public List<User> currentLoggedUsers() {
+	public Mono<List<User>> currentLoggedUsers() {
 		List<Object> principals = sessionRegistry.getAllPrincipals();
 		List<User> currentLoggedUsers = new ArrayList<>();
 		
@@ -49,7 +51,7 @@ public class UserController {
 			}
 		});
 		
-		return currentLoggedUsers;
+		return Mono.just(currentLoggedUsers);
 	}
 	
 }

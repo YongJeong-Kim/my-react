@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.kyj.service.LoginService;
 
+import reactor.core.publisher.Mono;
+
 @RestController
 @RequestMapping("/login")
 public class LoginController {	
@@ -25,7 +27,7 @@ public class LoginController {
 	
 	@PreAuthorize("hasAuthority('ROLE_ADMIN') or hasAuthority('ROLE_USER')")
 	@GetMapping("/user/info")
-	public Map<String, Object> loginUserInfo(Principal principal) {
+	public Mono<Map<String, Object>> loginUserInfo(Principal principal) {
 /*		List<Roles> roles = roleRepository.findAll();
 		Roles r = roleRepository.findOne(1L);
 		
@@ -71,16 +73,4 @@ public class LoginController {
 				//.transform(GroupBy.groupBy(roles.role).as(list(roles)));
 
 	}
-	
-	@GetMapping("/qqq")
-	public Map<String, Object> qqq() {
-		return loginService.getLoginUserInfo("aaa");
-	}
-	
-/*	@GetMapping("qqq")
-	public List<String> postqqq() {
-		return loginService.loginUser();
-	}*/
-	
-	
 }
