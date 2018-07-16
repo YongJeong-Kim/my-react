@@ -37,11 +37,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/user/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_USER")
 //				.antMatchers("/css/**", "/js/**").permitAll()
 			.and()
-			.formLogin().loginPage("/login").usernameParameter("username").passwordParameter("password").successHandler(new NoRedirectSavedRequestAwareAuthenticationSuccessHandler()).defaultSuccessUrl("/home")
+			.formLogin().loginPage("/login").usernameParameter("username").passwordParameter("password").defaultSuccessUrl("/home")
 			.and()
 			.logout().logoutSuccessUrl("/login?logout")
 			.and()
 			.exceptionHandling().accessDeniedPage("/error/403")
+				.and().exceptionHandling().authenticationEntryPoint(new AjaxAwareAuthenticationEntryPoint("/login"))
 //			.and()
 //				.sessionManagement().maximumSessions(1).sessionRegistry(sessionRegistry());
 			.and()
