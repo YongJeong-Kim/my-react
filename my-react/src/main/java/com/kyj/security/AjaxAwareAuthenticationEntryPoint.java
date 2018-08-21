@@ -16,11 +16,11 @@ public class AjaxAwareAuthenticationEntryPoint extends LoginUrlAuthenticationEnt
 
   @Override
   public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
-      String ajaxHeader = ((HttpServletRequest) request).getHeader("X-Requested-With");
-      if ("XMLHttpRequest".equals(ajaxHeader)) {
-          response.sendError(HttpServletResponse.SC_FORBIDDEN, "Ajax Request Denied (Session Expired)");
-      } else {
-          super.commence(request, response, authException);
-      }
+    String ajaxHeader = ((HttpServletRequest) request).getHeader("X-Requested-With");
+    if ("XMLHttpRequest".equals(ajaxHeader)) {
+        response.sendError(HttpServletResponse.SC_FORBIDDEN, "Ajax Request Denied (Session Expired)");
+    } else {
+        super.commence(request, response, authException);
+    }
   }
 }

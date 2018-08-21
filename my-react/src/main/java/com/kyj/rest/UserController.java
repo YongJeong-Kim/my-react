@@ -17,6 +17,7 @@ import com.kyj.dto.UserDTO;
 import com.kyj.entity.User;
 import com.kyj.service.UserService;
 
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @RestController
@@ -41,7 +42,7 @@ public class UserController {
 	}
 	
 	@PostMapping("/currentLoggedUsers")
-	public Mono<List<User>> currentLoggedUsers() {
+	public Flux<User> currentLoggedUsers() {
 		List<Object> principals = sessionRegistry.getAllPrincipals();
 		List<User> currentLoggedUsers = new ArrayList<>();
 		
@@ -51,7 +52,7 @@ public class UserController {
 			}
 		});
 		
-		return Mono.just(currentLoggedUsers);
+		return Flux.fromIterable(currentLoggedUsers);
 	}
 	
 }

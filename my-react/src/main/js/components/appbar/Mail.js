@@ -34,6 +34,7 @@ class Mail extends Component {
   }
 
   componentWillReceiveProps = (props) => {
+    console.log(props)
     if (props.notification.to) {
       const messageCount = this.state.messageCount + 1
       let messageStringCount = ''

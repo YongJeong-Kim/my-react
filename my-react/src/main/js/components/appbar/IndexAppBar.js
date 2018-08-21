@@ -28,6 +28,7 @@ import { withStyles } from '@material-ui/core/styles';
 import Mail from './Mail';
 import UserAvatar from './account/UserAvatar'
 import { setContentTab } from "../../actions/userActions"
+import MailSnackbar from './MailSnackbar'
 
 const styles = {
   root: {
@@ -91,6 +92,7 @@ class IndexAppBar extends React.Component {
       date: "",
       message: "",
     },
+    notificationOpen: false,
   }
 
   handleDrawer = () => {
@@ -122,20 +124,24 @@ class IndexAppBar extends React.Component {
     let chat = {
       to: "bbb",
       from: "aaa",
-      message: "hi bbb",
+      fromAvatarImage: this.props.user.avatarEncodeImage,
+      message: "ㅇㄴㅇㄴㄹㄷ",
       date: "2018-06-14",
     }
+    console.log(this.props);
     console.log(window.location.protocol + "//" + window.location.host + "/handler")
     this.clientRef.sendMessage("/app/fff", JSON.stringify(chat))
   }
   handleNotification = (notification) => {
     console.log(notification)
-    this.setState({notification, })
+    this.setState({notification, notificationOpen: true, })
+  }
+  handleNotificationClose = (notificationOpen) => {
+    this.setState({notificationOpen, })
   }
 
 	render() {
     const { classes } = this.props;
-
 {/*    const sideList = (
       <div className={classes.list}>
         <List>{mailFolderListItems}</List>
@@ -180,7 +186,9 @@ class IndexAppBar extends React.Component {
             <Typography variant="title" color="inherit" className={classes.flex}>
               Title
             </Typography>
-
+            <MailSnackbar notificationOpen={this.state.notificationOpen}
+                          handleNotificationClose={this.handleNotificationClose}
+                          notification={this.state.notification} />
             <IconButton onClick={this.handleTest} color="secondary" className={classes.button} aria-label="Add to shopping cart">
 	          	<AddShoppingCartIcon />
 	          </IconButton>
