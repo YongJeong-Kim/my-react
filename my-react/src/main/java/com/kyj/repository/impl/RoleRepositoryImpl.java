@@ -20,9 +20,9 @@ public class RoleRepositoryImpl implements RoleRepositoryCustom {
 		QUser user = QUser.user;
 		QRoles roles = QRoles.roles;
 		
-		return queryFactory.selectFrom(user)
-					.innerJoin(user.roles, roles).on(user.username.eq(username))
-					.select(roles.role).fetch();
+		return queryFactory.from(user)
+			.innerJoin(user.roles, roles).on(user.username.eq(username))
+			.select(roles.role).fetch();
 	}
 
 }

@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import axios from 'axios';
 import { connect } from "react-redux"
-import { Manager, Target, Popper } from 'react-popper';
 
 // material-ui components
 import TextField from '@material-ui/core/TextField';
@@ -26,6 +25,7 @@ import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
 import Avatar from '@material-ui/core/Avatar';
+import Popper from '@material-ui/core/Popper';
 
 //material-ui colors and style
 import { blue } from '@material-ui/core/colors';
@@ -82,7 +82,6 @@ class UserAvatar extends Component {
   state = {
     open: false,
     receiveUserProps: false,
-    anchorEl: null,
     profileOpen: false,
     chatOpen: false,
   };
@@ -99,24 +98,21 @@ class UserAvatar extends Component {
     if (this.target1.contains(event.target)) {
       return;
     }
-    this.setState({ anchorEl: null, open: false, })
+    this.setState({ open: false, })
   }
   handleRequestProfile = () => {
-    this.setState({
-      profileOpen: true, anchorEl: null,
-    });
+    this.setState({ profileOpen: true, open: !this.state.open, });
   }
   handleRequestProfileClose = (profileOpen) => {
     this.setState({ profileOpen, });
   }
   handleRequestChat = () => {
-    this.setState({ chatOpen: true, anchorEl: null, });
+    this.setState({ chatOpen: true, open: !this.state.open, });
   }
   handleRequestChatClose = (chatOpen) => {
     this.setState({ chatOpen, });
   }
   handleLogout = () => {
-    this.setState({ anchorEl: null });
     axios.post("/logout")
       .then((response) => {
         console.log('logout');
@@ -128,55 +124,46 @@ class UserAvatar extends Component {
   }
 
   render() {
-    const { anchorEl, profileOpen, profileEmail, receiveUserProps, open } = this.state;
-    const dropMenuOpen = Boolean(anchorEl);
+    const { profileOpen, receiveUserProps, open } = this.state;
     const { classes } = this.props;
 
     return (
       <div>
-        <Manager>
-          <Target>
-            <div
-              ref={node => {
-                this.target1 = node;
-              }}
-            >
-            <IconButton
-              aria-owns={open ? 'menu-list-grow' : null}
-              aria-haspopup="true"
-              onClick={this.handleMenu}
-              color="inherit"
-            >
-              {receiveUserProps && <ImageAvatars />}
-            </IconButton>
-            </div>
-          </Target>
-          <Popper
-            placement="bottom-start"
-            eventsEnabled={open}
-            className={classNames({ [classes.popperClose]: !open })}
-          >
-            <ClickAwayListener onClickAway={this.handleRequestClose}>
-              <Grow in={open} id="menu-list" style={{ transformOrigin: '0 0 0' }}>
-                <Paper>
+        <IconButton
+          buttonRef={node => {
+            this.target1 = node;
+          }}
+          aria-owns={open ? 'menu-list-grow' : null}
+          aria-haspopup="true"
+          onClick={this.handleMenu}
+          color="inherit"
+        >
+          {receiveUserProps && <ImageAvatars />}
+        </IconButton>
+        <Popper open={open} anchorEl={this.target1} transition disablePortal>
+          {({ TransitionProps, placement }) => (
+            <Grow {...TransitionProps} id="menu-list-grow"
+                style={{ transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom' }} >
+              <Paper>
+                <ClickAwayListener onClickAway={this.handleRequestClose}>
                   <MenuList role="menu">
                     <MenuItem onClick={this.handleRequestProfile}>Profile</MenuItem>
-                    <ProfileModal handleRequestProfileClose={this.handleRequestProfileClose}
-                                         profileOpen={profileOpen} />
                     <MenuItem onClick={this.handleRequestClose}>My account</MenuItem>
                     <MenuItem onClick={this.handleRequestChat}>Chat</MenuItem>
-                    {receiveUserProps &&
-                      <ChatModal handleRequestChatClose={this.handleRequestChatClose}
-                                        chatOpen={this.state.chatOpen} />
-                    }
                     <Divider />
                     <MenuItem onClick={this.handleLogout}>Logout</MenuItem>
                   </MenuList>
-                </Paper>
-              </Grow>
-            </ClickAwayListener>
-          </Popper>
-        </Manager>
+                </ClickAwayListener>
+              </Paper>
+            </Grow>
+          )}
+        </Popper>
+        <ProfileModal handleRequestProfileClose={this.handleRequestProfileClose}
+                      profileOpen={profileOpen} />
+        {receiveUserProps &&
+          <ChatModal handleRequestChatClose={this.handleRequestChatClose}
+                     chatOpen={this.state.chatOpen} />
+        }
       </div>
     )
   }

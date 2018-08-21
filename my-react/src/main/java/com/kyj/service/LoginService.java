@@ -13,6 +13,8 @@ import com.kyj.dto.UserDTO;
 import com.kyj.repository.RoleRepository;
 import com.kyj.repository.UserRepository;
 
+import reactor.core.publisher.Mono;
+
 @Service
 public class LoginService {
 	@Autowired
@@ -25,7 +27,7 @@ public class LoginService {
 		return roleRepository.getLoginUserRoles(username);
 	}
 	
-	public Map<String, Object> getLoginUserInfo(String username) {
+	public Mono<Map<String, Object>> getLoginUserInfo(String username) {
 		Map<String, Object> map = new HashMap<>();
 		Optional<UserDTO> userInfo = userRepository.findUserInfo(username);
 
@@ -39,6 +41,6 @@ public class LoginService {
 			map.put("user", userDTO);
 		});
 		
-		return map;
+		return Mono.just(map);
 	}
 }

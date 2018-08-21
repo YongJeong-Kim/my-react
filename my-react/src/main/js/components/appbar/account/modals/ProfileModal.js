@@ -124,7 +124,7 @@ class ProfileModal extends Component {
       reader.readAsDataURL(file);
     }
   }
-  handleSubcribe = () => {
+  handleSubscribe = () => {
     const { profile } = this.state;
     this.props.dispatch(setUserProfile(profile));
     this.setState({ profileOpen: false, });
@@ -141,48 +141,46 @@ class ProfileModal extends Component {
     else
       profileImage = <Avatar alt="No Image" src={avatarImage} className={classes.bigAvatar} />
     return (
-      <div>
-        <Dialog open={this.props.profileOpen} disableBackdropClick >
-          <DialogTitle>Profile</DialogTitle>
+      <Dialog open={this.props.profileOpen} disableBackdropClick >
+        <DialogTitle>Profile</DialogTitle>
 
-          <DialogContent>
-            <div className={classes.container}>
-              <input accept="image/*" className={classes.input} id="icon-button-file" type="file" onChange={this.handleOnChange} />
-              <label htmlFor="icon-button-file">
-                {profileImage}
-              </label>
-              <FormControl className={classes.formControl} >
-              <InputLabel
-                FormLabelClasses={{root: classes.cssFocusedLabel, focused: classes.cssFocused,}}
-                htmlFor="name-simple">Name</InputLabel>
-                <Input id="name-disabled" classes={{underline: classes.inputInkbar,}} value={this.state.profile.name} onChange={this.onChangeProfileName}/>
-                {/*<FormHelperText>Disabled</FormHelperText> */}
-              </FormControl>
-              <FormControl className={classes.formControl} >
-              <InputLabel
-                FormLabelClasses={{root: classes.cssFocusedLabel, focused: classes.cssFocused,}}
-                htmlFor="name-disabled">Email</InputLabel>
-                <Input id="name-disabled" classes={{underline: classes.inputInkbar,}} value={this.state.profile.email} onChange={this.onChangeProfileEmail}/>
-                {/*<FormHelperText>Disabled</FormHelperText> */}
-              </FormControl>
-            </div>
-            <DialogContentText>
-              To subscribe to this website, please enter your email address here. We will send
-              updates occationally.
-            </DialogContentText>
-          </DialogContent>
-          <MuiThemeProvider theme={buttonTheme}>
-            <DialogActions>
-              <Button onClick={this.handleRequestProfileClose} color="secondary" >
-                Cancel
-              </Button>
-              <Button onClick={this.handleSubcribe} color="primary" >
-                Subscribe
-              </Button>
-            </DialogActions>
-          </MuiThemeProvider>
-        </Dialog>
-      </div>
+        <DialogContent>
+          <div className={classes.container}>
+            <input accept="image/*" className={classes.input} id="icon-button-file" type="file" onChange={this.handleOnChange} />
+            <label htmlFor="icon-button-file">
+              {profileImage}
+            </label>
+            <FormControl className={classes.formControl} >
+            <InputLabel
+              FormLabelClasses={{root: classes.cssFocusedLabel, focused: classes.cssFocused,}}
+              htmlFor="name-simple">Name</InputLabel>
+              <Input id="name-disabled" classes={{underline: classes.inputInkbar,}} value={this.state.profile.name} onChange={this.onChangeProfileName}/>
+              {/*<FormHelperText>Disabled</FormHelperText> */}
+            </FormControl>
+            <FormControl className={classes.formControl} >
+            <InputLabel
+              FormLabelClasses={{root: classes.cssFocusedLabel, focused: classes.cssFocused,}}
+              htmlFor="name-disabled">Email</InputLabel>
+              <Input id="name-disabled" classes={{underline: classes.inputInkbar,}} value={this.state.profile.email} onChange={this.onChangeProfileEmail}/>
+              {/*<FormHelperText>Disabled</FormHelperText> */}
+            </FormControl>
+          </div>
+          <DialogContentText>
+            To subscribe to this website, please enter your email address here. We will send
+            updates occationally.
+          </DialogContentText>
+        </DialogContent>
+        <MuiThemeProvider theme={buttonTheme}>
+          <DialogActions>
+            <Button onClick={this.handleRequestProfileClose} color="secondary" >
+              Cancel
+            </Button>
+            <Button onClick={this.handleSubscribe} color="primary" >
+              Subscribe
+            </Button>
+          </DialogActions>
+        </MuiThemeProvider>
+      </Dialog>
     )
   }
 }

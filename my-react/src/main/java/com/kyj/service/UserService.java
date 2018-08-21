@@ -21,7 +21,7 @@ public class UserService {
 	private UserRepository userRepository;
 	
 	public void removeUser() {
-		userRepository.delete(1L);
+//		userRepository.delete(1L);
 	}
 	
 	public void setUserProfile(ProfileDTO profileDTO, Principal principal) {

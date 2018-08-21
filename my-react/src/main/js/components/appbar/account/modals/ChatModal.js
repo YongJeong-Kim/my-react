@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from "react-redux"
+import axios from 'axios'
 
 // material-ui components
 import Dialog from '@material-ui/core/Dialog';
@@ -15,32 +16,28 @@ import Grid from '@material-ui/core/Grid';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
+import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
-import Divider from '@material-ui/core/Divider';
-import Avatar from '@material-ui/core/Avatar';
-import FormControl from '@material-ui/core/FormControl';
-import FormHelperText from '@material-ui/core/FormHelperText';
-import Input from '@material-ui/core/Input';
-import InputLabel from '@material-ui/core/InputLabel';
+import AvatarMD from '@material-ui/core/Avatar';
 import TextField from '@material-ui/core/TextField';
-import Drawer from '@material-ui/core/Drawer';
 import Chip from '@material-ui/core/Chip';
 
 //material-ui colors and style
 import { blue } from '@material-ui/core/colors';
 import { withStyles } from '@material-ui/core/styles';
 import CloseIcon from '@material-ui/icons/Close';
-import StarBorder from '@material-ui/icons/StarBorder';
 
-import ImageAvatars from '../ImageAvatars'
-import { NoMarginImageAvatars } from '../ImageAvatars'
+// react live chat
+import { ThemeProvider, AgentBar, Column, Title, Subtitle, Avatar,
+         MessageGroup, Message, MessageText,
+         ChatList, ChatListItem, Row} from '@livechat/ui-kit'
 
 const chatStyles = theme => ({
   appBar: {
     position: 'relative',
+    backgroundColor: blue[500],
   },
   flex: {
     flex: 1,
@@ -48,7 +45,7 @@ const chatStyles = theme => ({
   drawerPaper: {
     position: 'relative',
     height: '100%',
-    width: drawerWidth,
+    width: 240,
   },
   drawerHeader: theme.mixins.toolbar,
   row: {
@@ -56,70 +53,24 @@ const chatStyles = theme => ({
     justifyContent: 'center',
     flexWrap: 'wrap',
   },
+  selectedListItem: {
+    '&:focus': {
+      // backgroundColor: theme.palette.primary.main,
+      backgroundColor: blue[300],
+      '& $primary, & $icon': {
+        color: theme.palette.common.white,
+      },
+    },
+  },
+  primary: {},
+  icon: {},
 });
 
 function Transition(props) {
   return <Slide direction="up" {...props} />;
 }
-const drawerWidth = 240;
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import DraftsIcon from '@material-ui/icons/Drafts';
-import StarIcon from '@material-ui/icons/Star';
-import SendIcon from '@material-ui/icons/Send';
-import MailIcon from '@material-ui/icons/Mail';
-import DeleteIcon from '@material-ui/icons/Delete';
-import ReportIcon from '@material-ui/icons/Report';
-const mailFolderListItems = (
-  <div>
-    <ListItem button>
-      <ListItemIcon>
-        <InboxIcon />
-      </ListItemIcon>
-      <ListItemText primary="Inbox" />
-    </ListItem>
-    <ListItem button>
-      <ListItemIcon>
-        <StarIcon />
-      </ListItemIcon>
-      <ListItemText primary="Starred" />
-    </ListItem>
-    <ListItem button>
-      <ListItemIcon>
-        <SendIcon />
-      </ListItemIcon>
-      <ListItemText primary="Send mail" />
-    </ListItem>
-    <ListItem button>
-      <ListItemIcon>
-        <DraftsIcon />
-      </ListItemIcon>
-      <ListItemText primary="Drafts" />
-    </ListItem>
-  </div>
-);
 
-const otherMailFolderListItems = (
-  <div>
-    <ListItem button>
-      <ListItemIcon>
-        <MailIcon />
-      </ListItemIcon>
-      <ListItemText primary="All mail" />
-    </ListItem>
-    <ListItem button>
-      <ListItemIcon>
-        <DeleteIcon />
-      </ListItemIcon>
-      <ListItemText primary="Trash" />
-    </ListItem>
-    <ListItem button>
-      <ListItemIcon>
-        <ReportIcon />
-      </ListItemIcon>
-      <ListItemText primary="Spam" />
-    </ListItem>
-  </div>
-);
+let currentLoggedUsers;
 
 @connect((store) => {
   return {
@@ -135,6 +86,7 @@ class ChatModal extends Component {
       { key: 1, message: 'bbb', justifyContent: 'end', },
       { key: 2, message: 'ccc', justifyContent: 'end', },
     ],
+    isCurrentLoggedUsersCallback: false,
   }
 
   handleRequestChatClose = () => {
@@ -183,12 +135,28 @@ class ChatModal extends Component {
       });
     }
   }
+  findCurrentLoggedUsers = () => {
+    if (this.state.isCurrentLoggedUsersCallback) {
+
+    }
+    else {
+      axios.post("/user/currentLoggedUsers")
+      .then((response) => {
+        //    this.setState({isCurrentLoggedUsersCallback: true,})
+        currentLoggedUsers = response.data
+        this.setState({isCurrentLoggedUsersCallback: true, })
+      }).catch((err) => {
+        console.log(err)
+      })
+    }
+  }
 
   render() {
     const { classes } = this.props;
     const chips = this.state.chipData;
     const chipsRight = this.state.chipDataRight;
     const userImage = this.props.user.avatarEncodeImage;
+    this.findCurrentLoggedUsers()
 
     let c = chips.map((chip, i) => {
       return (
@@ -198,30 +166,13 @@ class ChatModal extends Component {
       )
     });
 
-    const drawer = (
-      <div>
-      <Drawer
-        type="permanent"
-        classes={{
-          paperAnchorDockedLeft: classes.drawerPaper,
-        }}
-      >
-        <div className={classes.drawerHeader} />
-        <Divider />
-        <List>{mailFolderListItems}</List>
-        <Divider />
-        <List>{otherMailFolderListItems}</List>
-      </Drawer>
-      </div>
-    );
-
     return (
       <div>
         <Dialog
           fullScreen
           open={this.props.chatOpen}
-          onRequestClose={this.handleRequestChatClose}
-          transition={Transition}
+          onClose={this.handleRequestChatClose}
+          TransitionComponent={Transition}
         >
           <AppBar className={classes.appBar}>
             <Toolbar>
@@ -229,7 +180,7 @@ class ChatModal extends Component {
                 <CloseIcon />
               </IconButton>
               <Typography variant="title" color="inherit" className={classes.flex}>
-                Sound
+                ?
               </Typography>
               <Button color="inherit" >
                 save
@@ -239,40 +190,70 @@ class ChatModal extends Component {
 
           <Grid container spacing={24}>
             <Grid item sm={3}>
-              {drawer}
               <List>
-                <ListItem button onClick={this.starOnClick}>
-                  <ListItemIcon>
-                    <StarBorder />
-                  </ListItemIcon>
-                  <ListItemText primary="Phone ringtone" secondary="Titania" />
-                </ListItem>
-                <Divider />
-                <ListItem button>
-                  <ListItemIcon>
-                    <ImageAvatars noMargin="true" />
-                  </ListItemIcon>
-                  <ListItemText primary="Default notification ringtone" secondary="Tethys" />
-                </ListItem>
+                {this.state.isCurrentLoggedUsersCallback && currentLoggedUsers.map(currentLoggedUser => (
+                  <ListItem button key={currentLoggedUser.username} className={classes.selectedListItem} onClick={this.starOnClick}>
+                    <ListItemIcon>
+                      <AvatarMD className={classes.icon} src={currentLoggedUser.avatarEncodeImage}></AvatarMD>
+                    </ListItemIcon>
+            {/*        <ListItemText className={classes.primary} primary={currentLoggedUser.username} secondary="Titania" style={{color: 'white'}}/> */}
+                    <Grid container wrap="nowrap" >
+                      <Grid item xs zeroMinWidth>
+                        <Grid item>
+                          <Typography className={classes.primary} noWrap>{currentLoggedUser.username}</Typography>
+                        </Grid>
+                        <Grid item>
+                          <Typography className={classes.primary} noWrap>message</Typography>
+                        </Grid>
+                      </Grid>
+                    </Grid>
+                    <ListItemSecondaryAction>
+                      {'2018/07/07'}
+                    </ListItemSecondaryAction>
+                  </ListItem>
+                ))}
               </List>
             </Grid>
 
             <Grid item sm>
-              <List>
-                <ListItem button>
-                  <ListItemIcon>
-                    <StarBorder />
-                  </ListItemIcon>
-                  <ListItemText primary="Phone ringtone" secondary="Titania" />
-                </ListItem>
-                <Divider />
-                <ListItem button>
-                  <ListItemIcon>
-                    <ImageAvatars noMargin="true" />
-                  </ListItemIcon>
-                  <ListItemText primary="Default notification ringtone" secondary="Tethys" />
-                </ListItem>
-              </List>
+              <ThemeProvider>
+                <ChatList style={{ maxWidth: 300 }}>
+                  <ChatListItem>
+                    <Avatar letter="K" />
+                    <Column>
+                      <Row justify>
+                        <Title ellipsis>{'Konrad'}</Title>
+                        <Subtitle nowrap>{'14:31 PM'}</Subtitle>
+                      </Row>
+                      <Subtitle ellipsis>
+                        {'Hello, how can I help you? We have a lot to talk about'}
+                      </Subtitle>
+                    </Column>
+                  </ChatListItem>
+                  <ChatListItem active>
+                    <Avatar letter="J" />
+                    <Column>
+                      <Row justify>
+                        <Title ellipsis>{'Andrew'}</Title>
+                        <Subtitle nowrap>{'14:31 PM'}</Subtitle>
+                      </Row>
+                      <Subtitle ellipsis>{'actually I just emailed you back'}</Subtitle>
+                    </Column>
+                  </ChatListItem>
+                  <ChatListItem>
+                    <Avatar imgUrl="https://livechat.s3.amazonaws.com/default/avatars/male_8.jpg" />
+                    <Column>
+                      <Row justify>
+                        <Title ellipsis>{'Michael'}</Title>
+                        <Subtitle nowrap>{'14:31 PM'}</Subtitle>
+                      </Row>
+                      <Subtitle ellipsis>
+                        {"Ok, thanks for the details, I'll get back to you tomorrow."}
+                      </Subtitle>
+                    </Column>
+                  </ChatListItem>
+                </ChatList>
+        			</ThemeProvider>
               <TextField
                 id="multiline-flexible"
                 label="Multiline"
