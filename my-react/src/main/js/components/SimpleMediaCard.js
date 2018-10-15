@@ -93,7 +93,7 @@ class SimpleMediaCard extends React.Component {
           title="Contemplative Reptile"
         />
         <CardContent>
-          <Typography gutterBottom variant="headline" component="h2">
+          <Typography gutterBottom variant="h5" component="h2">
             {headline}
           </Typography>
           <Typography component="p" className={classes.nextLine}>

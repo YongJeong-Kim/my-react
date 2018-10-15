@@ -33,16 +33,17 @@ configurations {
 
 dependencies {
 	def querydslVersion = "4.2.1"
- 
+
  	compile ("com.querydsl:querydsl-core:$querydslVersion")
   compile ("com.querydsl:querydsl-apt:$querydslVersion")
   compile ("com.querydsl:querydsl-jpa:$querydslVersion")
 	compile ("com.querydsl:querydsl-sql:$querydslVersion")
 	compile group: 'ch.simas.qlrm', name: 'qlrm', version: '1.7.1'
-	
+
 	compile group: 'io.springfox', name: 'springfox-swagger2', version: '2.9.2'
 	compile group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.9.2'
 
+	compile group: 'org.bgee.log4jdbc-log4j2', name: 'log4jdbc-log4j2-jdbc4.1', version: '1.16'
 	compile('org.springframework.boot:spring-boot-starter-data-rest')
 //	compile('org.springframework.boot:spring-boot-starter-data-mongodb-reactive')
 	compile('org.springframework.boot:spring-boot-starter-webflux')

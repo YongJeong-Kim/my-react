@@ -64,7 +64,7 @@ class App extends React.Component {
               <SimpleMediaCard />
             }
 					</Grid>
-					<Grid item xs={8} >
+					<Grid item xs={9} sm={9}>
 						<div>
               <ContentTab />
             </div>

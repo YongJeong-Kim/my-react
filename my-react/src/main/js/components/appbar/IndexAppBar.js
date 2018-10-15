@@ -123,7 +123,7 @@ class IndexAppBar extends React.Component {
   handleTest = () => {
     let chat = {
       to: "bbb",
-      from: "aaa",
+      from: this.props.user.username,
       fromAvatarImage: this.props.user.avatarEncodeImage,
       message: "ㅇㄴㅇㄴㄹㄷ",
       date: "2018-06-14",
@@ -183,7 +183,7 @@ class IndexAppBar extends React.Component {
                 ))}
               </div>
             </Drawer>
-            <Typography variant="title" color="inherit" className={classes.flex}>
+            <Typography variant="h6" color="inherit" className={classes.flex}>
               Title
             </Typography>
             <MailSnackbar notificationOpen={this.state.notificationOpen}

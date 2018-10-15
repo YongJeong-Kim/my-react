@@ -179,7 +179,7 @@ class ChatModal extends Component {
               <IconButton color="inherit" onClick={this.handleRequestChatClose} aria-label="Close">
                 <CloseIcon />
               </IconButton>
-              <Typography variant="title" color="inherit" className={classes.flex}>
+              <Typography variant="h6" color="inherit" className={classes.flex}>
                 ?
               </Typography>
               <Button color="inherit" >

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from "react-redux"
+import { Switch, Route, BrowserRouter, Link } from 'react-router-dom'
 
 // material ui cores
 import AppBar from '@material-ui/core/AppBar';
@@ -36,7 +37,7 @@ const styles = theme => ({
 
 function TabContainer(props) {
   return (
-    <Typography component="div" style={{ padding: 8 * 3 }}>
+    <Typography variant='body2' component="div" style={{ padding: 8 * 3 }}>
       {props.children}
     </Typography>
   )
@@ -144,7 +145,20 @@ class ContentTab extends Component {
             </Tabs>
           </MuiThemeProvider>
         </AppBar>
-        {selectedTab === 0 && <TabContainer>Item One</TabContainer>}
+
+
+        {selectedTab === 0 &&
+          <BrowserRouter>
+            <TabContainer>
+              <Headerrr />
+              <Switch>
+                <Route path="/nnn/zxc" component={zxc} />
+                <Route path="/nnn/qwe" component={qwe} />
+                <Route path="/nnn/asd" component={asd} />
+              </Switch>
+            </TabContainer>
+          </BrowserRouter>
+        }
         {selectedTab === 1 && <TabContainer>Item Two</TabContainer>}
         {selectedTab === 2 && <TabContainer>Item Three</TabContainer>}
         {selectedTab === 3 && <TabContainer>Item Four</TabContainer>}
@@ -155,6 +169,34 @@ class ContentTab extends Component {
     );
   }
 }
+
+const Headerrr = () => (
+  <div>
+    <ul>
+      <li><Link to="/nnn/zxc">zxc</Link></li>
+      <li><Link to="/nnn/qwe">qwe</Link></li>
+      <li><Link to="/nnn/asd">asd</Link></li>
+    </ul>
+  </div>
+)
+
+const zxc = () => (
+  <div>
+    zxc
+  </div>
+)
+
+const qwe = () => (
+  <div>
+    qwe
+  </div>
+)
+
+const asd = () => (
+  <div>
+    asd
+  </div>
+)
 
 ContentTab.propTypes = {
   classes: PropTypes.object.isRequired,
