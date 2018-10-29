@@ -96,7 +96,7 @@ class MailSnackbar extends Component {
   };
   handleSnackbar = () => {
     this.handleClose()
-    axios.post("/user/currentLoggedUsers")
+    axios.post(window.rootURI + "/user/currentLoggedUsers")
       .then((response) => {
         this.setState({chatModalOpen: true})
 
@@ -139,7 +139,7 @@ class MailSnackbar extends Component {
     )
 
     return (
-      <div>
+      <>
         <Snackbar
            key={key}
            anchorOrigin={{
@@ -168,7 +168,7 @@ class MailSnackbar extends Component {
         />
         <ChatModal chatModalOpen={this.state.chatModalOpen}
                    chatModalClose={this.chatModalClose} />
-      </div>
+      </>
     )
   }
 }

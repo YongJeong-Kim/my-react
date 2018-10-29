@@ -51,7 +51,7 @@ class Mail extends Component {
     const notification = this.props.notification
 
     return (
-      <div>
+      <>
         <MuiThemeProvider theme={theme} >
           <IconButton color="inherit" aria-label="Menu" onClick={mailIconOnClick}>
             <Badge className={classes.badge} badgeContent={this.state.messageStringCount} >
@@ -66,7 +66,7 @@ class Mail extends Component {
             </Badge>
           </IconButton>
         </MuiThemeProvider>
-      </div>
+      </>
     );
   }
 }

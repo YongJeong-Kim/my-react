@@ -47,10 +47,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //				.sessionManagement().maximumSessions(1).sessionRegistry(sessionRegistry());
 			.and()
 				.csrf().disable();
-		
+
 		http.sessionManagement().maximumSessions(1).expiredUrl("/login").sessionRegistry(sessionRegistry());
 	}
-	
+
 	@Bean
   public SessionRegistry sessionRegistry() {
       return new SessionRegistryImpl();
@@ -65,7 +65,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	public PasswordEncoder passwordencoder() {
 		return new BCryptPasswordEncoder();
 	}
-	
+
 /*	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.
@@ -73,7 +73,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			and().formLogin().loginPage("/login").permitAll().
 			and().logout().permitAll();
 	}*/
-	
+
 	@Override
     public void configure(WebSecurity web) throws Exception {
 	/*	web.ignoring().antMatchers("/resources/**"); // #3
@@ -90,7 +90,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		System.out.println("configure global");
 //		auth.inMemoryAuthentication().withUser("user").password("password").roles("USER");
 	}
-	
+
 	/*@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		auth.userDetailsService(userService).;

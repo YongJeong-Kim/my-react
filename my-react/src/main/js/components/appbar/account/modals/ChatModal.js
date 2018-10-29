@@ -140,7 +140,7 @@ class ChatModal extends Component {
 
     }
     else {
-      axios.post("/user/currentLoggedUsers")
+      axios.post(window.rootURI + "user/currentLoggedUsers")
       .then((response) => {
         //    this.setState({isCurrentLoggedUsersCallback: true,})
         currentLoggedUsers = response.data
@@ -167,7 +167,7 @@ class ChatModal extends Component {
     });
 
     return (
-      <div>
+      <>
         <Dialog
           fullScreen
           open={this.props.chatOpen}
@@ -282,7 +282,7 @@ class ChatModal extends Component {
             </Grid>
           </Grid>
         </Dialog>
-      </div>
+      </>
     )
   }
 }

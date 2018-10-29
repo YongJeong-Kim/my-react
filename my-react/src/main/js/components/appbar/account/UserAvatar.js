@@ -93,7 +93,7 @@ class UserAvatar extends Component {
   handleMenu = () => {
     this.setState({ open: !this.state.open })
   }
-  handleRequestClose = () => {
+  handleRequestClose = (event) => {
     if (this.target1.contains(event.target)) {
       return;
     }
@@ -112,10 +112,10 @@ class UserAvatar extends Component {
     this.setState({ chatOpen, });
   }
   handleLogout = () => {
-    axios.post("/logout")
+    axios.post(window.rootURI + "logout")
       .then((response) => {
         console.log('logout');
-        window.location = "/";
+        window.location = window.rootURI;
       })
       .catch((err) => {
         console.log('logout err');
@@ -127,7 +127,7 @@ class UserAvatar extends Component {
     const { classes } = this.props;
 
     return (
-      <div>
+      <>
         <IconButton
           buttonRef={node => {
             this.target1 = node;
@@ -163,7 +163,7 @@ class UserAvatar extends Component {
           <ChatModal handleRequestChatClose={this.handleRequestChatClose}
                      chatOpen={this.state.chatOpen} />
         }
-      </div>
+      </>
     )
   }
 }

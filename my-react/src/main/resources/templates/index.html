@@ -4,8 +4,11 @@
 <title>Insert title here</title>
 </head>
 <body>
+  <script th:inline="javascript">
+  	var rootURI = [[@{/}]];
+  </script>
 	<div id="root"></div>
 	<!-- <script type="text/babel" th:src="@{/built/bundle.js}" ></script> -->
-	<script type="text/javascript" src="built/index.js" ></script>
+	<script type="text/javascript" th:src="@{/built/index.js}" ></script>
 </body>
 </html>

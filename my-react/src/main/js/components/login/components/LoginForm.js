@@ -117,7 +117,7 @@ class LoginForm extends React.Component {
     return (
       <div className={classes.col}>
         <Paper className={classes.root} elevation={4} >
-          <form action="/login" method="post" className={classes.container} onSubmit={this.handleSubmit}>
+          <form action={window.rootURI + "login"} method="post" className={classes.container} onSubmit={this.handleSubmit}>
             <div className={classes.row}>
               <Avatar className={classes.avatar}>
                 <PersonIcon />

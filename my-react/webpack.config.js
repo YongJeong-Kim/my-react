@@ -1,12 +1,13 @@
 var webpack = require('webpack');
+var path = require('path');
 
 module.exports = {
+  // context: path.resolve(__dirname, 'my'),
  //   entry: './src/index.js',
 	entry: {
 		index: './src/main/js/index.js',
 		login: './src/main/js/components/login/index.js',
 	},
-
   output: {
 		// path: __dirname + '/public/',
   	path: __dirname + '/src/main/resources/static/built/',
@@ -24,24 +25,18 @@ module.exports = {
     port: 3000,
 /*     contentBase: __dirname + '/src/main/resources/static/built/',*/
     publicPath: '/built/',
-    proxy: {
-      "**": "http://localhost:8080"
-    }
+		proxy: {
+			"/my/**": {
+				target: 'http://localhost:8080',
+				pathRewrite: {'^/my' : ''},
+			},
+			"**": 'http://localhost:8080',
+		}
   },
-
   module: {
   	rules: [
       {
         test: /\.js$/,
-      /*  loaders: ['react-hot-loader','babel-loader?' + JSON.stringify({
-            cacheDirectory: true,
-            presets: ['es2015', 'react']
-        })],*/
-        /*loaders: [
-            'react-hot-loader',
-            'babel-loader?presets[]=react,presets[]=es2015,presets[]=stage-0'
-          ], */
-				// loader: 'babel-loader',
 				use: {
           loader: "babel-loader",
 					options: {
@@ -75,11 +70,20 @@ module.exports = {
       },
       {
       	test: /\.(woff|woff2|eot|ttf|svg)$/,
-        loader: 'file-loader?name=fonts/[name].[ext]'
+				use: [{
+					loader: 'file-loader',
+					options: {
+						name: '[name].[ext]',
+						publicPath: '/built/fonts',
+						outputPath: '/fonts/', // => /built/fonts
+					}
+				}],
+        // loader: 'file-loader?name=fonts/[name].[ext]'
       },
       {
       	test: /\.css$/,
-      	loader: "style-loader!css-loader"
+				// loader: "style-loader!css-loader"
+				use: ['style-loader', 'css-loader'],
       }
     ]
   },

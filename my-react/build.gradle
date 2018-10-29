@@ -17,10 +17,13 @@ apply plugin: 'eclipse-wtp'
 apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
 apply plugin: 'war'
+//war {
+//	baseName: 'my-react'
+//}
 apply plugin: 'io.franzbecker.gradle-lombok'
 
 group = 'com.kyj'
-version = '0.0.1-SNAPSHOT'
+//version = '0.0.1-SNAPSHOT'
 sourceCompatibility = 1.8
 
 repositories {

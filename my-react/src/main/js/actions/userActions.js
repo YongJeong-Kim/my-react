@@ -28,7 +28,7 @@ export function getLoginUserInfo() {
   return function(dispatch) {
     dispatch({type: "FETCH_USER"});
 
-    axios.get("/login/user/info")
+    axios.get(window.rootURI + "login/user/info")
       .then((response) => {
         dispatch({type: "LOGIN_USER_INFO", payload: response.data});
       })
@@ -56,7 +56,7 @@ export const setUserProfile = (profile) => {
     'Content-Type': 'application/json',
   }
   return (dispatch) => {
-    axios.post("/user/set/profile", profileDTO, headers)
+    axios.post(window.rootURI + "user/set/profile", profileDTO, headers)
       .then((response) => {
         dispatch({type: "SET_USER_PROFILE", payload: profileDTO});
       }).catch((err) => {
@@ -71,7 +71,7 @@ export let setUserCard = (edit) => {
     'Content-Type': 'application/json',
   }
   return (dispatch) => {
-    axios.post("/user/set/card", edit, headers)
+    axios.post(window.rootURI + "user/set/card", edit, headers)
       .then((response) => {
           dispatch({ type: "SET_USER_CARD", payload: edit })
       }).catch((err) => {

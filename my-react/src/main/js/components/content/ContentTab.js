@@ -67,6 +67,7 @@ const tabDatas = [
 @connect((store) => {
   return {
     user: store.login.user,
+    rootPath: store.login.rootPath,
   }
 })
 class ContentTab extends Component {
@@ -154,7 +155,7 @@ class ContentTab extends Component {
               <Switch>
                 <Route path="/nnn/zxc" component={zxc} />
                 <Route path="/nnn/qwe" component={qwe} />
-                <Route path="/nnn/asd" component={asd} />
+                <Route path='/home/nnn/asd' component={asd} />
               </Switch>
             </TabContainer>
           </BrowserRouter>
@@ -175,7 +176,7 @@ const Headerrr = () => (
     <ul>
       <li><Link to="/nnn/zxc">zxc</Link></li>
       <li><Link to="/nnn/qwe">qwe</Link></li>
-      <li><Link to="/nnn/asd">asd</Link></li>
+      <li><Link to='/home/nnn/asd'>asd</Link></li>
     </ul>
   </div>
 )

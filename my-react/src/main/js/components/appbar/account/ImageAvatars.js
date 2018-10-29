@@ -41,9 +41,9 @@ class ImageAvatars extends Component {
     }
 
     return (
-      <div>
+      <>
         {Avar}
-      </div>
+      </>
     )
   }
 }

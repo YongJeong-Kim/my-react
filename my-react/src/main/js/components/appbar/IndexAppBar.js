@@ -93,6 +93,7 @@ class IndexAppBar extends React.Component {
       message: "",
     },
     notificationOpen: false,
+    clientConnected: false,
   }
 
   handleDrawer = () => {
@@ -120,17 +121,10 @@ class IndexAppBar extends React.Component {
       this.props.dispatch(setContentTab(recentTab))
     }
   }
-  handleTest = () => {
-    let chat = {
-      to: "bbb",
-      from: this.props.user.username,
-      fromAvatarImage: this.props.user.avatarEncodeImage,
-      message: "ㅇㄴㅇㄴㄹㄷ",
-      date: "2018-06-14",
-    }
-    console.log(this.props);
-    console.log(window.location.protocol + "//" + window.location.host + "/handler")
-    this.clientRef.sendMessage("/app/fff", JSON.stringify(chat))
+  handleMessage = (chat) => {
+    console.log(this.state.clientConnected)
+    if (this.state.clientConnected)
+      this.clientRef.sendMessage("/app/snackbar/" + chat.to, JSON.stringify(chat))
   }
   handleNotification = (notification) => {
     console.log(notification)
@@ -142,24 +136,24 @@ class IndexAppBar extends React.Component {
 
 	render() {
     const { classes } = this.props;
-{/*    const sideList = (
-      <div className={classes.list}>
-        <List>{mailFolderListItems}</List>
-        <Divider />
-        <List>{otherMailFolderListItems}</List>
-      </div>
-    );
+    const chat = {
+      to: "aaa",
+      from: this.props.user.username,
+      fromAvatarImage: this.props.user.avatarEncodeImage,
+      message: "ㅇㄴㅇㄴㄹㄷ",
+      date: "2018-06-14",
+    }
 
-    const fullList = (
-      <div className={classes.fullList}>
-        <List>{mailFolderListItems}</List>
-        <Divider />
-        <List>{otherMailFolderListItems}</List>
-      </div>
-    ); */}
-
-		return (
+    return (
 			<div className={classes.root}>
+        <SockJsClient
+          url={window.rootURI + 'handler'}
+          topics={['/user/queue/snackbar']}
+          onMessage={(notification) => this.handleNotification(notification)}
+          onConnect={() => {this.setState({clientConnected: true})}}
+          onDisconnect={() =>{this.setState({clientConnected: false})}}
+          debug={false}
+          ref={ (client) => { this.clientRef = client }} />
 
 	      <AppBar position="static" className={classes.badge}>
 	        <Toolbar>
@@ -189,22 +183,16 @@ class IndexAppBar extends React.Component {
             <MailSnackbar notificationOpen={this.state.notificationOpen}
                           handleNotificationClose={this.handleNotificationClose}
                           notification={this.state.notification} />
-            <IconButton onClick={this.handleTest} color="secondary" className={classes.button} aria-label="Add to shopping cart">
+            <IconButton onClick={() => this.handleMessage(chat)} color="secondary" className={classes.button} aria-label="Add to shopping cart">
 	          	<AddShoppingCartIcon />
 	          </IconButton>
 
             <Mail notification={this.state.notification} />
 
             <UserAvatar />
-
-            <SockJsClient
-              url={`http://localhost:8080/ws`}
-              topics={['/user/topic/fff']}
-              onMessage={(notification) => this.handleNotification(notification)}
-              ref={ (client) => { this.clientRef = client }} />
-
 	        </Toolbar>
 	      </AppBar>
+
 		  </div>
 		)
 	}
