@@ -1,5 +1,5 @@
 var webpack = require('webpack');
-var path = require('path');
+const TerserPlugin = require('terser-webpack-plugin');
 
 module.exports = {
   // context: path.resolve(__dirname, 'my'),
@@ -12,8 +12,15 @@ module.exports = {
 		// path: __dirname + '/public/',
   	path: __dirname + '/src/main/resources/static/built/',
     // filename: 'bundle.js'
-		filename: '[name].js',
+		filename: '[name].bundle.js',
+		chunkFilename: '[name].bundle.js',
   },
+	optimization: {
+		// minimizer: [new TerserPlugin()]
+	  minimizer: [
+			new TerserPlugin()
+		],
+	},
 	mode: 'development',
   devtool: 'inline-source-map',
   devServer: {
@@ -26,10 +33,10 @@ module.exports = {
 /*     contentBase: __dirname + '/src/main/resources/static/built/',*/
     publicPath: '/built/',
 		proxy: {
-			"/my/**": {
-				target: 'http://localhost:8080',
-				pathRewrite: {'^/my' : ''},
-			},
+			// "/my/**": {
+			// 	target: 'http://localhost:8080',
+			// 	pathRewrite: {'^/my' : ''},
+			// },
 			"**": 'http://localhost:8080',
 		}
   },
@@ -41,12 +48,6 @@ module.exports = {
           loader: "babel-loader",
 					options: {
 						presets: [
-							// [
-							// 	'@babel/preset-env', {
-							// 		targets: { node: 'current' }, // 노드일 경우만
-							// 		modules: 'false'
-							// 	}
-							// ],
 							'@babel/preset-env',
 							'@babel/preset-react',
 		          // '@babel/preset-stage-0'
@@ -60,12 +61,6 @@ module.exports = {
 						],
 					}
         },
-				// query: {
-  			// 	// presets: ['react', 'es2015', 'stage-0'],
-				// 	presets: ['@babel/react', '@babel/preset-es2015'],
-  			// 	// plugins: ['transform-class-properties', 'transform-decorators-legacy'],
-				// 	plugins: ['@babel/proposal-class-properties'],
-				// },
         exclude: /node_modules/,
       },
       {
@@ -80,14 +75,22 @@ module.exports = {
 				}],
         // loader: 'file-loader?name=fonts/[name].[ext]'
       },
-      {
-      	test: /\.css$/,
+			{
+        test: /\.scss$/,
+        use: [
+					{ loader: "style-loader" }, // creates style nodes from JS strings
+          { loader: "css-loader" }, // translates CSS into CommonJS
+					{ loader: "sass-loader" } // compiles Sass to CSS
+        ]
+			},
+			{
+				test: /\.css$/,
 				// loader: "style-loader!css-loader"
 				use: ['style-loader', 'css-loader'],
-      }
+			},
     ]
   },
   plugins: [
-    new webpack.HotModuleReplacementPlugin()
+    new webpack.HotModuleReplacementPlugin(),
   ]
 };
