@@ -1,4 +1,5 @@
 var webpack = require('webpack');
+var path = require('path')
 const TerserPlugin = require('terser-webpack-plugin');
 
 module.exports = {
@@ -40,6 +41,12 @@ module.exports = {
 			"**": 'http://localhost:8080',
 		}
   },
+	resolve: {
+		modules: [
+			path.join(__dirname, "src"),
+			"node_modules",
+		]
+	},
   module: {
   	rules: [
       {
@@ -57,7 +64,8 @@ module.exports = {
 							// "@babel/plugin-transform-runtime",
 							// ["@babel/preset-stage-2", { decoratorsBeforeExport: true }],
 							["@babel/plugin-proposal-decorators", { legacy: true }],
-							["@babel/plugin-proposal-class-properties", { loose: true }]
+							["@babel/plugin-proposal-class-properties", { loose: true }],
+							["babel-plugin-styled-components"]
 						],
 					}
         },

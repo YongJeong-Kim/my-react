@@ -67,13 +67,12 @@ const tabDatas = [
 @connect((store) => {
   return {
     user: store.login.user,
-    rootPath: store.login.rootPath,
   }
 })
 class ContentTab extends Component {
-  state = {
-
-  }
+  // state = {
+  //
+  // }
   componentWillReceiveProps = (props) => {
 
   }
@@ -84,7 +83,7 @@ class ContentTab extends Component {
       selected: value,
     }
     this.props.dispatch(setContentTab(changeSelectTab))
-    this.setState({ value });
+    // this.setState({ value });
   }
   handleWheelClick = (e, tab) => {
     // 휠 클릭을 했을 때.
@@ -146,7 +145,6 @@ class ContentTab extends Component {
             </Tabs>
           </MuiThemeProvider>
         </AppBar>
-
 
         {selectedTab === 0 &&
           <BrowserRouter>
