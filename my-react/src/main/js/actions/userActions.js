@@ -39,7 +39,7 @@ export function getLoginUserInfo() {
 }
 
 export const setUserProfile = (profile) => {
-  let profileDTO = {
+  const profileDTO = {
     ...profile,
     file: {
       lastModified: profile.file.lastModified,
@@ -51,7 +51,7 @@ export const setUserProfile = (profile) => {
     },
   }
 
-  let headers = {
+  const headers = {
     accept: 'application/json',
     'Content-Type': 'application/json',
   }
@@ -65,8 +65,8 @@ export const setUserProfile = (profile) => {
   }
 }
 
-export let setUserCard = (edit) => {
-  let headers = {
+export const setUserCard = (edit) => {
+  const headers = {
     accept: 'application/json',
     'Content-Type': 'application/json',
   }

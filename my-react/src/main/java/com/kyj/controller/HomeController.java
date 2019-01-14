@@ -11,6 +11,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.kyj.enums.Role;
+
 @Controller
 public class HomeController {
 	@GetMapping("/")
@@ -55,7 +57,8 @@ public class HomeController {
 
 //	@PreAuthorize("hasRole('USER') or hasRole('ADMIN')") success
 //	@PreAuthorize("hasAuthority('USER') or hasAuthority('ADMIN')") success
-    @PreAuthorize("hasAuthority('ROLE_USER')")
+//    @PreAuthorize("hasAuthority('ROLE_USER')")
+  @PreAuthorize("hasAuthority('" + Role.RoleName.ROLE_ADMIN + "')")  // if ROLE_ADMIN
 	@GetMapping("/ggg/ggg")
 	public String ggg(Principal principal) {
     	System.out.println(principal);

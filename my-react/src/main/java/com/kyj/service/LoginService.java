@@ -17,13 +17,16 @@ import reactor.core.publisher.Mono;
 
 @Service
 public class LoginService {
+	private final RoleRepository roleRepository;
+	private final UserRepository userRepository;
+	
 	@Autowired
-	private RoleRepository roleRepository;
+	public LoginService(RoleRepository roleRepository, UserRepository userRepository) {
+    this.roleRepository = roleRepository;
+    this.userRepository = userRepository;
+  }
 
-	@Autowired
-	private UserRepository userRepository;
-
-	public List<String> getLoginUserRoles(String username) {
+  public List<String> getLoginUserRoles(String username) {
 		return roleRepository.getLoginUserRoles(username);
 	}
 
