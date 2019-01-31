@@ -10,7 +10,6 @@ import FormControl from '@material-ui/core/FormControl';
 import Button from '@material-ui/core/Button';
 import Avatar from '@material-ui/core/Avatar';
 import Paper from '@material-ui/core/Paper';
-import Typography from '@material-ui/core/Typography';
 
 // material-ui icons
 import FolderIcon from '@material-ui/icons/Folder';
@@ -118,7 +117,7 @@ class LoginForm extends React.Component {
     return (
       <div className={classes.col}>
         <Paper className={classes.root} elevation={4} >
-          <form action="/login" method="post" className={classes.container} onSubmit={this.handleSubmit}>
+          <form action={window.rootURI + "login"} method="post" className={classes.container} onSubmit={this.handleSubmit}>
             <div className={classes.row}>
               <Avatar className={classes.avatar}>
                 <PersonIcon />

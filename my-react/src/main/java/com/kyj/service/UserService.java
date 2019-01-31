@@ -7,6 +7,7 @@ import javax.persistence.PersistenceContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.kyj.dto.ProfileDTO;
 import com.kyj.dto.UserDTO;
@@ -24,10 +25,12 @@ public class UserService {
 //		userRepository.delete(1L);
 	}
 	
+	@Transactional
 	public void setUserProfile(ProfileDTO profileDTO, Principal principal) {
 		userRepository.setUserProfile(profileDTO, principal.getName());
 	}
 	
+	@Transactional
 	public void setUserCard(UserDTO userDTO, Principal principal) {
 		userRepository.setUserCard(userDTO, principal.getName());
 	}

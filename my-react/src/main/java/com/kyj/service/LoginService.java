@@ -17,16 +17,19 @@ import reactor.core.publisher.Mono;
 
 @Service
 public class LoginService {
-	@Autowired
-	private RoleRepository roleRepository;
+	private final RoleRepository roleRepository;
+	private final UserRepository userRepository;
 	
 	@Autowired
-	private UserRepository userRepository;
-	
-	public List<String> getLoginUserRoles(String username) {
+	public LoginService(RoleRepository roleRepository, UserRepository userRepository) {
+    this.roleRepository = roleRepository;
+    this.userRepository = userRepository;
+  }
+
+  public List<String> getLoginUserRoles(String username) {
 		return roleRepository.getLoginUserRoles(username);
 	}
-	
+
 	public Mono<Map<String, Object>> getLoginUserInfo(String username) {
 		Map<String, Object> map = new HashMap<>();
 		Optional<UserDTO> userInfo = userRepository.findUserInfo(username);
@@ -40,7 +43,7 @@ public class LoginService {
 			UserDTO userDTO = new UserDTO(u, roles);
 			map.put("user", userDTO);
 		});
-		
+
 		return Mono.just(map);
 	}
 }

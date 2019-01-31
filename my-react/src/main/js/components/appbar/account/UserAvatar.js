@@ -19,7 +19,6 @@ import Paper from '@material-ui/core/Paper';
 import Divider from '@material-ui/core/Divider';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import Input from '@material-ui/core/Input';
@@ -94,7 +93,7 @@ class UserAvatar extends Component {
   handleMenu = () => {
     this.setState({ open: !this.state.open })
   }
-  handleRequestClose = () => {
+  handleRequestClose = (event) => {
     if (this.target1.contains(event.target)) {
       return;
     }
@@ -113,10 +112,10 @@ class UserAvatar extends Component {
     this.setState({ chatOpen, });
   }
   handleLogout = () => {
-    axios.post("/logout")
+    axios.post(window.rootURI + "logout")
       .then((response) => {
         console.log('logout');
-        window.location = "/";
+        window.location = window.rootURI;
       })
       .catch((err) => {
         console.log('logout err');
@@ -128,7 +127,7 @@ class UserAvatar extends Component {
     const { classes } = this.props;
 
     return (
-      <div>
+      <>
         <IconButton
           buttonRef={node => {
             this.target1 = node;
@@ -164,7 +163,7 @@ class UserAvatar extends Component {
           <ChatModal handleRequestChatClose={this.handleRequestChatClose}
                      chatOpen={this.state.chatOpen} />
         }
-      </div>
+      </>
     )
   }
 }

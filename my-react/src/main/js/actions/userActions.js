@@ -28,7 +28,7 @@ export function getLoginUserInfo() {
   return function(dispatch) {
     dispatch({type: "FETCH_USER"});
 
-    axios.get("/login/user/info")
+    axios.get(window.rootURI + "login/user/info")
       .then((response) => {
         dispatch({type: "LOGIN_USER_INFO", payload: response.data});
       })
@@ -39,7 +39,7 @@ export function getLoginUserInfo() {
 }
 
 export const setUserProfile = (profile) => {
-  let profileDTO = {
+  const profileDTO = {
     ...profile,
     file: {
       lastModified: profile.file.lastModified,
@@ -51,12 +51,12 @@ export const setUserProfile = (profile) => {
     },
   }
 
-  let headers = {
+  const headers = {
     accept: 'application/json',
     'Content-Type': 'application/json',
   }
   return (dispatch) => {
-    axios.post("/user/set/profile", profileDTO, headers)
+    axios.post(window.rootURI + "user/set/profile", profileDTO, headers)
       .then((response) => {
         dispatch({type: "SET_USER_PROFILE", payload: profileDTO});
       }).catch((err) => {
@@ -65,13 +65,13 @@ export const setUserProfile = (profile) => {
   }
 }
 
-export let setUserCard = (edit) => {
-  let headers = {
+export const setUserCard = (edit) => {
+  const headers = {
     accept: 'application/json',
     'Content-Type': 'application/json',
   }
   return (dispatch) => {
-    axios.post("/user/set/card", edit, headers)
+    axios.post(window.rootURI + "user/set/card", edit, headers)
       .then((response) => {
           dispatch({ type: "SET_USER_CARD", payload: edit })
       }).catch((err) => {

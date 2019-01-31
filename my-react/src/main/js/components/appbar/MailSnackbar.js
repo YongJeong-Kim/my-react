@@ -96,7 +96,7 @@ class MailSnackbar extends Component {
   };
   handleSnackbar = () => {
     this.handleClose()
-    axios.post("/user/currentLoggedUsers")
+    axios.post(window.rootURI + "user/currentLoggedUsers")
       .then((response) => {
         this.setState({chatModalOpen: true})
 
@@ -114,7 +114,6 @@ class MailSnackbar extends Component {
     const { key } = this.state.messageInfo
     const { encodeAvatarImage, notification } = this.props.user
     const props = this.props
-
 
     const messageSnackbar = (
       <div className={classes.wrapper}>
@@ -139,7 +138,7 @@ class MailSnackbar extends Component {
     )
 
     return (
-      <div>
+      <>
         <Snackbar
            key={key}
            anchorOrigin={{
@@ -168,7 +167,7 @@ class MailSnackbar extends Component {
         />
         <ChatModal chatModalOpen={this.state.chatModalOpen}
                    chatModalClose={this.chatModalClose} />
-      </div>
+      </>
     )
   }
 }

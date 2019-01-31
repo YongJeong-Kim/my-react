@@ -12,6 +12,7 @@ import com.kyj.entity.QRoles;
 import com.kyj.entity.QUser;
 import com.kyj.entity.QUser_Roles;
 import com.kyj.entity.User;
+import com.kyj.enums.Role;
 import com.kyj.repository.querydsl.UserRepositoryCustom;
 import com.querydsl.core.Tuple;
 import com.querydsl.core.types.Projections;
@@ -88,7 +89,7 @@ public class UserRepositoryImpl implements UserRepositoryCustom {
 						.on(urpk.userId.eq(user.id))
 					.join(role)
 						.on(urpk.rolesId.eq(role.id))
-					.where(role.role.eq("ROLE_ADMIN")).as(subuser);
+					.where(role.role.eq(Role.RoleName.ROLE_ADMIN)).as(subuser);
 		
 		JPASQLQuery<?> query = new JPASQLQuery<Void>(entityManager, templates);
 		

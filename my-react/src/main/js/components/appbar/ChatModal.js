@@ -83,6 +83,7 @@ let currentLoggedUsers;
 @connect((store) => {
   return {
     user: store.login.user,
+    rootPath: store.login.rootPath,
   }
 })
 class ChatModal extends Component {
@@ -108,7 +109,7 @@ class ChatModal extends Component {
 
     }
     else {
-      axios.post("/user/currentLoggedUsers")
+      axios.post(window.rootURI + 'user/currentLoggedUsers')
       .then((response) => {
         //    this.setState({isCurrentLoggedUsersCallback: true,})
         currentLoggedUsers = response.data
@@ -123,8 +124,7 @@ class ChatModal extends Component {
     const { fullScreen, classes } = this.props;
     const props = this.props;
     this.findCurrentLoggedUsers()
-    console.log(currentLoggedUsers)
-    console.log(classes)
+
     return (
       <Dialog
         fullScreen={fullScreen}
