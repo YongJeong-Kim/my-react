@@ -1,6 +1,7 @@
 buildscript {
   ext {
     springBootVersion = '2.1.0.RELEASE'
+    querydslPluginVersion = '1.0.10' // 플러그인 버전
   }
   repositories {
     mavenCentral()
@@ -8,6 +9,7 @@ buildscript {
   }
   dependencies {
     classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    classpath("gradle.plugin.com.ewerk.gradle.plugins:querydsl-plugin:${querydslPluginVersion}") // querydsl 플러그인 의존성 등록
     classpath("io.franzbecker:gradle-lombok:1.8")
   }
 }
@@ -16,11 +18,12 @@ apply plugin: 'java'
 apply plugin: 'eclipse-wtp'
 apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
+apply plugin: "com.ewerk.gradle.plugins.querydsl"
+apply plugin: 'io.franzbecker.gradle-lombok'
 apply plugin: 'war'
 //war {
 //	baseName: 'my-react'
 //}
-apply plugin: 'io.franzbecker.gradle-lombok'
 
 group = 'com.kyj'
 //version = '0.0.1-SNAPSHOT'
@@ -64,34 +67,20 @@ dependencies {
   testCompile('org.springframework.boot:spring-boot-starter-test')
 }
 
+// querydsl 적용
+apply plugin: "com.ewerk.gradle.plugins.querydsl"
+def querydslSrcDir = 'src/main/generated'
+
+querydsl {
+  library = "com.querydsl:querydsl-apt"
+  jpa = true
+  querydslSourcesDir = querydslSrcDir
+}
+
 sourceSets {
-  generated {
+  main {
     java {
-      srcDirs = ['src/main/generated']
+      srcDirs = ['src/main/java', querydslSrcDir]
     }
   }
-}
-
-task generateQueryDSL(type: JavaCompile, group: 'build') {
-  source = sourceSets.main.java
-  classpath = configurations.compile
-  options.compilerArgs = [
-    "-proc:only",
-    "-processor", "com.querydsl.apt.jpa.JPAAnnotationProcessor"
-  ]
-  destinationDir = sourceSets.generated.java.srcDirs.iterator().next()
-}
-
-compileJava {
-  dependsOn generateQueryDSL
-  source generateQueryDSL.destinationDir
-}
-compileGeneratedJava {
-  dependsOn generateQueryDSL
-  options.warnings = false
-  classpath += sourceSets.main.runtimeClasspath
-}
-
-clean {
-  delete sourceSets.generated.java.srcDirs
 }
