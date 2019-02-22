@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import PropTypes from 'prop-types';
 import {Router, Route, Link, browserHistory, IndexRoute } from 'react-router';
 import { connect } from "react-redux"
@@ -6,7 +6,7 @@ import { connect } from "react-redux"
 // material-ui components
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
-import IndexAppBar from './appbar/IndexAppBar';
+// import IndexAppBar from './appbar/IndexAppBar';
 
 //material-ui colors and style
 import { withStyles } from '@material-ui/core/styles';
@@ -14,6 +14,8 @@ import { withStyles } from '@material-ui/core/styles';
 import { getLoginUserInfo } from "../actions/userActions"
 import SimpleMediaCard from './SimpleMediaCard';
 import ContentTab from './content/ContentTab'
+
+const IndexAppBar = React.lazy(() => import('./appbar/IndexAppBar'));
 
 const styles = theme => ({
   root: {
@@ -55,7 +57,11 @@ class App extends React.Component {
 			<div className={classes.root} >
 				<Grid container spacing={24}>
 					<Grid item xs>
-						<IndexAppBar />
+            <div>
+            <Suspense fallback={<div>loading...</div>}>
+				  		<IndexAppBar />
+            </Suspense>
+            </div>
 					</Grid>
 				</Grid>
 				<Grid container spacing={24}>

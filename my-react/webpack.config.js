@@ -12,8 +12,10 @@ module.exports = {
   output: {
 		// path: __dirname + '/public/',
   	path: __dirname + '/src/main/resources/static/built/',
+		// path: path.resolve(__dirname, 'dist'),
     // filename: 'bundle.js'
 		filename: '[name].bundle.js',
+		publicPath: '/built/',
 		chunkFilename: '[name].bundle.js',
   },
 	optimization: {
@@ -65,7 +67,8 @@ module.exports = {
 							// ["@babel/preset-stage-2", { decoratorsBeforeExport: true }],
 							["@babel/plugin-proposal-decorators", { legacy: true }],
 							["@babel/plugin-proposal-class-properties", { loose: true }],
-							["babel-plugin-styled-components"]
+							["babel-plugin-styled-components"],
+							["@babel/plugin-syntax-dynamic-import"]
 						],
 					}
         },
